@@ -1,0 +1,24 @@
+<project name="GeneticAlgorithm" basedir="." default="jar">
+	<description>Builds, tests, and runs the project genetic algorithm program.</description>
+	
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+
+    <target name="compile" depends="clean">
+        <mkdir dir="build"/>
+        <javac srcdir="src" destdir="build" includeantruntime="false" />
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="build"/>
+        <jar destfile="build/GeneticAlgorithm.jar" basedir="build">
+            <manifest>
+                <attribute name="Main-Class" value="geneticalgorithm.Main"/>
+            </manifest>
+        </jar>
+    </target>
+	
+	<!-- ant task for test? -->
+	
+</project>
