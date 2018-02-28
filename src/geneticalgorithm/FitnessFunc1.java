@@ -1,3 +1,5 @@
+package geneticalgorithm;
+
 /** 
  *  Class Name: FitnessFunc1
  *  Class Description: The FitnessFuntion class contains the inherited attributes and methods from FitnessFuncion, with an overloaded getFitness() method.
@@ -19,18 +21,31 @@
  *       public int getUpperBound()
  *       public void setUpperBound()
  */
-package geneticalgorithm;
-
 public class FitnessFunc1 extends FitnessFunction {
 
-  public Double getFitness(Double genes) {
-  return null;
-  }
+	/**
+	 * Default constructor
+	 */
+	public FitnessFunc1() {
 
-  public FitnessFunc1() {
-  }
+	}
 
-  public FitnessFunc1(int vc, int lb, int ub) {
-  }
+	/**
+	 * Constructor that accepts parameters to be assigned to attributes.
+	 * @param vc
+	 * @param lb
+	 * @param ub
+	 */
+	public FitnessFunc1(int vc, int lb, int ub) {
+
+	}
+	/**
+	 * 
+	 * @param genes
+	 * @return a Double value of the equation: f(x)=sin^6(5*pi*x), where x = genes
+	 */
+	public Double getFitness(Double genes) {
+		return null;
+	}
 
 }

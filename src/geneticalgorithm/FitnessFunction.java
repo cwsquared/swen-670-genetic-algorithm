@@ -1,3 +1,5 @@
+package geneticalgorithm;
+
 /** 
  *  Class Name: FitnessFunction
  *  Class Description: The FitnessFuntion class contains the generic attributes and methods of one of the fitness functions individual's genes will be tested against.
@@ -19,44 +21,73 @@
  *       public int getUpperBound()
  *       public void setUpperBound()
  */
-package geneticalgorithm;
-
 public class FitnessFunction {
 
-  protected int VARIABLE_COUNT;
+	protected int VARIABLE_COUNT;
 
-  protected int LOWER_BOUND;
+	protected int LOWER_BOUND;
 
-  protected int UPPER_BOUND;
+	protected int UPPER_BOUND;
 
-    public ResearchGA myResearchGA;
+	public ResearchGA myResearchGA;
 
-  public int getVariableCount() {
-  return 0;
-  }
+	/**
+	 * Get the variable count for the fitness function.
+	 * @return the variable count
+	 */
+	public int getVariableCount() {
+		return 0;
+	}
 
-  public Double getFitness(String genes) {
-  return null;
-  }
+	/**
+	 * Fitness function to be overloaded by inheriting classes.  Returns 0.0
+	 * @param genes 
+	 * @return 
+	 */
+	public Double getFitness(String genes) {
+		return null;
+	}
 
-  public FitnessFunction() {
-  }
+	/**
+	 * Default constructor
+	 */
+	public FitnessFunction() {
+	}
 
-  public void setVariableCount(int variables) {
-  }
+	/**
+	 * Set the number of variables for the fitness function
+	 * @param variables the number of variables
+	 */
+	public void setVariableCount(int variables) {
 
-  public int getLowerBound() {
-  return 0;
-  }
+	}
 
-  public void setLowerBound(int lb) {
-  }
+	/**
+	 * Get the lower bound
+	 * @return the lower bound
+	 */
+	public int getLowerBound() {
+		return 0;
+	}
 
-  public int getUpperBound() {
-  return 0;
-  }
+	public void setLowerBound(int lb) {
 
-  public void setUpperBound(int ub) {
-  }
+	}
+
+	/**
+	 * Get the upper bound
+	 * @return the upper bound
+	 */
+	public int getUpperBound() {
+		return 0;
+	}
+
+	/**
+	 * Set the upper bound
+	 * @param ub	the upper bound
+	 */
+	public void setUpperBound(int ub) {
+
+	}
 
 }
