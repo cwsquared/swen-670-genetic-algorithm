@@ -48,7 +48,7 @@ import java.util.ArrayList;
  */
 public class ResearchGA {
 
-  private ArrayList population;
+  private String[][][] population;
   private int POP_SIZE;
   private int NUM_GENES_PER_INDIVIDUAL;
   private Double MUTATION_RATE;
@@ -76,11 +76,8 @@ public class ResearchGA {
 			  ga.currentFunction = new FitnessFunc5();	
 	  }
 	  
-	  ga.initialization(ga.currentFunction.getVariableCount());
-	  
-	  
-	  
-	  
+	  ga.population = ga.initialization(ga.currentFunction.getVariableCount());
+	  	  
   }
   
   public ResearchGA() {
@@ -89,7 +86,10 @@ public class ResearchGA {
   public ResearchGA(int popSize, int numGenerations, int numGenes, Double mutation, int methCount, String filePath) {
   }
 
-  private void initialization(int numVariables) {
+  private String[][][] initialization(int numVariables) {
+	  String[][][] newPopulation = new String[POP_SIZE][numVariables][2];
+	  	  
+	  return newPopulation;
   }
 
   private void performSelection() {
