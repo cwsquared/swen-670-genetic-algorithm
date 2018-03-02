@@ -49,25 +49,40 @@ import java.util.ArrayList;
 public class ResearchGA {
 
   private ArrayList population;
-
   private int POP_SIZE;
-
   private int NUM_GENES_PER_INDIVIDUAL;
-
   private Double MUTATION_RATE;
-
   private int METHYLATION_COUNT;
-
   private Random rnd;
-
   private int NUM_OF_GENERATIONS;
-
   private FitnessFunction currentFunction;
-
   private String filePath;
+  public FitnessFunction myFitnessFunction;
 
-    public FitnessFunction myFitnessFunction;
-
+  public static void main(String[] args) {
+	  
+	  ResearchGA ga = new ResearchGA();
+	  
+	  switch (args[0]) {
+		  case "1":
+			  ga.currentFunction = new FitnessFunc1();
+		  case "2":
+			  ga.currentFunction = new FitnessFunc2();
+		  case "3":
+			  ga.currentFunction = new FitnessFunc3();
+		  case "4":
+			  ga.currentFunction = new FitnessFunc4();
+		  case "5":
+			  ga.currentFunction = new FitnessFunc5();	
+	  }
+	  
+	  ga.initialization(ga.currentFunction.getVariableCount());
+	  
+	  
+	  
+	  
+  }
+  
   public ResearchGA() {
   }
 
