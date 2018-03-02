@@ -1,7 +1,6 @@
 package geneticalgorithm;
 
 import java.util.Random;
-import java.util.ArrayList;
 
 /** 
  *  Class Name: ResearchGA
@@ -114,60 +113,68 @@ public class ResearchGA {
   private void outputToFile(String filepath) {
   }
 
-  public ArrayList getPopulation() {
-  return null;
+  public String[][][] getPopulation() {
+	  return population;
   }
 
   public int getPopulationSize() {
-  return 0;
+	  return POP_SIZE;
   }
 
   public int getNumberGenesPerIndividual() {
-  return 0;
+	  return NUM_GENES_PER_INDIVIDUAL;
   }
 
   public Double getMutationRate() {
-  return null;
+	  return MUTATION_RATE;
   }
 
   public int getMethylationCount() {
-  return 0;
+	  return METHYLATION_COUNT;
   }
 
   public int getNumberOfGenerations() {
-  return 0;
+	  return NUM_OF_GENERATIONS;
   }
 
   public FitnessFunction getCurrentFunction() {
-  return null;
+	  return currentFunction;
   }
 
   public String getFilePath() {
 	  return filePath;
   }
 
-  public void setPopulation(ArrayList population) {
+  public void setPopulation(String[][][] population) {
+	  this.population = population;
   }
 
   public void setPopulationSize(int popSize) {
+	  this.POP_SIZE = popSize;
   }
 
   public void setNumGenesPerIndividual(int numGenes) {
+	  this.NUM_GENES_PER_INDIVIDUAL = numGenes;
   }
 
   public void setMutationRate(Double rate) {
+	  this.MUTATION_RATE = rate;
   }
 
   public void setMethylationCount(int mc) {
+	  this.METHYLATION_COUNT = mc;
   }
 
   public void setNumberOfGenerations(int generations) {
+	  this.NUM_OF_GENERATIONS = generations;
   }
 
   public void setCurrentFunction(FitnessFunction function) {
+	  this.currentFunction = function;
   }
 
   public void setFilePath(String filepath) {
+	  this.filePath = filepath;
   }
 
 }

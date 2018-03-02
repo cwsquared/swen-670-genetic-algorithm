@@ -24,39 +24,39 @@ package geneticalgorithm;
 public class FitnessFunction {
 
   protected int VARIABLE_COUNT;
-
   protected int LOWER_BOUND;
-
   protected int UPPER_BOUND;
-
-    public ResearchGA myResearchGA;
+  public ResearchGA myResearchGA;
 
   public int getVariableCount() {
-  return 0;
+	  return VARIABLE_COUNT;
   }
 
   public Double getFitness(String genes) {
-  return null;
+	  return null;
   }
 
   public FitnessFunction() {
   }
 
   public void setVariableCount(int variables) {
+	  this.VARIABLE_COUNT = variables;
   }
 
   public int getLowerBound() {
-  return 0;
+	  return LOWER_BOUND;
   }
 
   public void setLowerBound(int lb) {
+	  this.LOWER_BOUND = lb;
   }
 
   public int getUpperBound() {
-  return 0;
+	  return UPPER_BOUND;
   }
 
   public void setUpperBound(int ub) {
+	  this.UPPER_BOUND = ub;
   }
 
 }

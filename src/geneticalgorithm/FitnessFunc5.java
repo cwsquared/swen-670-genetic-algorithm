@@ -24,13 +24,19 @@ package geneticalgorithm;
 public class FitnessFunc5 extends FitnessFunction {
 
   public FitnessFunc5() {
+	  this.VARIABLE_COUNT = 2;
+	  this.LOWER_BOUND = -3;
+	  this.UPPER_BOUND = 3;
   }
 
   public Double getFitness(Double xGenes, Double yGenes) {
-  return null;
+	  return null;
   }
 
   public FitnessFunc5(int vc, int lb, int ub) {
+	  this.VARIABLE_COUNT = vc;
+	  this.LOWER_BOUND = lb;
+	  this.UPPER_BOUND = ub;
   }
 
 }
