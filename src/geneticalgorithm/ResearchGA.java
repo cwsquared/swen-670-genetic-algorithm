@@ -8,7 +8,8 @@ import java.util.Random;
  *  Class Modifiers: Public
  *  Class Inheritance: None
  *  Class Attributes:
- *       private ArrayList population - an array of the individuals in a generation.  Array size is dictated by POP_SIZE attribute.
+ *       private String[][][] population - an array of the individuals in a generation.  Array size is dictated by POP_SIZE attribute.
+ *       private String[][][] nextGen - an array containing the next generation of the population.  It is the same size as population.
  *       private int POP_SIZE - number of individuals in a generation
  *       private int NUM_GENES_PER_INDIVIDUAL - number of characters in the string describing the individuals genes
  *       private Double MUTATION_RATE - the percent of genes that may be altered at random
@@ -44,10 +45,13 @@ import java.util.Random;
  *       public void setCurrentFunction(FitnessFunction function)
  *       public String getFilePath()
  *       public void setFilePath(String filepath)
+ *       public String[][][] getNextGen90
+ *       public void setNextGen(String[][][] gen)
  */
 public class ResearchGA {
 
   private String[][][] population;
+  private String[][][] nextGen;
   private int POP_SIZE;
   private int NUM_GENES_PER_INDIVIDUAL;
   private Double MUTATION_RATE;
@@ -76,7 +80,14 @@ public class ResearchGA {
 	  }
 	  
 	  ga.population = ga.initialization(ga.currentFunction.getVariableCount());
-	  	  
+	  for (int gen = 0; gen < ga.NUM_OF_GENERATIONS; gen++) {
+		  //CW: Just added the method calls in the order the overview doc calls for them
+		  ga.determineMethylation();
+		  ga.performSelection();
+		  ga.performCrossover();
+		  ga.performMutation();
+		  ga.clearMethylation();		  
+	  }
   }
   
   public ResearchGA() {
@@ -175,6 +186,14 @@ public class ResearchGA {
 
   public void setFilePath(String filepath) {
 	  this.filePath = filepath;
+  }
+  
+  public String[][][] getNextGen() {
+	  return nextGen;
+  }
+  
+  public void setNextGen(String[][][] gen) {
+	  this.nextGen = gen;
   }
 
 }
