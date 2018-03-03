@@ -1,5 +1,7 @@
 package geneticalgorithm;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Random;
 
 /** 
@@ -78,6 +80,11 @@ public class ResearchGA {
 		  case "5":
 			  ga.currentFunction = new FitnessFunc5();	
 	  }
+	  ga.rnd = new Random();
+	  Calendar cal = Calendar.getInstance();
+      SimpleDateFormat sdf = new SimpleDateFormat("ssMMmmyydd");
+      long d = Long.parseLong(sdf.format(cal.getTime()));
+      ga.rnd.setSeed(d);
 	  
 	  ga.population = ga.initialization(ga.currentFunction.getVariableCount());
 	  ga.outputToFile(ga.population);
