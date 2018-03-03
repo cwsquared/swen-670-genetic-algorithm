@@ -1,24 +1,53 @@
 <project name="GeneticAlgorithm" basedir="." default="jar">
 	<description>Builds, tests, and runs the project genetic algorithm program.</description>
 	
-    <target name="clean">
-        <delete dir="build"/>
+    <target name="clean" description="Cleans build directory">
+        <delete dir="build" />
+    	<delete dir="testreports" />
     </target>
 
-    <target name="compile" depends="clean">
+    <target name="compile" depends="clean" description="Compiles the code">
         <mkdir dir="build"/>
-        <javac srcdir="src" destdir="build" includeantruntime="false" />
+        <javac srcdir="src/geneticalgorithm" destdir="build" includeantruntime="false" />
     </target>
 
-    <target name="jar" depends="compile">
+    <target name="jar" depends="compile" description="Builds JAR">
         <mkdir dir="build"/>
         <jar destfile="build/GeneticAlgorithm.jar" basedir="build">
             <manifest>
-                <attribute name="Main-Class" value="geneticalgorithm.Main"/>
+                <attribute name="GA-Class" value="geneticalgorithm.ResearchGA"/>
             </manifest>
         </jar>
     </target>
 	
-	<!-- ant task for test? -->
+	<target name="doc" depends="compile" description="Generate Java documentation">
+		<mkdir dir="build/docs"/>
+		<javadoc destdir="build/docs">
+			<fileset dir="src/geneticalgorithm" />
+		</javadoc>
+	</target>
+	
+	<!-- Ant task to run unit tests and produce report.
+	<target name="test" depends="compile" description="Run unit tests and create unit test report" >
+		<mkdir dir="testreports"/>
+		<junit printsummary="yes" haltonfailure="yes">
+		    <classpath>
+		    	<pathelement location="libs/junit-4.12.jar"/>
+		    	<pathelement location="libs/hamcrest-core-1.3.jar"/>
+		    	<pathelement location="bin/geneticalgorithm"/>
+		    	<pathelement location="bin/tests"/>
+		    </classpath>
+			<formatter type="plain"/>
+			<formatter type="xml"/>
+			<batchtest fork="yes" todir="testreports">
+				<fileset dir="src/tests">
+					<include name="**/*Test*.java"/>
+				</fileset>
+			</batchtest>
+		</junit>
+	</target> -->
+	
+	<!-- Run before a code commit -->
+	<target name="pre-commit" depends="compile,doc" description="Runs unit tests, generates java docs, and compiles code." />
 	
 </project>
