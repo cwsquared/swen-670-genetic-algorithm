@@ -80,13 +80,17 @@ public class ResearchGA {
 	  }
 	  
 	  ga.population = ga.initialization(ga.currentFunction.getVariableCount());
-	  for (int gen = 0; gen < ga.NUM_OF_GENERATIONS; gen++) {
+	  ga.outputToFile(ga.population);
+	  int[][] pairs;
+	  for (int gen = 1; gen <= ga.NUM_OF_GENERATIONS; gen++) {
 		  //CW: Just added the method calls in the order the overview doc calls for them
-		  ga.determineMethylation();
-		  ga.performSelection();
-		  ga.performCrossover();
-		  ga.performMutation();
-		  ga.clearMethylation();		  
+		  ga.nextGen = ga.determineMethylation(ga.population);
+		  pairs = ga.performSelection(ga.nextGen);
+		  ga.nextGen = ga.performCrossover(ga.nextGen, pairs);
+		  ga.nextGen = ga.performMutation(ga.nextGen);
+		  ga.outputToFile(ga.nextGen);
+		  ga.nextGen = ga.clearMethylation(ga.nextGen);
+		  ga.population = ga.nextGen;
 	  }
   }
   
@@ -94,34 +98,55 @@ public class ResearchGA {
   }
 
   public ResearchGA(int popSize, int numGenerations, int numGenes, Double mutation, int methCount, String filePath) {
+	  this.POP_SIZE = popSize;
+	  this.NUM_OF_GENERATIONS = numGenerations;
+	  this.NUM_GENES_PER_INDIVIDUAL = numGenes;
+	  this.MUTATION_RATE = mutation;
+	  this.METHYLATION_COUNT = methCount;
+	  this.filePath = filePath;
   }
 
   private String[][][] initialization(int numVariables) {
 	  String[][][] newPopulation = new String[POP_SIZE][numVariables][2];
-	  	  
+	  
 	  return newPopulation;
   }
 
-  private void performSelection() {
+  private int[][] performSelection(String[][][] currGen) {
+	  int[][] selectPairs = new int[currGen.length/2][2]; //creates a 
+	  
+	  return selectPairs;
   }
 
-  private void performCrossover() {
+  private String[][][] performCrossover(String[][][] nextGen,int[][] pairs) {
+	  String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
+	  
+	  return ng;
   }
 
-  private void performMutation() {
+  private String[][][] performMutation(String[][][] nextGen) {
+	  String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
+	  
+	  return ng;	  
   }
 
-  private void determineMethylation() {
+  private String[][][] determineMethylation(String[][][] nextGen) {
+	  String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
+	  
+	  return ng;
   }
 
-  private void clearMethylation() {
+  private String[][][] clearMethylation(String[][][] nextGen) {
+	  String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
+	  
+	  return ng;
   }
 
   private Double convertGenesToNumber(String genes) {
-  return null;
+	  return null;
   }
 
-  private void outputToFile(String filepath) {
+  private void outputToFile(String[][][] currPop) {
   }
 
   public String[][][] getPopulation() {
