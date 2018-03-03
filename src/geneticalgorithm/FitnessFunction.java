@@ -42,7 +42,22 @@ public class FitnessFunction {
 	public Double getFitness(String genes) {
 		return null;
 	}
-
+	/**
+	 * Converts the string of genes to a number of type Double.
+	 * @param genes
+	 * @param numGenes
+	 * @return the genes as a number
+	 */
+	public Double convertGenesToNumber(String genes, int numGenes) {
+		double num = 0.0;
+        for (int i = 0; i < numGenes; i++)
+        {
+           if (genes.charAt(i) == '1')
+             num = num + StrictMath.pow(2, i);
+        }
+        num = LOWER_BOUND + (num/(StrictMath.pow(2, numGenes) - 1)) * (UPPER_BOUND - LOWER_BOUND);
+		return num;
+	}
 	/**
 	 * Get the variable count for the fitness function.
 	 * @return the variable count
