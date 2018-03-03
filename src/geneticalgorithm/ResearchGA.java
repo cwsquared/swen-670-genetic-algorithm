@@ -24,12 +24,12 @@ import java.util.Random;
  *  Class Methods:
  *       public ResearchGA() - default constructor
  *       public ResearchGA(int popSize, int numGenerations, int numGenes, Double mutation, int methCount, String filePath) - constructor, which sets attributes
- *       private void initialization(int numVariables) - generates random set of bits for genes and all 0's for methylation
- *       private void performSelection() - determine which individuals from the current generation will be mated for the next generation
- *       private void performCrossover() - combine genes from the selected pairs to produce a pair of new individuals
- *       private void performMutation() - randomly change a MUTATION_RATE percentage of genes in an individual
- *       private void determineMethylation() - Locates the MC least fit individuals, randomly select 1 (one) gene, and test whether the gene being flipped makes for a more fit individual.  If the bit flip increases fitness, the corresponding methylation bit is set to 1.
- *       private void clearMethylation() - sets all methylation bits back to 0
+ *       private String[][][] initialization(int numVariables) - generates random set of bits for genes and all 0's for methylation
+ *       private int[][] performSelection(String[][][] currGen) - determine which individuals from the current generation will be mated for the next generation
+ *       private String[][][] performCrossover(String[][][] nextGen, int[][] pairs) - combine genes from the selected pairs to produce a pair of new individuals
+ *       private String[][][] performMutation(String[][][] nextGen) - randomly change a MUTATION_RATE percentage of genes in an individual
+ *       private String[][][] determineMethylation(String[][][] nextGen) - Locates the MC least fit individuals, randomly select 1 (one) gene, and test whether the gene being flipped makes for a more fit individual.  If the bit flip increases fitness, the corresponding methylation bit is set to 1.
+ *       private String[][][] clearMethylation(String[][][] nextGen) - sets all methylation bits back to 0
  *       private Double convertGenesToNumber(String genes) - converts the string of 1's and 0's to a Double number value
  *       private void outputToFile(String filepath) - writes the current individual's genes, domain values, and fitness to the file specified in the filePath
  *       public ArrayList getPopulation()
@@ -47,7 +47,7 @@ import java.util.Random;
  *       public void setCurrentFunction(FitnessFunction function)
  *       public String getFilePath()
  *       public void setFilePath(String filepath)
- *       public String[][][] getNextGen90
+ *       public String[][][] getNextGen()
  *       public void setNextGen(String[][][] gen)
  */
 public class ResearchGA {
