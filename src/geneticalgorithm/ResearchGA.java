@@ -145,6 +145,21 @@ public class ResearchGA {
 	 */
 	private String[][][] initialization(int numVariables) {
 		String[][][] newPopulation = new String[POP_SIZE][numVariables][2];
+		
+		
+		//Iterate through the array "for i < POP_SIZE"
+			//Create local String variable to hold
+			//Iterate through "for j < numVariables"
+				//Iterate "for g < ga.NUM_GENES_PER_INDIVIDUAL"
+					/* 
+					 if (rand.nextInt(2) == 0)
+					 	news = news.concat("0");	//Taken from example GA
+					else
+						news = news.concat("1");
+					*/
+		            //String meth = meth.concat("0");
+				//newPopulation[i][j][0] = news
+				//newPopulationi[i][j][1] = meth;
 
 		return newPopulation;
 	}
@@ -156,7 +171,9 @@ public class ResearchGA {
 	 */
 	private int[][] performSelection(String[][][] currGen) {
 		int[][] selectPairs = new int[currGen.length/2][2]; //creates a 
-
+		
+		//TODO
+		
 		return selectPairs;
 	}
 
@@ -169,6 +186,8 @@ public class ResearchGA {
 	private String[][][] performCrossover(String[][][] nextGen,int[][] pairs) {
 		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
 
+		//TODO
+		
 		return ng;
 	}
 
@@ -180,6 +199,8 @@ public class ResearchGA {
 	private String[][][] performMutation(String[][][] nextGen) {
 		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
 
+		//TODO
+		
 		return ng;	  
 	}
 
@@ -193,6 +214,8 @@ public class ResearchGA {
 	private String[][][] determineMethylation(String[][][] nextGen) {
 		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
 
+		//TODO
+		
 		return ng;
 	}
 
@@ -204,6 +227,8 @@ public class ResearchGA {
 	private String[][][] clearMethylation(String[][][] nextGen) {
 		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
 
+		//TODO
+		
 		return ng;
 	}
 
