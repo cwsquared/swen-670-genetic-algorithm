@@ -16,7 +16,7 @@ import java.util.Random;
  *       private int NUM_GENES_PER_INDIVIDUAL - number of characters in the string describing the individuals genes
  *       private Double MUTATION_RATE - the percent of genes that may be altered at random
  *       private int METHYLATION_COUNT - the number of least fit individuals who will be affected by methylation
- *       private Random rnd - 
+ *       private Random rnd - random number generator
  *       private int NUM_OF_GENERATIONS - the number of generations (iterations) that the algorithm will go through
  *       private FitnessFunction currentFunction - holds the currently used fitness function object that the individuals will be judged against
  *       private String filePath - full path to the file the output will be written to
@@ -54,17 +54,19 @@ public class ResearchGA {
 
 	// An array of the individuals in a generation.  Array size is dictated by POP_SIZE attribute.
 	private String[][][] population;
+	// An array containing the next generation of the population.  It is the same size as population.
 	private String[][][] nextGen;
-	//Number of individuals in a generation
+	// Number of individuals in a generation
 	private int POP_SIZE;
-	//Number of characters in the string describing the individuals genes
+	// Number of characters in the string describing the individuals genes
 	private int NUM_GENES_PER_INDIVIDUAL;
-	//The percent of genes that may be altered at random
+	// The percent of genes that may be altered at random
 	private Double MUTATION_RATE;
-	//The number of least fit individuals who will be affected by methylation
+	// The number of least fit individuals who will be affected by methylation
 	private int METHYLATION_COUNT;
+	// Random number generator 
 	private Random rnd;
-	//The number of generations (iterations) that the algorithm will go through
+	// The number of generations (iterations) that the algorithm will go through
 	private int NUM_OF_GENERATIONS;
 	// Holds the currently used fitness function object that the individuals will be judged against
 	private FitnessFunction currentFunction;
@@ -74,30 +76,45 @@ public class ResearchGA {
 
 	/**
 	 * 
-	 * @param args 
+	 * @param args	the command line arguments
+	 * 			[0] = fitness function
 	 */
 	public static void main(String[] args) {
 
+		// TODO Get rid of default constructor. The args should pass in the
+		//		values for the class attributes and set them immediately. 
 		ResearchGA ga = new ResearchGA();
-
+		
+		// First argument represents the fitness function to run the GA against
 		switch (args[0]) {
 		case "1":
 			ga.currentFunction = new FitnessFunc1();
+			break;
 		case "2":
 			ga.currentFunction = new FitnessFunc2();
+			break;
 		case "3":
 			ga.currentFunction = new FitnessFunc3();
+			break;
 		case "4":
 			ga.currentFunction = new FitnessFunc4();
+			break;
 		case "5":
-			ga.currentFunction = new FitnessFunc5();	
+			ga.currentFunction = new FitnessFunc5();
+			break;
+		default: 
+			ga.currentFunction = new FitnessFunc1();
+			break;
 		}
+		
+		// Intialize random number generator based on date
 		ga.rnd = new Random();
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("ssMMmmyydd");
 		long d = Long.parseLong(sdf.format(cal.getTime()));
 		ga.rnd.setSeed(d);
 
+		// Initialize the population
 		ga.population = ga.initialization(ga.currentFunction.getVariableCount());
 		ga.outputToFile(ga.population);
 		int[][] pairs;
@@ -117,7 +134,8 @@ public class ResearchGA {
 	 * Default constructor
 	 */
 	public ResearchGA() {
-
+		// TODO do we even need this? Default constructors are only really necessary if we have default values,
+		//	but it seems to me like we'll always require the user to enter in the values.
 	}
 
 	/**
@@ -145,21 +163,21 @@ public class ResearchGA {
 	 */
 	private String[][][] initialization(int numVariables) {
 		String[][][] newPopulation = new String[POP_SIZE][numVariables][2];
-		
-		
+
+
 		//Iterate through the array "for i < POP_SIZE"
-			//Create local String variable to hold
-			//Iterate through "for j < numVariables"
-				//Iterate "for g < ga.NUM_GENES_PER_INDIVIDUAL"
-					/* 
+		//Create local String variable to hold
+		//Iterate through "for j < numVariables"
+		//Iterate "for g < ga.NUM_GENES_PER_INDIVIDUAL"
+		/* 
 					 if (rand.nextInt(2) == 0)
 					 	news = news.concat("0");	//Taken from example GA
 					else
 						news = news.concat("1");
-					*/
-		            //String meth = meth.concat("0");
-				//newPopulation[i][j][0] = news
-				//newPopulationi[i][j][1] = meth;
+		 */
+		//String meth = meth.concat("0");
+		//newPopulation[i][j][0] = news
+		//newPopulationi[i][j][1] = meth;
 
 		return newPopulation;
 	}
@@ -171,9 +189,9 @@ public class ResearchGA {
 	 */
 	private int[][] performSelection(String[][][] currGen) {
 		int[][] selectPairs = new int[currGen.length/2][2]; //creates a 
-		
+
 		//TODO
-		
+
 		return selectPairs;
 	}
 
@@ -187,7 +205,7 @@ public class ResearchGA {
 		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
 
 		//TODO
-		
+
 		return ng;
 	}
 
@@ -200,7 +218,7 @@ public class ResearchGA {
 		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
 
 		//TODO
-		
+
 		return ng;	  
 	}
 
@@ -215,7 +233,7 @@ public class ResearchGA {
 		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
 
 		//TODO
-		
+
 		return ng;
 	}
 
@@ -228,7 +246,7 @@ public class ResearchGA {
 		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
 
 		//TODO
-		
+
 		return ng;
 	}
 
@@ -250,7 +268,6 @@ public class ResearchGA {
 	}
 
 	/**
-	 * /**
 	 * Get the population
 	 * @return an array representing the population
 	 */
@@ -385,7 +402,7 @@ public class ResearchGA {
 	public void setFilePath(String filepath) {
 		this.filePath = filepath;
 	}
-	
+
 	/**
 	 * Set the next generation
 	 * @param gen	an array representing the next generation
