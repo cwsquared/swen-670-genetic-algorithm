@@ -48,8 +48,10 @@ public class FitnessFunc1 extends FitnessFunction {
 	 * @param genes
 	 * @return a Double value of the equation: f(x)=sin^6(5*pi*x), where x = genes
 	 */
-	public Double getFitness(Double genes) {
-		return null;
+	public Double getFitness(String genes) {
+		Double x = convertGenesToNumber(genes);
+		Double pi = Math.PI;
+		return Math.pow(Math.sin(5 * pi * x), 6.0);
 	}
 
 }

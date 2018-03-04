@@ -20,6 +20,7 @@ package geneticalgorithm;
  *       public void setLowerBound(int lb)
  *       public int getUpperBound()
  *       public void setUpperBound()
+ *       public Double convertGenesToNumber(String genes) - converts the gene string to a number
  */
 public class FitnessFunction {
 
@@ -48,8 +49,9 @@ public class FitnessFunction {
 	 * @param numGenes
 	 * @return the genes as a number
 	 */
-	public Double convertGenesToNumber(String genes, int numGenes) {
+	public Double convertGenesToNumber(String genes) {
 		double num = 0.0;
+		int numGenes = genes.length();
         for (int i = 0; i < numGenes; i++)
         {
            if (genes.charAt(i) == '1')
