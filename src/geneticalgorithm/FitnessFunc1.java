@@ -27,7 +27,9 @@ public class FitnessFunc1 extends FitnessFunction {
 	 * Default constructor
 	 */
 	public FitnessFunc1() {
-
+		this.VARIABLE_COUNT = 1;
+		this.LOWER_BOUND = 0;
+		this.UPPER_BOUND = 1;
 	}
 
 	/**
@@ -37,15 +39,19 @@ public class FitnessFunc1 extends FitnessFunction {
 	 * @param ub
 	 */
 	public FitnessFunc1(int vc, int lb, int ub) {
-
+		this.VARIABLE_COUNT = vc;
+		this.LOWER_BOUND = lb;
+		this.UPPER_BOUND = ub;
 	}
 	/**
 	 * 
 	 * @param genes
 	 * @return a Double value of the equation: f(x)=sin^6(5*pi*x), where x = genes
 	 */
-	public Double getFitness(Double genes) {
-		return null;
+	public Double getFitness(String genes) {
+		Double x = convertGenesToNumber(genes);
+		Double pi = Math.PI;
+		return Math.pow(Math.sin(5 * pi * x), 6.0);
 	}
 
 }
