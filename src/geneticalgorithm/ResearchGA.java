@@ -162,23 +162,30 @@ public class ResearchGA {
 	 * @return new population
 	 */
 	private String[][][] initialization(int numVariables) {
+		
 		String[][][] newPopulation = new String[POP_SIZE][numVariables][2];
-
-
-		//Iterate through the array "for i < POP_SIZE"
-		//Create local String variable to hold
-		//Iterate through "for j < numVariables"
-		//Iterate "for g < ga.NUM_GENES_PER_INDIVIDUAL"
-		/* 
-					 if (rand.nextInt(2) == 0)
-					 	news = news.concat("0");	//Taken from example GA
-					else
-						news = news.concat("1");
-		 */
-		//String meth = meth.concat("0");
-		//newPopulation[i][j][0] = news
-		//newPopulationi[i][j][1] = meth;
-
+		
+		// each individual
+		    // num of variables (twice for function 5)
+				// builds character string based on appended existing string
+		
+        Random rand = new Random();
+        String news;
+        String meth;
+        for (int a = 0; a < POP_SIZE; a++)
+        {
+            news = new String();
+            meth = new String();
+            for (int b = 0; b < numVariables; b++)
+            {
+                if (rand.nextInt(2) == 0)
+                	news = news.concat("0");
+                else
+                	meth = news.concat("1");
+                newPopulation[a][b][0] = news;
+                newPopulation[a][b][1] = meth;
+            }
+        }
 		return newPopulation;
 	}
 
