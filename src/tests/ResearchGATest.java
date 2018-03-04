@@ -12,7 +12,7 @@ public class ResearchGATest {
 	// Test the constructor that sets privates attributes
 	public void testResearchGAConstructor() {
 		ResearchGA ga = new ResearchGA(1, 2, 3, 4.4, 5, "filepath");
-		assertEquals("filepath was not set correctly",ga.getFilePath(), "filepath");
+		assertEquals("filepath was not set correctly", ga.getFilePath(), "filepath");
 	}
 
 }
