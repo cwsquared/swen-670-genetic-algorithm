@@ -89,53 +89,84 @@ public class ResearchGA {
 	 */
 	public static void main(String[] args) {
 
-		// Create genetic algorithm based on arguments
-		ResearchGA ga = new ResearchGA(
-				Integer.parseInt(args[1]),
-				Integer.parseInt(args[2]),
-				Integer.parseInt(args[3]),
-				Double.parseDouble(args[4]),
-				Integer.parseInt(args[5]));
-
-		// First argument represents the fitness function to run the GA against
-		switch (args[0]) {
-		case "1":
-			ga.currentFunction = new FitnessFunc1();
-			break;
-		case "2":
-			ga.currentFunction = new FitnessFunc2();
-			break;
-		case "3":
-			ga.currentFunction = new FitnessFunc3();
-			break;
-		case "4":
-			ga.currentFunction = new FitnessFunc4();
-			break;
-		case "5":
-			ga.currentFunction = new FitnessFunc5();
-			break;
+		boolean validated = false;
+		
+		// Validate arguments before proceeding
+		if(args.length == 6) {
+			boolean arg0Valid = false;
+			boolean numberArgsValid = false;
+			
+			// Check that the first argument is 1,2,3,4,5 (i.e. valid fitness function)
+			if(args[0].equals("1") || args[0].equals("2") || args[0].equals("3") || args[0].equals("4") || args[0].equals("5")) {
+				arg0Valid = true;
+			}
+			
+			// Check that the remaining arguments are int or double
+			try {
+				Integer.parseInt(args[1]);
+				Integer.parseInt(args[2]);
+				Integer.parseInt(args[3]);
+				Double.parseDouble(args[4]);
+				Integer.parseInt(args[5]);
+				numberArgsValid = true;
+			}  catch (Exception e) { numberArgsValid = false;}
+			
+			if(arg0Valid == true && numberArgsValid ==true) {
+				validated = true;
+			}
+			
 		}
+		
+		// If the arguments are valid, continue with program
+		if(validated == true) {
+			// Create genetic algorithm based on arguments
+			ResearchGA ga = new ResearchGA(
+					Integer.parseInt(args[1]),
+					Integer.parseInt(args[2]),
+					Integer.parseInt(args[3]),
+					Double.parseDouble(args[4]),
+					Integer.parseInt(args[5]));
 
-		// Intialize random number generator based on date
-		ga.rnd = new Random();
-		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("ssMMmmyydd");
-		long d = Long.parseLong(sdf.format(cal.getTime()));
-		ga.rnd.setSeed(d);
+			// First argument represents the fitness function to run the GA against
+			switch (args[0]) {
+			case "1":
+				ga.currentFunction = new FitnessFunc1();
+				break;
+			case "2":
+				ga.currentFunction = new FitnessFunc2();
+				break;
+			case "3":
+				ga.currentFunction = new FitnessFunc3();
+				break;
+			case "4":
+				ga.currentFunction = new FitnessFunc4();
+				break;
+			case "5":
+				ga.currentFunction = new FitnessFunc5();
+				break;
+			}
 
-		// Initialize the population
-		ga.population = ga.initialization(ga.currentFunction.getVariableCount());
-		ga.outputToFile(ga.population);
-		int[][] pairs;
-		for (int gen = 1; gen <= ga.NUM_OF_GENERATIONS; gen++) {
-			//CW: Just added the method calls in the order the overview doc calls for them
-			ga.nextGen = ga.determineMethylation(ga.population);
-			pairs = ga.performSelection(ga.nextGen);
-			ga.nextGen = ga.performCrossover(ga.nextGen, pairs);
-			ga.nextGen = ga.performMutation(ga.nextGen);
-			//ga.outputToFile(ga.nextGen);
-			ga.nextGen = ga.clearMethylation(ga.nextGen);
-			ga.population = ga.nextGen;
+			// Intialize random number generator based on date
+			ga.rnd = new Random();
+			Calendar cal = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("ssMMmmyydd");
+			long d = Long.parseLong(sdf.format(cal.getTime()));
+			ga.rnd.setSeed(d);
+
+			// Initialize the population
+			ga.population = ga.initialization(ga.currentFunction.getVariableCount());
+			ga.outputToFile(ga.population);
+			int[][] pairs;
+			for (int gen = 1; gen <= ga.NUM_OF_GENERATIONS; gen++) {
+				//CW: Just added the method calls in the order the overview doc calls for them
+				ga.nextGen = ga.determineMethylation(ga.population);
+				pairs = ga.performSelection(ga.nextGen);
+				ga.nextGen = ga.performCrossover(ga.nextGen, pairs);
+				ga.nextGen = ga.performMutation(ga.nextGen);
+				//ga.outputToFile(ga.nextGen);
+				ga.nextGen = ga.clearMethylation(ga.nextGen);
+				ga.population = ga.nextGen;
+			}
 		}
 	}
 
