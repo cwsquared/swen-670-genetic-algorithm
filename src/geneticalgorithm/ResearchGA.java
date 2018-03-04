@@ -178,12 +178,13 @@ public class ResearchGA {
             meth = new String();
             for (int b = 0; b < numVariables; b++)
             {
+            	news = newPopulation[a][b][];
+            	meth = newPopulation[a][b][];
+            	
                 if (rand.nextInt(2) == 0)
                 	news = news.concat("0");
                 else
-                	meth = news.concat("1");
-                newPopulation[a][b][0] = news;
-                newPopulation[a][b][1] = meth;
+                	meth = meth.concat("1");
             }
         }
 		return newPopulation;
