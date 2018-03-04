@@ -10,7 +10,7 @@ public class FitnessFunctionTest {
 
 	@Test
 	// Test the default constructor
-	public void testFitnessFunc1DefaultConstructor() {
+	public void testFitnessFunctionDefaultConstructor() {
 		FitnessFunction f = new FitnessFunction();
 		assertEquals(f.getVariableCount(), 1);
 		assertEquals(f.getLowerBound(), 0);
@@ -19,7 +19,7 @@ public class FitnessFunctionTest {
 	
 	@Test
 	// Test the constructor that sets privates attributes
-	public void testFitnessFunc1Constructor() {
+	public void testFitnessFunctionConstructor() {
 		FitnessFunction f = new FitnessFunction(1, -1, 6);
 		assertEquals(f.getVariableCount(), 1);
 		assertEquals(f.getLowerBound(), -1);
