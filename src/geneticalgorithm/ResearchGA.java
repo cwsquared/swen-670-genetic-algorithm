@@ -1,5 +1,8 @@
 package geneticalgorithm;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
@@ -23,7 +26,7 @@ import java.util.Random;
  *  
  *  Class Methods:
  *       public ResearchGA() - default constructor
- *       public ResearchGA(int popSize, int numGenerations, int numGenes, Double mutation, int methCount, String filePath) - constructor, which sets attributes
+ *       public ResearchGA(int popSize, int numGenerations, int numGenes, Double mutation, int methCount) - constructor, which sets attributes
  *       private String[][][] initialization(int numVariables) - generates random set of bits for genes and all 0's for methylation
  *       private int[][] performSelection(String[][][] currGen) - determine which individuals from the current generation will be mated for the next generation
  *       private String[][][] performCrossover(String[][][] nextGen, int[][] pairs) - combine genes from the selected pairs to produce a pair of new individuals
@@ -71,20 +74,29 @@ public class ResearchGA {
 	// Holds the currently used fitness function object that the individuals will be judged against
 	private FitnessFunction currentFunction;
 	// Full path to the file the output will be written to
-	private String filePath;
+	private String filePath = "genetic_algorithm_output.txt";
 	public FitnessFunction myFitnessFunction;
 
 	/**
-	 * 
+	 * Main program
 	 * @param args	the command line arguments
 	 * 			[0] = fitness function
+	 * 			[1] = POP_SIZE
+	 * 			[2] = NUM_OF_GENERATIONS
+	 * 			[3] = NUM_GENES_PER_INDIVIDUAL
+	 * 			[4] = MUTATION_RATE 
+	 * 			[5] = METHYLATION_COUNT
 	 */
 	public static void main(String[] args) {
 
-		// TODO Get rid of default constructor. The args should pass in the
-		//		values for the class attributes and set them immediately. 
-		ResearchGA ga = new ResearchGA();
-		
+		// Create genetic algorithm based on arguments
+		ResearchGA ga = new ResearchGA(
+				Integer.parseInt(args[1]),
+				Integer.parseInt(args[2]),
+				Integer.parseInt(args[3]),
+				Double.parseDouble(args[4]),
+				Integer.parseInt(args[5]));
+
 		// First argument represents the fitness function to run the GA against
 		switch (args[0]) {
 		case "1":
@@ -102,11 +114,8 @@ public class ResearchGA {
 		case "5":
 			ga.currentFunction = new FitnessFunc5();
 			break;
-		default: 
-			ga.currentFunction = new FitnessFunc1();
-			break;
 		}
-		
+
 		// Intialize random number generator based on date
 		ga.rnd = new Random();
 		Calendar cal = Calendar.getInstance();
@@ -124,18 +133,10 @@ public class ResearchGA {
 			pairs = ga.performSelection(ga.nextGen);
 			ga.nextGen = ga.performCrossover(ga.nextGen, pairs);
 			ga.nextGen = ga.performMutation(ga.nextGen);
-			ga.outputToFile(ga.nextGen);
+			//ga.outputToFile(ga.nextGen);
 			ga.nextGen = ga.clearMethylation(ga.nextGen);
 			ga.population = ga.nextGen;
 		}
-	}
-
-	/**
-	 * Default constructor
-	 */
-	public ResearchGA() {
-		// TODO do we even need this? Default constructors are only really necessary if we have default values,
-		//	but it seems to me like we'll always require the user to enter in the values.
 	}
 
 	/**
@@ -145,15 +146,13 @@ public class ResearchGA {
 	 * @param numGenes			the number of genes
 	 * @param mutation			the mutation rate
 	 * @param methCount			the methylation count
-	 * @param filePath			the output filepath
 	 */
-	public ResearchGA(int popSize, int numGenerations, int numGenes, Double mutation, int methCount, String filePath) {
+	public ResearchGA(int popSize, int numGenerations, int numGenes, Double mutation, int methCount) {
 		this.POP_SIZE = popSize;
 		this.NUM_OF_GENERATIONS = numGenerations;
 		this.NUM_GENES_PER_INDIVIDUAL = numGenes;
 		this.MUTATION_RATE = mutation;
 		this.METHYLATION_COUNT = methCount;
-		this.filePath = filePath;
 	}
 
 	/**
@@ -264,7 +263,23 @@ public class ResearchGA {
 	 * @param currPop	array representing the current population
 	 */
 	private void outputToFile(String[][][] currPop) {
-
+		//TODO Need to modify to actually perform function. Currently just spitting out arguments
+		
+		FileWriter fileWriter;
+		try {
+			fileWriter = new FileWriter(this.filePath, true);
+			PrintWriter printWriter = new PrintWriter(fileWriter);
+			printWriter.println(this.currentFunction.getClass().getName() + ": " + 
+					this.POP_SIZE + ", " + 
+					this.NUM_OF_GENERATIONS + ", " + 
+					this.NUM_GENES_PER_INDIVIDUAL + ", " + 
+					this.MUTATION_RATE + ", " + 
+					this.METHYLATION_COUNT);
+		    printWriter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
