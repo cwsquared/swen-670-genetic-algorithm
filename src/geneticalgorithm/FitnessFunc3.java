@@ -27,9 +27,11 @@ public class FitnessFunc3 extends FitnessFunction {
 	 * Default constructor
 	 */
 	public FitnessFunc3() {
-
+		this.VARIABLE_COUNT = 1;
+		this.LOWER_BOUND = 0;
+		this.UPPER_BOUND = 1;
 	}
-	
+
 	/**
 	 * Constructor that accepts parameters to be assigned to attributes.
 	 * @param vc
@@ -37,7 +39,9 @@ public class FitnessFunc3 extends FitnessFunction {
 	 * @param ub
 	 */
 	public FitnessFunc3(int vc, int lb, int ub) {
-
+		this.VARIABLE_COUNT = vc;
+		this.LOWER_BOUND = lb;
+		this.UPPER_BOUND = ub;
 	}
 
 	/**
