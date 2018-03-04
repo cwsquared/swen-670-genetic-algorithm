@@ -24,15 +24,25 @@ package geneticalgorithm;
  */
 public class FitnessFunction {
 
-	protected int VARIABLE_COUNT;
-	protected int LOWER_BOUND;
-	protected int UPPER_BOUND;
+	protected int VARIABLE_COUNT = 1;
+	protected int LOWER_BOUND = 0;
+	protected int UPPER_BOUND = 1;
 	public ResearchGA myResearchGA;
-
+	
 	/**
 	 * Default constructor
 	 */
 	public FitnessFunction() {
+		
+	}
+	
+	/**
+	 * Constructor to set attributes
+	 */
+	public FitnessFunction(int vc, int lb, int ub) {
+		this.VARIABLE_COUNT = vc;
+		this.LOWER_BOUND = lb;
+		this.UPPER_BOUND = ub;
 	}
 	
 	/**
@@ -43,6 +53,7 @@ public class FitnessFunction {
 	public Double getFitness(String genes) {
 		return null;
 	}
+	
 	/**
 	 * Converts the string of genes to a number of type Double.
 	 * @param genes

@@ -27,6 +27,7 @@ public class FitnessFunc5 extends FitnessFunction {
 	 * Default constructor
 	 */
 	public FitnessFunc5() {
+		super();
 		this.VARIABLE_COUNT = 2;
 		this.LOWER_BOUND = -3;
 		this.UPPER_BOUND = 3;
@@ -39,9 +40,7 @@ public class FitnessFunc5 extends FitnessFunction {
 	 * @param ub
 	 */
 	public FitnessFunc5(int vc, int lb, int ub) {
-		this.VARIABLE_COUNT = vc;
-		this.LOWER_BOUND = lb;
-		this.UPPER_BOUND = ub;
+		super(vc, lb, ub);
 	}
 
 	/**
