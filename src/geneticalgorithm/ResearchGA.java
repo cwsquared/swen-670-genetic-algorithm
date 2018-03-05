@@ -162,32 +162,32 @@ public class ResearchGA {
 	 * @return new population
 	 */
 	private String[][][] initialization(int numVariables) {
-		
-		String[][][] newPopulation = new String[POP_SIZE][numVariables][2];
-		
-		// each individual
-		    // num of variables (twice for function 5)
-				// builds character string based on appended existing string
-		
-        Random rand = new Random();
-        String news;
-        String meth;
-        for (int a = 0; a < POP_SIZE; a++)
-        {
-            news = new String();
-            meth = new String();
-            for (int b = 0; b < numVariables; b++)
-            {
-            	news = newPopulation[a][b][];
-            	meth = newPopulation[a][b][];
-            	
-                if (rand.nextInt(2) == 0)
-                	news = news.concat("0");
-                else
-                	meth = meth.concat("1");
-            }
-        }
-		return newPopulation;
+	    String[][][] newPopulation = new String[POP_SIZE][numVariables][2];
+
+	    Random rand = new Random();
+	    String news;
+	    String meth;
+
+	    //Iterates through the individuals (runs POP_SIZE times)
+	    for (int a = 0; a < POP_SIZE; a++) {
+	        //Iterates though the variables (1 time for #1-4 and 2 times for #5)
+	        for (int b = 0; b < numVariables; b++) {
+	            news = new String();
+	            meth = new String();
+	            //Builds the new strings for genes (news) and methylation (meth) by iterating "number of genes per individual" times
+	            for (int c = 0; c < NUM_GENES_PER_INDIVIDUAL; c++) {
+	                if (rand.nextInt(2) == 0)
+	                    news = news.concat("0");    // tacks a 0 on to the end of the string
+	                else
+	                    news = news.concat("1");    // tacks a 0 on to the end of the string
+
+	                meth = meth.concat("0");        // builds the all 0 string for methylation
+	            }
+	            newPopulation[a][b][0] = news;      //saves the gene string into the current array element
+	            newPopulation[a][b][1] = meth;      //saves the methylation string into the current array element
+	        }
+	    }
+	    return newPopulation;
 	}
 
 	/**
