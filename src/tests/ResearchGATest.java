@@ -1,5 +1,6 @@
 package tests;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -25,6 +26,12 @@ public class ResearchGATest {
 		assertEquals("Constructor did not set number of genes per individual", 3, ga.getNumberGenesPerIndividual());
 		assertEquals("Constructor did not set mutation rate", 4.4, ga.getMutationRate(), 1);
 		assertEquals("Constructor did not set methylation count", 5, ga.getMethylationCount());
+	}
+	
+	@Test
+	// Test the initialization function
+	public void testInitialization() {
+		assertEquals("Population generated properly", ga.getPopulation(), true);
 	}
 	
 	@Test
