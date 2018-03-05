@@ -219,6 +219,9 @@ public class ResearchGA {
 	            System.out.println("Meth " + meth);
 	        }
 	    }
+	    for (int iterator = 0; iterator < newPopulation.length; iterator++){	    	
+	    	System.out.println(newPopulation[iterator]);
+	    }
 	    return newPopulation;
 	}
 

@@ -1,6 +1,5 @@
 package tests;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
