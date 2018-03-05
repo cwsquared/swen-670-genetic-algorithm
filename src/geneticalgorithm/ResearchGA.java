@@ -19,11 +19,10 @@ import java.util.Random;
  *       private Random rnd - random number generator
  *       private int NUM_OF_GENERATIONS - the number of generations (iterations) that the algorithm will go through
  *       private FitnessFunction currentFunction - holds the currently used fitness function object that the individuals will be judged against
- *       private String filePath - full path to the file the output will be written to
  *  
  *  Class Methods:
  *       public ResearchGA() - default constructor
- *       public ResearchGA(int popSize, int numGenerations, int numGenes, Double mutation, int methCount, String filePath) - constructor, which sets attributes
+ *       public ResearchGA(int popSize, int numGenerations, int numGenes, Double mutation, int methCount) - constructor, which sets attributes
  *       private String[][][] initialization(int numVariables) - generates random set of bits for genes and all 0's for methylation
  *       private int[][] performSelection(String[][][] currGen) - determine which individuals from the current generation will be mated for the next generation
  *       private String[][][] performCrossover(String[][][] nextGen, int[][] pairs) - combine genes from the selected pairs to produce a pair of new individuals
@@ -31,7 +30,7 @@ import java.util.Random;
  *       private String[][][] determineMethylation(String[][][] nextGen) - Locates the MC least fit individuals, randomly select 1 (one) gene, and test whether the gene being flipped makes for a more fit individual.  If the bit flip increases fitness, the corresponding methylation bit is set to 1.
  *       private String[][][] clearMethylation(String[][][] nextGen) - sets all methylation bits back to 0
  *       private Double convertGenesToNumber(String genes) - converts the string of 1's and 0's to a Double number value
- *       private void outputToFile(String filepath) - writes the current individual's genes, domain values, and fitness to the file specified in the filePath
+ *       private void printGeneration() - outputs the current individual's genes, domain values, and fitness
  *       public ArrayList getPopulation()
  *       public setPopulation(ArrayList population)
  *       public int getPopulationSize()
@@ -45,8 +44,6 @@ import java.util.Random;
  *       public int getNumberOfGenerations()
  *       public FitnessFunction getCurrentFunction()
  *       public void setCurrentFunction(FitnessFunction function)
- *       public String getFilePath()
- *       public void setFilePath(String filepath)
  *       public String[][][] getNextGen()
  *       public void setNextGen(String[][][] gen)
  */
@@ -70,72 +67,108 @@ public class ResearchGA {
 	private int NUM_OF_GENERATIONS;
 	// Holds the currently used fitness function object that the individuals will be judged against
 	private FitnessFunction currentFunction;
-	// Full path to the file the output will be written to
-	private String filePath;
 	public FitnessFunction myFitnessFunction;
 
 	/**
-	 * 
+	 * Main program
 	 * @param args	the command line arguments
 	 * 			[0] = fitness function
+	 * 			[1] = POP_SIZE
+	 * 			[2] = NUM_OF_GENERATIONS
+	 * 			[3] = NUM_GENES_PER_INDIVIDUAL
+	 * 			[4] = MUTATION_RATE 
+	 * 			[5] = METHYLATION_COUNT
 	 */
 	public static void main(String[] args) {
 
-		// TODO Get rid of default constructor. The args should pass in the
-		//		values for the class attributes and set them immediately. 
-		ResearchGA ga = new ResearchGA();
-		
-		// First argument represents the fitness function to run the GA against
-		switch (args[0]) {
-		case "1":
-			ga.currentFunction = new FitnessFunc1();
-			break;
-		case "2":
-			ga.currentFunction = new FitnessFunc2();
-			break;
-		case "3":
-			ga.currentFunction = new FitnessFunc3();
-			break;
-		case "4":
-			ga.currentFunction = new FitnessFunc4();
-			break;
-		case "5":
-			ga.currentFunction = new FitnessFunc5();
-			break;
-		default: 
-			ga.currentFunction = new FitnessFunc1();
-			break;
-		}
-		
-		// Intialize random number generator based on date
-		ga.rnd = new Random();
-		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("ssMMmmyydd");
-		long d = Long.parseLong(sdf.format(cal.getTime()));
-		ga.rnd.setSeed(d);
+		boolean validated = false;
 
-		// Initialize the population
-		ga.population = ga.initialization(ga.currentFunction.getVariableCount());
-		ga.outputToFile(ga.population);
-		int[][] pairs;
-		for (int gen = 1; gen <= ga.NUM_OF_GENERATIONS; gen++) {
-			//CW: Just added the method calls in the order the overview doc calls for them
-			ga.nextGen = ga.determineMethylation(ga.population);
-			pairs = ga.performSelection(ga.nextGen);
-			ga.nextGen = ga.performCrossover(ga.nextGen, pairs);
-			ga.nextGen = ga.performMutation(ga.nextGen);
-			ga.outputToFile(ga.nextGen);
-			ga.nextGen = ga.clearMethylation(ga.nextGen);
-			ga.population = ga.nextGen;
-		}
-	}
+		// Validate arguments before proceeding
+		if(args.length == 6) {
+			boolean arg0Valid = false;
+			boolean numberArgsValid = false;
+			boolean popSizeIsEven = false;
 
-	/**
-	 * Default constructor
-	 */
-	public ResearchGA() {
-		// TODO do we even need this? Default constructors are only really necessary if we have default values,
-		//	but it seems to me like we'll always require the user to enter in the values.
+			// Check that the first argument is 1,2,3,4,5 (i.e. valid fitness function)
+			if(args[0].equals("1") || args[0].equals("2") || args[0].equals("3") || args[0].equals("4") || args[0].equals("5")) {
+				arg0Valid = true;
+			}
+
+			// Check that the remaining arguments are int or double
+			try {
+				Integer.parseInt(args[1]);
+				
+				// Check that population size is even
+				if((Integer.parseInt(args[1]) & 1) == 0) {
+					popSizeIsEven = true;
+				}
+				
+				Integer.parseInt(args[2]);
+				Integer.parseInt(args[3]);
+				Double.parseDouble(args[4]);
+				Integer.parseInt(args[5]);
+				numberArgsValid = true;
+			}  catch (Exception e) { numberArgsValid = false;}
+
+			if(arg0Valid == true && numberArgsValid == true && popSizeIsEven == true) {
+				validated = true;
+			}
+
+		}
+
+		// If the arguments are valid, continue with program
+		if(validated == true) {
+			// Create genetic algorithm based on arguments
+			ResearchGA ga = new ResearchGA(
+					Integer.parseInt(args[1]),
+					Integer.parseInt(args[2]),
+					Integer.parseInt(args[3]),
+					Double.parseDouble(args[4]),
+					Integer.parseInt(args[5]));
+
+			// First argument represents the fitness function to run the GA against
+			switch (args[0]) {
+			case "1":
+				ga.currentFunction = new FitnessFunc1();
+				break;
+			case "2":
+				ga.currentFunction = new FitnessFunc2();
+				break;
+			case "3":
+				ga.currentFunction = new FitnessFunc3();
+				break;
+			case "4":
+				ga.currentFunction = new FitnessFunc4();
+				break;
+			case "5":
+				ga.currentFunction = new FitnessFunc5();
+				break;
+			}
+
+			// Intialize random number generator based on date
+			ga.rnd = new Random();
+			Calendar cal = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("ssMMmmyydd");
+			long d = Long.parseLong(sdf.format(cal.getTime()));
+			ga.rnd.setSeed(d);
+
+			// Initialize the population
+			ga.population = ga.initialization(ga.currentFunction.getVariableCount());
+			ga.printGeneration(ga.population);
+			int[][] pairs;
+			for (int gen = 1; gen <= ga.NUM_OF_GENERATIONS; gen++) {
+				//CW: Just added the method calls in the order the overview doc calls for them
+				ga.nextGen = ga.determineMethylation(ga.population);
+				pairs = ga.performSelection(ga.nextGen);
+				ga.nextGen = ga.performCrossover(ga.nextGen, pairs);
+				ga.nextGen = ga.performMutation(ga.nextGen);
+				//ga.printGeneration(ga.nextGen);
+				ga.nextGen = ga.clearMethylation(ga.nextGen);
+				ga.population = ga.nextGen;
+			}
+		} else {
+			System.out.println("Failed to run genetic algorithm due to invalid arguments.");
+		}
 	}
 
 	/**
@@ -145,15 +178,13 @@ public class ResearchGA {
 	 * @param numGenes			the number of genes
 	 * @param mutation			the mutation rate
 	 * @param methCount			the methylation count
-	 * @param filePath			the output filepath
 	 */
-	public ResearchGA(int popSize, int numGenerations, int numGenes, Double mutation, int methCount, String filePath) {
+	public ResearchGA(int popSize, int numGenerations, int numGenes, Double mutation, int methCount) {
 		this.POP_SIZE = popSize;
 		this.NUM_OF_GENERATIONS = numGenerations;
 		this.NUM_GENES_PER_INDIVIDUAL = numGenes;
 		this.MUTATION_RATE = mutation;
 		this.METHYLATION_COUNT = methCount;
-		this.filePath = filePath;
 	}
 
 	/**
@@ -260,10 +291,18 @@ public class ResearchGA {
 	}
 
 	/**
-	 * Writes the current individual's genes, domain values, and fitness to the file specified in the filePath
+	 * Prints the current individual's genes, domain values, and fitness
 	 * @param currPop	array representing the current population
 	 */
-	private void outputToFile(String[][][] currPop) {
+	private void printGeneration(String[][][] currPop) {
+		//TODO Need to modify to actually perform function. Currently just spitting out arguments
+
+		System.out.println(this.currentFunction.getClass().getName() + ": " + 
+				this.POP_SIZE + ", " + 
+				this.NUM_OF_GENERATIONS + ", " + 
+				this.NUM_GENES_PER_INDIVIDUAL + ", " + 
+				this.MUTATION_RATE + ", " + 
+				this.METHYLATION_COUNT);
 
 	}
 
@@ -321,14 +360,6 @@ public class ResearchGA {
 	 */
 	public FitnessFunction getCurrentFunction() {
 		return currentFunction;
-	}
-
-	/**
-	 * Get the output filepath
-	 * @return the output file path
-	 */
-	public String getFilePath() {
-		return filePath;
 	}
 
 	/**
@@ -393,14 +424,6 @@ public class ResearchGA {
 	 */
 	public void setCurrentFunction(FitnessFunction function) {
 		this.currentFunction = function;
-	}
-
-	/**
-	 * Set output filepath
-	 * @param filepath	the filepath of the output file
-	 */
-	public void setFilePath(String filepath) {
-		this.filePath = filepath;
 	}
 
 	/**
