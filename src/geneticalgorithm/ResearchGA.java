@@ -180,11 +180,12 @@ public class ResearchGA {
 	                    news = news.concat("0");    // tacks a 0 on to the end of the string
 	                else
 	                    news = news.concat("1");    // tacks a 0 on to the end of the string
-
 	                meth = meth.concat("0");        // builds the all 0 string for methylation
 	            }
 	            newPopulation[a][b][0] = news;      //saves the gene string into the current array element
+	            System.out.println("News " + news);
 	            newPopulation[a][b][1] = meth;      //saves the methylation string into the current array element
+	            System.out.println("Meth " + meth);
 	        }
 	    }
 	    return newPopulation;
