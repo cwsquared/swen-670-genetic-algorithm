@@ -34,9 +34,6 @@ public class ResearchGATest {
 		ga.setCurrentFunction(f);
 		assertEquals("set/get CurrentFunction failed", f, ga.getCurrentFunction());
 		
-		ga.setFilePath("filepathxyz.txt");
-		assertEquals("set/get FilePath failed", "filepathxyz.txt", ga.getFilePath());
-		
 		ga.setMethylationCount(12);
 		assertEquals("set/get MethylationCount failed", 12, ga.getMethylationCount());
 		
