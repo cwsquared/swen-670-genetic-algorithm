@@ -38,25 +38,24 @@ public class ResearchGATest {
 		 * @param methCount			the methylation count 		5
 		 */
 		ga = new ResearchGA(2, 2, 3, 4.4, 5);
-		// initialize the population
-		ga.initialization(ga.getPopulationSize());
 		// Setup values of population array
-		String[][][] pop = ga.getPopulation();
+		String[][][] pop = ga.initialization(1);
 		// Set value of population size by checking length of population array
 		int individuals = pop.length;
+		
 		// check that initialization passes back an array of correct size based on population size
-		assertEquals("Initialization created pop of correct size", 1, individuals);
+		assertEquals("Initialization created pop of correct size", 2, individuals);
 		
 		// loop through all values for given population size
-		
 		for ( int a = 0; a < individuals; a++ ) {	
+			// excluded/point of discussion: loop through all values for given number of variables
+		
 			// setup the values for each assert within the loop
+			int variables = pop[a].length;  // should be 1 for functions 1-4 or 2 for function 5
+			int values = pop[a][0].length;   // should always equal 2
 			
-			//int variables = pop[0].length;  // should be 1 for functions 1-4 or 2 for function 5
-			//int values = pop[0][0].length;   // should always equal 2
-
 			// check that initialization passes back an array with correct number of variables
-			assertEquals("Initialization created pop with correct number of fitness function variabls", ,);
+			//assertEquals("Initialization created pop with correct number of fitness function variabls", ,);
 			
 			// 		news check
 			// fills the gene elements with strings equal to NUM_GENES_PER_INDIVIDUAL in length
@@ -67,8 +66,7 @@ public class ResearchGATest {
 			//assertEquals("Initialization created sequence with expected methylation string", ,)
 			
 		}
-		
-		
+
 	}
 	
 	@Test

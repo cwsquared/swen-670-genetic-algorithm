@@ -199,6 +199,8 @@ public class ResearchGA {
 	    String news;
 	    String meth;
 
+	    System.out.println(newPopulation.length);
+	    
 	    //Iterates through the individuals (runs POP_SIZE times)
 	    for (int a = 0; a < POP_SIZE; a++) {
 	        //Iterates though the variables (1 time for #1-4 and 2 times for #5)
