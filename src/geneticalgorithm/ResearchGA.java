@@ -192,7 +192,7 @@ public class ResearchGA {
 	 * @param numVariables	the number of variables to intialize with
 	 * @return new population
 	 */
-	private String[][][] initialization(int numVariables) {
+	public String[][][] initialization(int numVariables) {
 	    String[][][] newPopulation = new String[POP_SIZE][numVariables][2];
 
 	    Random rand = new Random();
@@ -210,14 +210,12 @@ public class ResearchGA {
 	            	news +=String.valueOf(rand.nextInt(2));
 	                meth += "0";
 	            }
-	            newPopulation[a][b][0] = news;      //saves the gene string into the current array element
-	            System.out.println("News " + news);
-	            newPopulation[a][b][1] = meth;      //saves the methylation string into the current array element
-	            System.out.println("Meth " + meth);
+	            newPopulation[a][b][0] = news;      //saves the gene string into the current array element for index [a][b]
+	            newPopulation[a][b][1] = meth;      //saves the methylation string into the current array element for index [a][b]
+	            
+	            System.out.println(newPopulation[a][b][0].length());
+	            System.out.println(newPopulation[a][b][1].length());
 	        }
-	    }
-	    for (int iterator = 0; iterator < newPopulation.length; iterator++){	    	
-	    	System.out.println(newPopulation[iterator]);
 	    }
 	    return newPopulation;
 	}

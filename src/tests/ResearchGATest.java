@@ -30,7 +30,45 @@ public class ResearchGATest {
 	@Test
 	// Test the initialization function
 	public void testInitialization() {
-		assertEquals("Population generated properly", ga.getPopulation(), true);
+		/* Build GA Object with Constructor Arguments as follows
+	 	 * @param popSize 			the population size 		2
+		 * @param numGenerations	the number of generations 	2
+		 * @param numGenes			the number of genes 		3
+		 * @param mutation			the mutation rate			4.4
+		 * @param methCount			the methylation count 		5
+		 */
+		ga = new ResearchGA(2, 2, 3, 4.4, 5);
+		// initialize the population
+		ga.initialization(ga.getPopulationSize());
+		// Setup values of population array
+		String[][][] pop = ga.getPopulation();
+		// Set value of population size by checking length of population array
+		int individuals = pop.length;
+		// check that initialization passes back an array of correct size based on population size
+		assertEquals("Initialization created pop of correct size", 1, individuals);
+		
+		// loop through all values for given population size
+		
+		for ( int a = 0; a < individuals; a++ ) {	
+			// setup the values for each assert within the loop
+			
+			//int variables = pop[0].length;  // should be 1 for functions 1-4 or 2 for function 5
+			//int values = pop[0][0].length;   // should always equal 2
+
+			// check that initialization passes back an array with correct number of variables
+			assertEquals("Initialization created pop with correct number of fitness function variabls", ,);
+			
+			// 		news check
+			// fills the gene elements with strings equal to NUM_GENES_PER_INDIVIDUAL in length
+			//assertEquals("Initialization created sequence with proper size", ,)
+			
+			// 		meth check
+			// fills the methylation elements with the correct number of all zeroes
+			//assertEquals("Initialization created sequence with expected methylation string", ,)
+			
+		}
+		
+		
 	}
 	
 	@Test
