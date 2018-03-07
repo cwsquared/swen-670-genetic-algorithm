@@ -207,11 +207,8 @@ public class ResearchGA {
 	            meth = new String();
 	            //Builds the new strings for genes (news) and methylation (meth) by iterating "number of genes per individual" times
 	            for (int c = 0; c < NUM_GENES_PER_INDIVIDUAL; c++) {
-	                if (rand.nextInt(2) == 0)
-	                    news = news.concat("0");    // tacks a 0 on to the end of the string
-	                else
-	                    news = news.concat("1");    // tacks a 0 on to the end of the string
-	                meth = meth.concat("0");        // builds the all 0 string for methylation
+	            	news +=String.valueOf(rand.nextInt(2));
+	                meth += "0";
 	            }
 	            newPopulation[a][b][0] = news;      //saves the gene string into the current array element
 	            System.out.println("News " + news);
