@@ -28,6 +28,17 @@ public class ResearchGATest {
 	}
 	
 	@Test
+	// Test the initialization function population size
+	public void testInitializationPopulationSize() {
+		// Setup values of population array
+		String[][][] pop = ga.initialization(1);
+		// Set value of population size by checking length of population array
+		int individuals = pop.length;
+		// check that initialization passes back an array of correct size based on population size
+		assertEquals("Initialization created population of correct size", 1, individuals);
+	}
+	
+	@Test
 	// Test getter and setter for current function
 	public void testResearchGAGetSetCurrentFunction() {
 		FitnessFunction f = new FitnessFunction();

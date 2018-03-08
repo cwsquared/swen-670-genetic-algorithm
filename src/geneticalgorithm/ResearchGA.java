@@ -192,25 +192,31 @@ public class ResearchGA {
 	 * @param numVariables	the number of variables to intialize with
 	 * @return new population
 	 */
-	private String[][][] initialization(int numVariables) {
-		String[][][] newPopulation = new String[POP_SIZE][numVariables][2];
+	public String[][][] initialization(int numVariables) {
+	    String[][][] newPopulation = new String[POP_SIZE][numVariables][2];
 
+	    Random rand = new Random();
+	    String news;
+	    String meth;
 
-		//Iterate through the array "for i < POP_SIZE"
-		//Create local String variable to hold
-		//Iterate through "for j < numVariables"
-		//Iterate "for g < ga.NUM_GENES_PER_INDIVIDUAL"
-		/* 
-					 if (rand.nextInt(2) == 0)
-					 	news = news.concat("0");	//Taken from example GA
-					else
-						news = news.concat("1");
-		 */
-		//String meth = meth.concat("0");
-		//newPopulation[i][j][0] = news
-		//newPopulationi[i][j][1] = meth;
-
-		return newPopulation;
+	    System.out.println(newPopulation.length);
+	    
+	    //Iterates through the individuals (runs POP_SIZE times)
+	    for (int a = 0; a < POP_SIZE; a++) {
+	        //Iterates though the variables (1 time for #1-4 and 2 times for #5)
+	        for (int b = 0; b < numVariables; b++) {
+	            news = new String();
+	            meth = new String();
+	            //Builds the new strings for genes (news) and methylation (meth) by iterating "number of genes per individual" times
+	            for (int c = 0; c < NUM_GENES_PER_INDIVIDUAL; c++) {
+	            	news +=String.valueOf(rand.nextInt(2));
+	                meth += "0";
+	            }
+	            newPopulation[a][b][0] = news;      //saves the gene string into the current array element for index [a][b]
+	            newPopulation[a][b][1] = meth;      //saves the methylation string into the current array element for index [a][b]
+	        }
+	    }
+	    return newPopulation;
 	}
 
 	/**
