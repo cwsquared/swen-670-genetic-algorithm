@@ -28,44 +28,14 @@ public class ResearchGATest {
 	}
 	
 	@Test
-	// Test the initialization function
-	public void testInitialization() {
-		/* Build GA Object with Constructor Arguments as follows
-	 	 * @param popSize 			the population size 		2
-		 * @param numGenerations	the number of generations 	2
-		 * @param numGenes			the number of genes 		3
-		 * @param mutation			the mutation rate			4.4
-		 * @param methCount			the methylation count 		5
-		 */
-		ga = new ResearchGA(2, 2, 3, 4.4, 5);
+	// Test the initialization function population size
+	public void testInitializationPopulationSize() {
 		// Setup values of population array
 		String[][][] pop = ga.initialization(1);
 		// Set value of population size by checking length of population array
 		int individuals = pop.length;
-		
 		// check that initialization passes back an array of correct size based on population size
-		assertEquals("Initialization created population of correct size", 2, individuals);
-		
-		// loop through all values for given population size
-		for ( int a = 0; a < individuals; a++ ) {	
-			// excluded/point of discussion: loop through all values for given number of variables
-			// check that initialization passes back an array with correct number of variables
-			//assertEquals("Initialization created pop with correct number of fitness function variabls", ,);
-					
-			// setup the values for each assert within the loop
-			int variables = pop[a].length;  // should be 1 for functions 1-4 or 2 for function 5
-			int values = pop[a][0].length;   // should always equal 2
-			
-			// 		news check
-			// fills the gene elements with strings equal to NUM_GENES_PER_INDIVIDUAL in length
-			//assertEquals("Initialization created sequence with proper size", ,)
-			
-			// 		meth check
-			// fills the methylation elements with the correct number of all zeroes
-			//assertEquals("Initialization created sequence with expected methylation string", ,)
-			
-		}
-
+		assertEquals("Initialization created population of correct size", 1, individuals);
 	}
 	
 	@Test

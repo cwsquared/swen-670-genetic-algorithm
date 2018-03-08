@@ -214,9 +214,6 @@ public class ResearchGA {
 	            }
 	            newPopulation[a][b][0] = news;      //saves the gene string into the current array element for index [a][b]
 	            newPopulation[a][b][1] = meth;      //saves the methylation string into the current array element for index [a][b]
-	            
-	            System.out.println(newPopulation[a][b][0].length());
-	            System.out.println(newPopulation[a][b][1].length());
 	        }
 	    }
 	    return newPopulation;
