@@ -251,12 +251,61 @@ public class ResearchGA {
 	 * @param nextGen
 	 * @return
 	 */
-	private String[][][] performMutation(String[][][] nextGen) {
-		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
+	public String[][][] performMutation(String[][][] nextGen, boolean...showMsg) { ///---modified the argument to allow for additional parameter. I use this for debuging
+		
+		boolean ShowMessage = showMsg.length > 0 ? showMsg[0] : false;
+		boolean mutated =false;		//--detect if mutation took place
+		String[][][] ng = nextGen;	//--a copy of the current generation of genes that needs to be mutated
+		
+		String normalIndividual = new String();		///---used to store current individual string that we will examine and mutate
+		//String methylIndividual = new String(); 	///---methylation...remmed out for now...part of phase 3
+		Double myrnd; ///---random number, did this so we can see the actual random number being used to detect mutation!
 
-		//TODO
 
-		return ng;	  
+        for (int population_size = 0; population_size < nextGen.length; population_size++)
+        {
+        	for (int number_of_generations = 0; number_of_generations < nextGen[population_size].length; number_of_generations++) 
+        	{
+        		mutated = false;
+        		normalIndividual = nextGen[population_size][number_of_generations][0];
+        		//methylIndividual = nextGen[population_size][number_of_generations][1];  ///--remmed out for now since we are not doing Methylation!
+        		
+        		if (ShowMessage)  ///---show debugging output 
+        			System.out.println("\tAnalyzing gene <<<[ "+normalIndividual + " ]>>>");
+
+                for (int c = 0; c < NUM_GENES_PER_INDIVIDUAL;c++) // normalIndividual.length(); c++)
+                {
+                	if (rnd==null) {  ///---We need to initialize this if not trying to test the GA function the main thread will throw an exception on
+                		rnd = new Random();
+                	}
+                	myrnd = rnd.nextDouble();
+                  
+                	if (myrnd < MUTATION_RATE) {
+                		mutated = true;
+                		
+                		if (ShowMessage) ///---show debugging output 
+                			System.out.println("\tGenaration(["+(population_size+1)+"]["+(number_of_generations+1)+"]["+(c+1)+"]) Will mutate! --> Random #("+MUTATION_RATE+") is: "+ String.format("%1.2f", myrnd));                   
+
+                    	if (normalIndividual.substring(c, c + 1).equals("1")) {
+                			normalIndividual = normalIndividual.substring(0,c)+'0'+normalIndividual.substring(c+1);
+                		}else{
+                			normalIndividual = normalIndividual.substring(0,c)+'1'+normalIndividual.substring(c+1);
+                		}
+                	}else{                	  
+	                	  ///---We do not mutate...do not touch the genetic string!
+                	}                  
+                }
+                
+                ng[population_size][number_of_generations][0] = normalIndividual;
+                		
+                if (ShowMessage) ///---show debugging output 
+        			System.out.println("\t-->> "+normalIndividual + " <<--  " + (mutated ? "MUTATED!!!" : "")); System.out.println();   		
+        	}
+        	
+        }
+        
+		return ng;
+		
 	}
 
 	/**
