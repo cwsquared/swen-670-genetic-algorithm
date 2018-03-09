@@ -99,4 +99,41 @@ public class ResearchGATest {
 		assertEquals("set/get PopulationSize failed", 100, ga.getPopulationSize());	
 	}
 	
+	@Test
+	// Test the selected function selected pairs size
+	public void testResearchGASelectionPairsSize(){		
+		//Create the Array to hold the individuals
+		String[][][] population = ga.initialization(1);
+		int populationLength = ga.getPopulationSize();
+		
+		//Perform Selection on this population and save the pairs
+		int[][] pairs = ga.performSelection(population);
+		int pairsLength = pairs.length;
+		
+		//Check that the selection returns an array of size (Total Population)/2
+		assertEquals("Selected Pair size is half of the population size", populationLength/2, pairsLength);		
+	}
+	
+	@Test
+	// Test the crossover function next generation size
+	public void testResearchGANextGenSize(){		
+		//Create the Array to hold the current generation individuals
+		String[][][] population = ga.initialization(1);
+		int populationLength = ga.getPopulationSize();
+		
+		//Perform Selection on this population and save the pairs
+		int[][] pairs = ga.performSelection(population);
+		
+		//Create Array to hold the next generation individuals
+		//NOTE: Parameter values were derived from the constructor (i.e. pop size = 1, numVariables = 1)
+		String[][][] nextGen = new String[1][1][2];
+		
+		//Perform crossover on the population		
+		nextGen =  ga.performCrossover(population, pairs);
+		int nextGenLength = nextGen.length;
+		
+		//Check that the function returns a new generation with correct size after crossing the genes
+		assertEquals("The new generation size is twice the Selected pair size", populationLength, nextGenLength);		
+	}
+	
 }

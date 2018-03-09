@@ -224,25 +224,98 @@ public class ResearchGA {
 	 * @param currGen
 	 * @return
 	 */
-	private int[][] performSelection(String[][][] currGen) {
-		int[][] selectPairs = new int[currGen.length/2][2]; //creates a 
-
-		//TODO
-
+	public int[][] performSelection(String[][][] currGen) {
+		int[][] selectPairs = new int[currGen.length/2][2]; 
+				
+		for(int x = 0; x < currGen.length / 2; x++){
+				
+			//Variable to hold the overall fitness
+			double sumFitness = 0.0;
+			double selectionValue = 0.0;
+			
+			//Loop to determine the sum of the overall fitness
+			for(int a = 0; a < currGen.length; a++){ 
+				for(int b = 0; b < currGen[a].length; b++){
+					sumFitness = sumFitness + getCurrentFunction().getFitness(currGen[a][b][0]);
+				}
+			}
+//			System.out.print("Sum of fitness for this generation is " + sumFitness + "\n");
+			
+			//Loop to Select the individuals from the array
+			for(int b = 0; b < currGen[x].length; b++){
+				
+				//**First individual
+				selectionValue = rnd.nextDouble() * sumFitness;
+//				System.out.print("Selection value (Before) is " + selectionValue + "\n");				
+				int selectionIndex = -1;
+				while(selectionValue >= 0.0){
+					selectionIndex = selectionIndex + 1;
+					selectionValue = selectionValue - getCurrentFunction().getFitness(currGen[selectionIndex][b][0]);
+				}		
+				selectPairs[x][0] = selectionIndex; 
+//				System.out.print("Selection value (After) is " + selectionValue + "\n");
+//				System.out.println("First Index: " + selectionIndex);
+		    
+		        //**Second Individual
+		        selectionValue = rnd.nextDouble() * sumFitness;
+//		        System.out.print("Selection value (Before) is " + selectionValue + "\n");
+		        selectionIndex = -1;
+		        while (selectionValue >= 0.0)
+		        {
+		            selectionIndex = selectionIndex + 1;
+		            selectionValue = selectionValue - getCurrentFunction().getFitness(currGen[selectionIndex][b][0]);
+		        }  
+//		        System.out.print("Selection value (After) is " + selectionValue + "\n");
+		        selectPairs[x][1] = selectionIndex; 	
+//		        System.out.println("Second Index: " + selectionIndex);
+			}        		
+//			System.out.println("");
+		}
+		 	    
 		return selectPairs;
 	}
-
+	
+			
 	/**
 	 * Combine genes from the selected pairs to produce a pair of new individuals
 	 * @param nextGen
 	 * @param pairs
 	 * @return
 	 */
-	private String[][][] performCrossover(String[][][] nextGen,int[][] pairs) {
+	public String[][][] performCrossover(String[][][] nextGen,int[][] pairs) {
 		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
 
-		//TODO
-
+		String selectedIndividual1 = new String();
+		String selectedIndividual2 = new String();
+		String newIndividual1 = new String();
+		String newIndividual2 = new String();
+		
+		for(int a = 0; a < nextGen.length / 2; a++){ 
+			for(int b = 0; b < nextGen[a].length; b++){
+				selectedIndividual1 = nextGen[pairs[a][0]][b][0];
+				selectedIndividual2 = nextGen[pairs[a][1]][b][0];
+//				System.out.println("Pairs: " + selectedIndividual1 + "|" + selectedIndividual2);
+				
+				//** Crossover Implementation
+				int crossoverPoint = rnd.nextInt(getNumberGenesPerIndividual() - 1);   
+//				System.out.print("Crossover point " + crossoverPoint + "\n");
+				
+				
+				//First Individual
+				newIndividual1 = selectedIndividual1.substring(0, crossoverPoint).concat(
+						selectedIndividual2.substring(crossoverPoint, getNumberGenesPerIndividual()));
+		        
+				//Second Individual
+		        newIndividual2 = selectedIndividual2.substring(0, crossoverPoint).concat(
+		                selectedIndividual1.substring(crossoverPoint, getNumberGenesPerIndividual()));	
+		        
+//		        System.out.println("First Individual: " + newIndividual1 + " |  Second Individual: " + newIndividual2 + "\n");
+		        
+		        //Add new individuals to generation
+		        ng[a*2][b][0] = newIndividual1;
+		        ng[a*2+1][b][0] = newIndividual2;
+			}
+		}	
 		return ng;
 	}
 
