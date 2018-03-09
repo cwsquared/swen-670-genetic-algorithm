@@ -47,14 +47,7 @@ public class driver {
 			ga.setCurrentFunction(new FitnessFunc5());
 			break;
 		}
-/*
-		// Intialize random number generator based on date
-		rnd = new Random();
-		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("ssMMmmyydd");
-		long d = Long.parseLong(sdf.format(cal.getTime()));
-		rnd.setSeed(d);
-*/
+
 		// Initialize the population
 //		ga.population = ga.initialization(ga.currentFunction.getVariableCount());
 		ga.setPopulation( ga.initialization(ga.getCurrentFunction().getVariableCount()));
@@ -80,6 +73,7 @@ mytesting.myprint(" BEFORE ",ga.getPopulation());
 
 			//ga.nextGen = ga.performMutation(ga.population);
 			ga.setNextGen( ga.performMutation(ga.getPopulation() , true));
+
 mytesting.myprint(" AFTER ",ga.getNextGen());
 
 			//ga.printGeneration(ga.nextGen);
@@ -95,15 +89,22 @@ mytesting.myprint(" AFTER ",ga.getNextGen());
 		String normalIndividual = new String();
 
     	System.out.println("====================="+ String.format("%s", Title)+"==========================");
-        for (int x = 0; x < nextGen.length; x++)
-        {
-        	for (int y = 0; y < nextGen[x].length; y++) 
-        	{        		
-        		normalIndividual = nextGen[x][y][0];
-        		System.out.println("Normal Individual:     " + normalIndividual);
-         		//System.out.println();
-        	}
-        }		
+
+    	try {
+	    	for (int x = 0; x < nextGen.length; x++)
+	        {
+	        	for (int y = 0; y < nextGen[x].length; y++) 
+	        	{        		
+	        		normalIndividual = nextGen[x][y][0];
+	        		System.out.println("Normal Individual:     " + normalIndividual);
+	         		//System.out.println();
+	        	}
+	        }
+    	}catch(Exception ex) {
+    		System.out.println("Error occured with array : "+ex.getMessage());
+    	}
+    	
+  
     	System.out.println("========================================================");		
 	}
 	
