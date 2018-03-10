@@ -192,25 +192,31 @@ public class ResearchGA {
 	 * @param numVariables	the number of variables to intialize with
 	 * @return new population
 	 */
-	private String[][][] initialization(int numVariables) {
-		String[][][] newPopulation = new String[POP_SIZE][numVariables][2];
+	public String[][][] initialization(int numVariables) {
+	    String[][][] newPopulation = new String[POP_SIZE][numVariables][2];
 
+	    Random rand = new Random();
+	    String news;
+	    String meth;
 
-		//Iterate through the array "for i < POP_SIZE"
-		//Create local String variable to hold
-		//Iterate through "for j < numVariables"
-		//Iterate "for g < ga.NUM_GENES_PER_INDIVIDUAL"
-		/* 
-					 if (rand.nextInt(2) == 0)
-					 	news = news.concat("0");	//Taken from example GA
-					else
-						news = news.concat("1");
-		 */
-		//String meth = meth.concat("0");
-		//newPopulation[i][j][0] = news
-		//newPopulationi[i][j][1] = meth;
-
-		return newPopulation;
+	    System.out.println(newPopulation.length);
+	    
+	    //Iterates through the individuals (runs POP_SIZE times)
+	    for (int a = 0; a < POP_SIZE; a++) {
+	        //Iterates though the variables (1 time for #1-4 and 2 times for #5)
+	        for (int b = 0; b < numVariables; b++) {
+	            news = new String();
+	            meth = new String();
+	            //Builds the new strings for genes (news) and methylation (meth) by iterating "number of genes per individual" times
+	            for (int c = 0; c < NUM_GENES_PER_INDIVIDUAL; c++) {
+	            	news +=String.valueOf(rand.nextInt(2));
+	                meth += "0";
+	            }
+	            newPopulation[a][b][0] = news;      //saves the gene string into the current array element for index [a][b]
+	            newPopulation[a][b][1] = meth;      //saves the methylation string into the current array element for index [a][b]
+	        }
+	    }
+	    return newPopulation;
 	}
 
 	/**
@@ -218,25 +224,98 @@ public class ResearchGA {
 	 * @param currGen
 	 * @return
 	 */
-	private int[][] performSelection(String[][][] currGen) {
-		int[][] selectPairs = new int[currGen.length/2][2]; //creates a 
-
-		//TODO
-
+	public int[][] performSelection(String[][][] currGen) {
+		int[][] selectPairs = new int[currGen.length/2][2]; 
+				
+		for(int x = 0; x < currGen.length / 2; x++){
+				
+			//Variable to hold the overall fitness
+			double sumFitness = 0.0;
+			double selectionValue = 0.0;
+			
+			//Loop to determine the sum of the overall fitness
+			for(int a = 0; a < currGen.length; a++){ 
+				for(int b = 0; b < currGen[a].length; b++){
+					sumFitness = sumFitness + getCurrentFunction().getFitness(currGen[a][b][0]);
+				}
+			}
+//			System.out.print("Sum of fitness for this generation is " + sumFitness + "\n");
+			
+			//Loop to Select the individuals from the array
+			for(int b = 0; b < currGen[x].length; b++){
+				
+				//**First individual
+				selectionValue = rnd.nextDouble() * sumFitness;
+//				System.out.print("Selection value (Before) is " + selectionValue + "\n");				
+				int selectionIndex = -1;
+				while(selectionValue >= 0.0){
+					selectionIndex = selectionIndex + 1;
+					selectionValue = selectionValue - getCurrentFunction().getFitness(currGen[selectionIndex][b][0]);
+				}		
+				selectPairs[x][0] = selectionIndex; 
+//				System.out.print("Selection value (After) is " + selectionValue + "\n");
+//				System.out.println("First Index: " + selectionIndex);
+		    
+		        //**Second Individual
+		        selectionValue = rnd.nextDouble() * sumFitness;
+//		        System.out.print("Selection value (Before) is " + selectionValue + "\n");
+		        selectionIndex = -1;
+		        while (selectionValue >= 0.0)
+		        {
+		            selectionIndex = selectionIndex + 1;
+		            selectionValue = selectionValue - getCurrentFunction().getFitness(currGen[selectionIndex][b][0]);
+		        }  
+//		        System.out.print("Selection value (After) is " + selectionValue + "\n");
+		        selectPairs[x][1] = selectionIndex; 	
+//		        System.out.println("Second Index: " + selectionIndex);
+			}        		
+//			System.out.println("");
+		}
+		 	    
 		return selectPairs;
 	}
-
+	
+			
 	/**
 	 * Combine genes from the selected pairs to produce a pair of new individuals
 	 * @param nextGen
 	 * @param pairs
 	 * @return
 	 */
-	private String[][][] performCrossover(String[][][] nextGen,int[][] pairs) {
+	public String[][][] performCrossover(String[][][] nextGen,int[][] pairs) {
 		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
 
-		//TODO
-
+		String selectedIndividual1 = new String();
+		String selectedIndividual2 = new String();
+		String newIndividual1 = new String();
+		String newIndividual2 = new String();
+		
+		for(int a = 0; a < nextGen.length / 2; a++){ 
+			for(int b = 0; b < nextGen[a].length; b++){
+				selectedIndividual1 = nextGen[pairs[a][0]][b][0];
+				selectedIndividual2 = nextGen[pairs[a][1]][b][0];
+//				System.out.println("Pairs: " + selectedIndividual1 + "|" + selectedIndividual2);
+				
+				//** Crossover Implementation
+				int crossoverPoint = rnd.nextInt(getNumberGenesPerIndividual() - 1);   
+//				System.out.print("Crossover point " + crossoverPoint + "\n");
+				
+				
+				//First Individual
+				newIndividual1 = selectedIndividual1.substring(0, crossoverPoint).concat(
+						selectedIndividual2.substring(crossoverPoint, getNumberGenesPerIndividual()));
+		        
+				//Second Individual
+		        newIndividual2 = selectedIndividual2.substring(0, crossoverPoint).concat(
+		                selectedIndividual1.substring(crossoverPoint, getNumberGenesPerIndividual()));	
+		        
+//		        System.out.println("First Individual: " + newIndividual1 + " |  Second Individual: " + newIndividual2 + "\n");
+		        
+		        //Add new individuals to generation
+		        ng[a*2][b][0] = newIndividual1;
+		        ng[a*2+1][b][0] = newIndividual2;
+			}
+		}	
 		return ng;
 	}
 
@@ -245,12 +324,66 @@ public class ResearchGA {
 	 * @param nextGen
 	 * @return
 	 */
-	private String[][][] performMutation(String[][][] nextGen) {
-		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
+	public String[][][] performMutation(String[][][] nextGen, boolean...showMsg) { ///---modified the argument to allow for additional parameter. I use this for debuging
+		
+		boolean ShowMessage = showMsg.length > 0 ? showMsg[0] : false;
+		boolean mutated =false;		//--detect if mutation took place
+		String[][][] ng = nextGen;	//--a copy of the current generation of genes that needs to be mutated
+		
+		String normalIndividual = new String();		///---used to store current individual string that we will examine and mutate
+		//String methylIndividual = new String(); 	///---methylation...remmed out for now...part of phase 3
+		Double myrnd; ///---random number, did this so we can see the actual random number being used to detect mutation!
 
-		//TODO
+		try {
 
-		return ng;	  
+	        for (int population_size = 0; population_size < nextGen.length; population_size++)
+	        {
+	        	for (int number_of_generations = 0; number_of_generations < nextGen[population_size].length; number_of_generations++) 
+	        	{
+	        		mutated = false;
+	        		normalIndividual = nextGen[population_size][number_of_generations][0];
+	        		//methylIndividual = nextGen[population_size][number_of_generations][1];  ///--remmed out for now since we are not doing Methylation!
+	        		
+	        		if (ShowMessage)  ///---show debugging output 
+	        			System.out.println("\tAnalyzing gene <<<[ "+normalIndividual + " ]>>>");
+	
+	                for (int c = 0; c < NUM_GENES_PER_INDIVIDUAL;c++) // normalIndividual.length(); c++)
+	                {
+	                	if (rnd==null) {  ///---We need to initialize this if not trying to test the GA function the main thread will throw an exception on
+	                		rnd = new Random();
+	                	}
+	                	myrnd = rnd.nextDouble();
+	                  
+	                	if (myrnd < MUTATION_RATE) {
+	                		mutated = true;
+	                		
+	                		if (ShowMessage) ///---show debugging output 
+	                			System.out.println("\tGenaration(["+(population_size+1)+"]["+(number_of_generations+1)+"]["+(c+1)+"]) Will mutate! --> Random #("+MUTATION_RATE+") is: "+ String.format("%1.2f", myrnd));                   
+	
+	                    	if (normalIndividual.substring(c, c + 1).equals("1")) {
+	                			normalIndividual = normalIndividual.substring(0,c)+'0'+normalIndividual.substring(c+1);
+	                		}else{
+	                			normalIndividual = normalIndividual.substring(0,c)+'1'+normalIndividual.substring(c+1);
+	                		}
+	                	}else{                	  
+		                	  ///---We do not mutate...do not touch the genetic string!
+	                	}                  
+	                }
+	                
+	                ng[population_size][number_of_generations][0] = normalIndividual;
+	                		
+	                if (ShowMessage) ///---show debugging output 
+	        			System.out.println("\t-->> "+normalIndividual + " <<--  " + (mutated ? "MUTATED!!!" : "")); System.out.println();   		
+	        	}
+	        	
+	        }
+		} catch (Exception ex) {
+			if (ShowMessage)
+				System.out.println("Error occured with array : "+ex.getMessage());
+		}
+        
+		return ng;
+		
 	}
 
 	/**
