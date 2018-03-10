@@ -393,7 +393,7 @@ public class ResearchGA {
 	 * @param nextGen
 	 * @return
 	 */
-	private String[][][] determineMethylation(String[][][] nextGen) {
+	public String[][][] determineMethylation(String[][][] nextGen) {
 		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
 
 		//TODO
@@ -406,7 +406,7 @@ public class ResearchGA {
 	 * @param nextGen
 	 * @return
 	 */
-	private String[][][] clearMethylation(String[][][] nextGen) {
+	public String[][][] clearMethylation(String[][][] nextGen) {
 		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
 
 		//TODO
@@ -419,8 +419,22 @@ public class ResearchGA {
 	 * @param genes	a string representing genes
 	 * @return a number representing the genes
 	 */
-	private Double convertGenesToNumber(String genes) {
-		return null;
+	public String expressGenetics(String genes, String meth) {
+		String eg = new String();
+		
+		for (int i = 0; i < genes.length(); i++) {
+			if (meth.substring(i, i + 1).equals("1")) {		//Flip the current gene char
+				if (genes.substring(i, i + 1).equals("1"))
+					eg = eg.concat("0");
+				else
+					eg = eg.concat("1");
+			} 
+			else
+			{
+				eg = eg.concat(genes.substring(i, i + 1));
+			}
+		}	
+		return eg;
 	}
 
 	/**
