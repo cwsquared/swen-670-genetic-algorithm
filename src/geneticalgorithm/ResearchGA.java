@@ -197,24 +197,24 @@ public class ResearchGA {
 	    String[][][] newPopulation = new String[POP_SIZE][numVariables][2];
 
 	    Random rand = new Random();
-	    String news;
+	    String genes;
 	    String meth;
 
 	    System.out.println(newPopulation.length);
 	    
 	    //Iterates through the individuals (runs POP_SIZE times)
-	    for (int a = 0; a < POP_SIZE; a++) {
+	    for (int ind = 0; ind < POP_SIZE; ind++) {
 	        //Iterates though the variables (1 time for #1-4 and 2 times for #5)
-	        for (int b = 0; b < numVariables; b++) {
-	            news = new String();
+	        for (int vb = 0; vb < numVariables; vb++) {
+	            genes = new String();
 	            meth = new String();
 	            //Builds the new strings for genes (news) and methylation (meth) by iterating "number of genes per individual" times
-	            for (int c = 0; c < NUM_GENES_PER_INDIVIDUAL; c++) {
-	            	news +=String.valueOf(rand.nextInt(2));
+	            for (int i = 0; i < NUM_GENES_PER_INDIVIDUAL; i++) {
+	            	genes +=String.valueOf(rand.nextInt(2));
 	                meth += "0";
 	            }
-	            newPopulation[a][b][0] = news;      //saves the gene string into the current array element for index [a][b]
-	            newPopulation[a][b][1] = meth;      //saves the methylation string into the current array element for index [a][b]
+	            newPopulation[ind][vb][0] = genes;      //saves the gene string into the current array element for index [a][b]
+	            newPopulation[ind][vb][1] = meth;      //saves the methylation string into the current array element for index [a][b]
 	        }
 	    }
 	    return newPopulation;
