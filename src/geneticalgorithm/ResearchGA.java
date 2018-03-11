@@ -235,7 +235,7 @@ public class ResearchGA {
 			//Loop to determine the sum of the overall fitness
 			for(int ind = 0; ind < currGen.length; ind++){ 
 				for(int vb = 0; vb < currGen[ind].length; vb++){
-					sumFitness = sumFitness + currentFunction.getFitness(expressGenetics(currGen[ind][vb][0],currGen[ind][vb][1]));
+					sumFitness = sumFitness + currentFunction.getFitness(currGen[ind][vb][0]);
 				}
 			}
 //			System.out.print("Sum of fitness for this generation is " + sumFitness + "\n");
@@ -249,7 +249,7 @@ public class ResearchGA {
 				int selectionIndex = -1;
 				while(selectionValue >= 0.0){
 					selectionIndex = selectionIndex + 1;
-					selectionValue = selectionValue - currentFunction.getFitness(expressGenetics(currGen[selectionIndex][b][0],currGen[selectionIndex][b][1]));
+					selectionValue = selectionValue - currentFunction.getFitness(currGen[selectionIndex][b][0]);
 				}		
 				selectPairs[x][0] = selectionIndex; 
 //				System.out.print("Selection value (After) is " + selectionValue + "\n");
@@ -262,7 +262,7 @@ public class ResearchGA {
 		        while (selectionValue >= 0.0)
 		        {
 		            selectionIndex = selectionIndex + 1;
-		            selectionValue = selectionValue - currentFunction.getFitness(expressGenetics(currGen[selectionIndex][b][0],currGen[selectionIndex][b][1]));
+		            selectionValue = selectionValue - currentFunction.getFitness(currGen[selectionIndex][b][0]);
 		        }  
 //		        System.out.print("Selection value (After) is " + selectionValue + "\n");
 		        selectPairs[x][1] = selectionIndex; 	
@@ -292,9 +292,9 @@ public class ResearchGA {
 		for(int a = 0; a < nextGen.length / 2; a++){ 
 			for(int b = 0; b < nextGen[a].length; b++){
 				selectedIndividual1[0] = nextGen[pairs[a][0]][b][0];	//genes
-				selectedIndividual1[1] = nextGen[pairs[a][0]][b][1];	//methylation
+				//selectedIndividual1[1] = nextGen[pairs[a][0]][b][1];	//methylation
 				selectedIndividual2[0] = nextGen[pairs[a][1]][b][0];	//genes
-				selectedIndividual2[1] = nextGen[pairs[a][1]][b][1];	//methylation
+				//selectedIndividual2[1] = nextGen[pairs[a][1]][b][1];	//methylation
 //				System.out.println("Pairs: " + selectedIndividual1 + "|" + selectedIndividual2);
 				
 				//** Crossover Implementation
@@ -304,23 +304,23 @@ public class ResearchGA {
 				
 				//First Individual
 				newIndividual1[0] = selectedIndividual1[0].substring(0, crossoverPoint).concat(
-						selectedIndividual2[0].substring(crossoverPoint, nextGen[0][0].length));	//genes
-				newIndividual1[1] = selectedIndividual1[1].substring(0, crossoverPoint).concat(
-						selectedIndividual2[1].substring(crossoverPoint, nextGen[0][0].length));	//methylation
+						selectedIndividual2[0].substring(crossoverPoint, getNumberGenesPerIndividual()));	//genes
+				//newIndividual1[1] = selectedIndividual1[1].substring(0, crossoverPoint).concat(
+				//		selectedIndividual2[1].substring(crossoverPoint, getNumberGenesPerIndividual()));	//methylation
 		        
 				//Second Individual
 		        newIndividual2[0] = selectedIndividual2[0].substring(0, crossoverPoint).concat(
-		                selectedIndividual1[0].substring(crossoverPoint, nextGen[0][0].length));	//genes
-		        newIndividual2[1] = selectedIndividual2[1].substring(0, crossoverPoint).concat(
-		                selectedIndividual1[1].substring(crossoverPoint, nextGen[0][0].length));	//methylation
+		                selectedIndividual1[0].substring(crossoverPoint, getNumberGenesPerIndividual()));	//genes
+		        //newIndividual2[1] = selectedIndividual2[1].substring(0, crossoverPoint).concat(
+		        //        selectedIndividual1[1].substring(crossoverPoint, getNumberGenesPerIndividual()));	//methylation
 		        
 //		        System.out.println("First Individual: " + newIndividual1 + " |  Second Individual: " + newIndividual2 + "\n");
 		        
 		        //Add new individuals to generation
 		        ng[a*2][b][0] = newIndividual1[0];		//genes
-		        ng[a*2][b][1] = newIndividual1[1];		//methylation
+		        //ng[a*2][b][1] = newIndividual1[1];		//methylation
 		        ng[a*2+1][b][0] = newIndividual2[0];	//genes
-		        ng[a*2+1][b][1] = newIndividual2[1];	//methylation
+		        //ng[a*2+1][b][1] = newIndividual2[1];	//methylation
 			}
 		}	
 		return ng;
@@ -458,13 +458,13 @@ public class ResearchGA {
 			String individual = "";
 			
 			for (int vb = 0; vb < currPop[ind].length; vb++) {
-				individual = individual.concat(expressGenetics(currPop[ind][vb][0],currPop[ind][vb][1]) + ",");
+				individual = individual.concat(currPop[ind][vb][0] + ",");
 			}
 			
 			for (int vb = 0; vb < currPop[ind].length; vb++) {
-				individual = individual.concat(currentFunction.convertGenesToNumber(expressGenetics(currPop[ind][vb][0],currPop[ind][vb][1])) + ",");
+				individual = individual.concat(currentFunction.convertGenesToNumber(currPop[ind][vb][0]) + ",");
 			} 
-			individual = individual.concat(currentFunction.getFitness(expressGenetics(currPop[ind][0][0],currPop[ind][0][1])).toString());
+			individual = individual.concat(currentFunction.getFitness(currPop[ind][0][0]).toString());
 		
 			System.out.println(individual);
 		}
