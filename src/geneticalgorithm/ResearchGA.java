@@ -145,7 +145,7 @@ public class ResearchGA {
 				break;
 			}
 
-			// Intialize random number generator based on date
+			// Initialize random number generator based on date
 			ga.rnd = new Random();
 			Calendar cal = Calendar.getInstance();
 			SimpleDateFormat sdf = new SimpleDateFormat("ssMMmmyydd");
@@ -154,15 +154,16 @@ public class ResearchGA {
 
 			// Initialize the population
 			ga.population = ga.initialization(ga.currentFunction.getVariableCount());
+			System.out.println("Initial generation");   //Header for the output
 			ga.printGeneration(ga.population);
 			int[][] pairs;
 			for (int gen = 1; gen <= ga.NUM_OF_GENERATIONS; gen++) {
-				//CW: Just added the method calls in the order the overview doc calls for them
 				ga.nextGen = ga.determineMethylation(ga.population);
 				pairs = ga.performSelection(ga.nextGen);
 				ga.nextGen = ga.performCrossover(ga.nextGen, pairs);
 				ga.nextGen = ga.performMutation(ga.nextGen);
-				//ga.printGeneration(ga.nextGen);
+				System.out.println("\n Generation" + gen);
+				ga.printGeneration(ga.nextGen);
 				ga.nextGen = ga.clearMethylation(ga.nextGen);
 				ga.population = ga.nextGen;
 			}
@@ -196,24 +197,24 @@ public class ResearchGA {
 	    String[][][] newPopulation = new String[POP_SIZE][numVariables][2];
 
 	    Random rand = new Random();
-	    String news;
+	    String genes;
 	    String meth;
 
 	    System.out.println(newPopulation.length);
 	    
 	    //Iterates through the individuals (runs POP_SIZE times)
-	    for (int a = 0; a < POP_SIZE; a++) {
+	    for (int ind = 0; ind < POP_SIZE; ind++) {
 	        //Iterates though the variables (1 time for #1-4 and 2 times for #5)
-	        for (int b = 0; b < numVariables; b++) {
-	            news = new String();
+	        for (int vb = 0; vb < numVariables; vb++) {
+	            genes = new String();
 	            meth = new String();
 	            //Builds the new strings for genes (news) and methylation (meth) by iterating "number of genes per individual" times
-	            for (int c = 0; c < NUM_GENES_PER_INDIVIDUAL; c++) {
-	            	news +=String.valueOf(rand.nextInt(2));
+	            for (int i = 0; i < NUM_GENES_PER_INDIVIDUAL; i++) {
+	            	genes +=String.valueOf(rand.nextInt(2));
 	                meth += "0";
 	            }
-	            newPopulation[a][b][0] = news;      //saves the gene string into the current array element for index [a][b]
-	            newPopulation[a][b][1] = meth;      //saves the methylation string into the current array element for index [a][b]
+	            newPopulation[ind][vb][0] = genes;      //saves the gene string into the current array element for index [a][b]
+	            newPopulation[ind][vb][1] = meth;      //saves the methylation string into the current array element for index [a][b]
 	        }
 	    }
 	    return newPopulation;
@@ -234,9 +235,9 @@ public class ResearchGA {
 			double selectionValue = 0.0;
 			
 			//Loop to determine the sum of the overall fitness
-			for(int a = 0; a < currGen.length; a++){ 
-				for(int b = 0; b < currGen[a].length; b++){
-					sumFitness = sumFitness + getCurrentFunction().getFitness(currGen[a][b][0]);
+			for(int ind = 0; ind < currGen.length; ind++){ 
+				for(int vb = 0; vb < currGen[ind].length; vb++){
+					sumFitness = sumFitness + currentFunction.getFitness(expressGenetics(currGen[ind][vb][0],currGen[ind][vb][1]));
 				}
 			}
 //			System.out.print("Sum of fitness for this generation is " + sumFitness + "\n");
@@ -250,7 +251,7 @@ public class ResearchGA {
 				int selectionIndex = -1;
 				while(selectionValue >= 0.0){
 					selectionIndex = selectionIndex + 1;
-					selectionValue = selectionValue - getCurrentFunction().getFitness(currGen[selectionIndex][b][0]);
+					selectionValue = selectionValue - currentFunction.getFitness(expressGenetics(currGen[selectionIndex][b][0],currGen[selectionIndex][b][1]));
 				}		
 				selectPairs[x][0] = selectionIndex; 
 //				System.out.print("Selection value (After) is " + selectionValue + "\n");
@@ -263,7 +264,7 @@ public class ResearchGA {
 		        while (selectionValue >= 0.0)
 		        {
 		            selectionIndex = selectionIndex + 1;
-		            selectionValue = selectionValue - getCurrentFunction().getFitness(currGen[selectionIndex][b][0]);
+		            selectionValue = selectionValue - currentFunction.getFitness(expressGenetics(currGen[selectionIndex][b][0],currGen[selectionIndex][b][1]));
 		        }  
 //		        System.out.print("Selection value (After) is " + selectionValue + "\n");
 		        selectPairs[x][1] = selectionIndex; 	
@@ -285,15 +286,17 @@ public class ResearchGA {
 	public String[][][] performCrossover(String[][][] nextGen,int[][] pairs) {
 		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
 
-		String selectedIndividual1 = new String();
-		String selectedIndividual2 = new String();
-		String newIndividual1 = new String();
-		String newIndividual2 = new String();
+		String[] selectedIndividual1 = new String[2];
+		String[] selectedIndividual2 = new String[2];
+		String[] newIndividual1 = new String[2];
+		String[] newIndividual2 = new String[2];
 		
 		for(int a = 0; a < nextGen.length / 2; a++){ 
 			for(int b = 0; b < nextGen[a].length; b++){
-				selectedIndividual1 = nextGen[pairs[a][0]][b][0];
-				selectedIndividual2 = nextGen[pairs[a][1]][b][0];
+				selectedIndividual1[0] = nextGen[pairs[a][0]][b][0];	//genes
+				selectedIndividual1[1] = nextGen[pairs[a][0]][b][1];	//methylation
+				selectedIndividual2[0] = nextGen[pairs[a][1]][b][0];	//genes
+				selectedIndividual2[1] = nextGen[pairs[a][1]][b][1];	//methylation
 //				System.out.println("Pairs: " + selectedIndividual1 + "|" + selectedIndividual2);
 				
 				//** Crossover Implementation
@@ -302,18 +305,24 @@ public class ResearchGA {
 				
 				
 				//First Individual
-				newIndividual1 = selectedIndividual1.substring(0, crossoverPoint).concat(
-						selectedIndividual2.substring(crossoverPoint, getNumberGenesPerIndividual()));
+				newIndividual1[0] = selectedIndividual1[0].substring(0, crossoverPoint).concat(
+						selectedIndividual2[0].substring(crossoverPoint, nextGen[0][0].length));	//genes
+				newIndividual1[1] = selectedIndividual1[1].substring(0, crossoverPoint).concat(
+						selectedIndividual2[1].substring(crossoverPoint, nextGen[0][0].length));	//methylation
 		        
 				//Second Individual
-		        newIndividual2 = selectedIndividual2.substring(0, crossoverPoint).concat(
-		                selectedIndividual1.substring(crossoverPoint, getNumberGenesPerIndividual()));	
+		        newIndividual2[0] = selectedIndividual2[0].substring(0, crossoverPoint).concat(
+		                selectedIndividual1[0].substring(crossoverPoint, nextGen[0][0].length));	//genes
+		        newIndividual2[1] = selectedIndividual2[1].substring(0, crossoverPoint).concat(
+		                selectedIndividual1[1].substring(crossoverPoint, nextGen[0][0].length));	//methylation
 		        
 //		        System.out.println("First Individual: " + newIndividual1 + " |  Second Individual: " + newIndividual2 + "\n");
 		        
 		        //Add new individuals to generation
-		        ng[a*2][b][0] = newIndividual1;
-		        ng[a*2+1][b][0] = newIndividual2;
+		        ng[a*2][b][0] = newIndividual1[0];		//genes
+		        ng[a*2][b][1] = newIndividual1[1];		//methylation
+		        ng[a*2+1][b][0] = newIndividual2[0];	//genes
+		        ng[a*2+1][b][1] = newIndividual2[1];	//methylation
 			}
 		}	
 		return ng;
@@ -331,18 +340,16 @@ public class ResearchGA {
 		String[][][] ng = nextGen;	//--a copy of the current generation of genes that needs to be mutated
 		
 		String normalIndividual = new String();		///---used to store current individual string that we will examine and mutate
-		//String methylIndividual = new String(); 	///---methylation...remmed out for now...part of phase 3
 		Double myrnd; ///---random number, did this so we can see the actual random number being used to detect mutation!
 
 		try {
 
-	        for (int population_size = 0; population_size < nextGen.length; population_size++)
+	        for (int individual = 0; individual < nextGen.length; individual++)
 	        {
-	        	for (int number_of_generations = 0; number_of_generations < nextGen[population_size].length; number_of_generations++) 
+	        	for (int number_of_variables = 0; number_of_variables < nextGen[individual].length; number_of_variables++) 
 	        	{
 	        		mutated = false;
-	        		normalIndividual = nextGen[population_size][number_of_generations][0];
-	        		//methylIndividual = nextGen[population_size][number_of_generations][1];  ///--remmed out for now since we are not doing Methylation!
+	        		normalIndividual = nextGen[individual][number_of_variables][0];
 	        		
 	        		if (ShowMessage)  ///---show debugging output 
 	        			System.out.println("\tAnalyzing gene <<<[ "+normalIndividual + " ]>>>");
@@ -358,19 +365,17 @@ public class ResearchGA {
 	                		mutated = true;
 	                		
 	                		if (ShowMessage) ///---show debugging output 
-	                			System.out.println("\tGenaration(["+(population_size+1)+"]["+(number_of_generations+1)+"]["+(c+1)+"]) Will mutate! --> Random #("+MUTATION_RATE+") is: "+ String.format("%1.2f", myrnd));                   
+	                			System.out.println("\tGeneration(["+(individual+1)+"]["+(number_of_variables+1)+"]["+(c+1)+"]) Will mutate! --> Random #("+MUTATION_RATE+") is: "+ String.format("%1.2f", myrnd));                   
 	
 	                    	if (normalIndividual.substring(c, c + 1).equals("1")) {
 	                			normalIndividual = normalIndividual.substring(0,c)+'0'+normalIndividual.substring(c+1);
 	                		}else{
 	                			normalIndividual = normalIndividual.substring(0,c)+'1'+normalIndividual.substring(c+1);
 	                		}
-	                	}else{                	  
-		                	  ///---We do not mutate...do not touch the genetic string!
 	                	}                  
 	                }
 	                
-	                ng[population_size][number_of_generations][0] = normalIndividual;
+	                ng[individual][number_of_variables][0] = normalIndividual;
 	                		
 	                if (ShowMessage) ///---show debugging output 
 	        			System.out.println("\t-->> "+normalIndividual + " <<--  " + (mutated ? "MUTATED!!!" : "")); System.out.println();   		
@@ -393,8 +398,8 @@ public class ResearchGA {
 	 * @param nextGen
 	 * @return
 	 */
-	private String[][][] determineMethylation(String[][][] nextGen) {
-		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
+	public String[][][] determineMethylation(String[][][] nextGen) {
+		String[][][] ng = nextGen;
 
 		//TODO
 
@@ -406,10 +411,19 @@ public class ResearchGA {
 	 * @param nextGen
 	 * @return
 	 */
-	private String[][][] clearMethylation(String[][][] nextGen) {
-		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
+	public String[][][] clearMethylation(String[][][] nextGen) {
+		String[][][] ng = nextGen;
 
-		//TODO
+		for (int ind = 0; ind < ng.length; ind++) {
+			for (int vb = 0; vb < ng[ind].length; vb++) {
+				String newMeth = new String();
+				for (int i = 0; i < ng[ind][vb].length; i++) {
+					newMeth = newMeth.concat("0");
+				}
+				
+				ng[ind][vb][1] = newMeth;
+			}
+		}
 
 		return ng;
 	}
@@ -419,8 +433,22 @@ public class ResearchGA {
 	 * @param genes	a string representing genes
 	 * @return a number representing the genes
 	 */
-	private Double convertGenesToNumber(String genes) {
-		return null;
+	public String expressGenetics(String genes, String meth) {
+		String eg = new String();
+		
+		for (int i = 0; i < genes.length(); i++) {
+			if (meth.substring(i, i + 1).equals("1")) {		//Flip the current gene char
+				if (genes.substring(i, i + 1).equals("1"))
+					eg = eg.concat("0");
+				else
+					eg = eg.concat("1");
+			} 
+			else
+			{
+				eg = eg.concat(genes.substring(i, i + 1));
+			}
+		}	
+		return eg;
 	}
 
 	/**
@@ -428,14 +456,27 @@ public class ResearchGA {
 	 * @param currPop	array representing the current population
 	 */
 	private void printGeneration(String[][][] currPop) {
-		//TODO Need to modify to actually perform function. Currently just spitting out arguments
 
-		System.out.println(this.currentFunction.getClass().getName() + ": " + 
+		for (int ind = 0; ind < currPop.length; ) {
+			String individual = "";
+			for (int vb = 0; vb < currPop[ind].length; vb++) {
+				individual = individual.concat(expressGenetics(currPop[ind][vb][0],currPop[ind][vb][1]) + ",");
+			}
+			for (int vb = 0; vb < currPop[ind].length; vb++) {
+				individual = individual.concat(currentFunction.convertGenesToNumber(expressGenetics(currPop[ind][vb][0],currPop[ind][vb][1])) + ",");
+			} 
+			individual = individual.concat(currentFunction.getFitness(expressGenetics(currPop[ind][0][0],currPop[ind][0][1])).toString());
+		
+			System.out.println(individual);
+		}
+
+		/*System.out.println(this.currentFunction.getClass().getName() + ": " + 
 				this.POP_SIZE + ", " + 
 				this.NUM_OF_GENERATIONS + ", " + 
 				this.NUM_GENES_PER_INDIVIDUAL + ", " + 
 				this.MUTATION_RATE + ", " + 
 				this.METHYLATION_COUNT);
+		*/
 
 	}
 
