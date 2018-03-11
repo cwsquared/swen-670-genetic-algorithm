@@ -154,7 +154,7 @@ public class ResearchGA {
 
 			// Initialize the population
 			ga.population = ga.initialization(ga.currentFunction.getVariableCount());
-			System.out.println("Initial generation");   //Header for the output
+			System.out.println("\nInitial generation");   //Header for the output
 			ga.printGeneration(ga.population);
 			int[][] pairs;
 			for (int gen = 1; gen <= ga.NUM_OF_GENERATIONS; gen++) {
@@ -162,7 +162,7 @@ public class ResearchGA {
 				pairs = ga.performSelection(ga.nextGen);
 				ga.nextGen = ga.performCrossover(ga.nextGen, pairs);
 				ga.nextGen = ga.performMutation(ga.nextGen);
-				System.out.println("\n Generation" + gen);
+				System.out.println("Generation" + gen);
 				ga.printGeneration(ga.nextGen);
 				ga.nextGen = ga.clearMethylation(ga.nextGen);
 				ga.population = ga.nextGen;
@@ -376,13 +376,13 @@ public class ResearchGA {
 	                ng[individual][number_of_variables][0] = normalIndividual;
 	                		
 	                if (ShowMessage) ///---show debugging output 
-	        			System.out.println("\t-->> "+normalIndividual + " <<--  " + (mutated ? "MUTATED!!!" : "")); System.out.println();   		
+	        			System.out.println("\t-->> "+normalIndividual + " <<--  " + (mutated ? "MUTATED!!!" : ""));	
 	        	}
 	        	
 	        }
 		} catch (Exception ex) {
 			if (ShowMessage)
-				System.out.println("Error occured with array : "+ex.getMessage());
+				System.out.println("Error occured with array : "+ ex.getMessage());
 		}
         
 		return ng;
@@ -458,13 +458,10 @@ public class ResearchGA {
 			String individual = "";
 			
 			for (int vb = 0; vb < currPop[ind].length; vb++) {
-				individual = individual.concat(currPop[ind][vb][0] + ",");
+				individual += currPop[ind][vb][0] + ",";
+				individual += currentFunction.convertGenesToNumber(currPop[ind][vb][0]) + ",";
 			}
-			
-			for (int vb = 0; vb < currPop[ind].length; vb++) {
-				individual = individual.concat(currentFunction.convertGenesToNumber(currPop[ind][vb][0]) + ",");
-			} 
-			individual = individual.concat(currentFunction.getFitness(currPop[ind][0][0]).toString());
+			individual += currentFunction.getFitness(currPop[ind][0][0]).toString();
 		
 			System.out.println(individual);
 		}
