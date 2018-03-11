@@ -456,14 +456,27 @@ public class ResearchGA {
 	 * @param currPop	array representing the current population
 	 */
 	private void printGeneration(String[][][] currPop) {
-		//TODO Need to modify to actually perform function. Currently just spitting out arguments
 
-		System.out.println(this.currentFunction.getClass().getName() + ": " + 
+		for (int ind = 0; ind < currPop.length; ) {
+			String individual = "";
+			for (int vb = 0; vb < currPop[ind].length; vb++) {
+				individual = individual.concat(expressGenetics(currPop[ind][vb][0],currPop[ind][vb][1]) + ",");
+			}
+			for (int vb = 0; vb < currPop[ind].length; vb++) {
+				individual = individual.concat(currentFunction.convertGenesToNumber(expressGenetics(currPop[ind][vb][0],currPop[ind][vb][1])) + ",");
+			} 
+			individual = individual.concat(currentFunction.getFitness(expressGenetics(currPop[ind][0][0],currPop[ind][0][1])).toString());
+		
+			System.out.println(individual);
+		}
+
+		/*System.out.println(this.currentFunction.getClass().getName() + ": " + 
 				this.POP_SIZE + ", " + 
 				this.NUM_OF_GENERATIONS + ", " + 
 				this.NUM_GENES_PER_INDIVIDUAL + ", " + 
 				this.MUTATION_RATE + ", " + 
 				this.METHYLATION_COUNT);
+		*/
 
 	}
 
