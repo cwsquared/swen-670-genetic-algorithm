@@ -162,7 +162,7 @@ public class ResearchGA {
 				pairs = ga.performSelection(ga.nextGen);
 				ga.nextGen = ga.performCrossover(ga.nextGen, pairs);
 				ga.nextGen = ga.performMutation(ga.nextGen);
-				System.out.println("Generation" + gen);
+				System.out.println("Generation " + gen);
 				ga.printGeneration(ga.nextGen);
 				ga.nextGen = ga.clearMethylation(ga.nextGen);
 				ga.population = ga.nextGen;
@@ -301,7 +301,6 @@ public class ResearchGA {
 				int crossoverPoint = rnd.nextInt(getNumberGenesPerIndividual() - 1);   
 //				System.out.print("Crossover point " + crossoverPoint + "\n");
 				
-				
 				//First Individual
 				newIndividual1[0] = selectedIndividual1[0].substring(0, crossoverPoint).concat(
 						selectedIndividual2[0].substring(crossoverPoint, getNumberGenesPerIndividual()));	//genes
@@ -331,26 +330,18 @@ public class ResearchGA {
 	 * @param nextGen
 	 * @return
 	 */
-	public String[][][] performMutation(String[][][] nextGen, boolean...showMsg) { ///---modified the argument to allow for additional parameter. I use this for debuging
+	public String[][][] performMutation(String[][][] nextGen) {
 		
-		boolean ShowMessage = showMsg.length > 0 ? showMsg[0] : false;
-		boolean mutated =false;		//--detect if mutation took place
 		String[][][] ng = nextGen;	//--a copy of the current generation of genes that needs to be mutated
 		
 		String normalIndividual = new String();		///---used to store current individual string that we will examine and mutate
 		Double myrnd; ///---random number, did this so we can see the actual random number being used to detect mutation!
 
-		try {
-
 	        for (int individual = 0; individual < nextGen.length; individual++)
 	        {
 	        	for (int number_of_variables = 0; number_of_variables < nextGen[individual].length; number_of_variables++) 
 	        	{
-	        		mutated = false;
 	        		normalIndividual = nextGen[individual][number_of_variables][0];
-	        		
-	        		if (ShowMessage)  ///---show debugging output 
-	        			System.out.println("\tAnalyzing gene <<<[ "+normalIndividual + " ]>>>");
 	
 	                for (int c = 0; c < NUM_GENES_PER_INDIVIDUAL;c++) // normalIndividual.length(); c++)
 	                {
@@ -360,11 +351,6 @@ public class ResearchGA {
 	                	myrnd = rnd.nextDouble();
 	                  
 	                	if (myrnd < MUTATION_RATE) {
-	                		mutated = true;
-	                		
-	                		if (ShowMessage) ///---show debugging output 
-	                			System.out.println("\tGeneration(["+(individual+1)+"]["+(number_of_variables+1)+"]["+(c+1)+"]) Will mutate! --> Random #("+MUTATION_RATE+") is: "+ String.format("%1.2f", myrnd));                   
-	
 	                    	if (normalIndividual.substring(c, c + 1).equals("1")) {
 	                			normalIndividual = normalIndividual.substring(0,c)+'0'+normalIndividual.substring(c+1);
 	                		}else{
@@ -374,16 +360,9 @@ public class ResearchGA {
 	                }
 	                
 	                ng[individual][number_of_variables][0] = normalIndividual;
-	                		
-	                if (ShowMessage) ///---show debugging output 
-	        			System.out.println("\t-->> "+normalIndividual + " <<--  " + (mutated ? "MUTATED!!!" : ""));	
 	        	}
 	        	
 	        }
-		} catch (Exception ex) {
-			if (ShowMessage)
-				System.out.println("Error occured with array : "+ ex.getMessage());
-		}
         
 		return ng;
 		
@@ -454,17 +433,24 @@ public class ResearchGA {
 	 * @param currPop	array representing the current population
 	 */
 	private void printGeneration(String[][][] currPop) {
+		Double averageFitness = 0.0;
 		for (int ind = 0; ind < currPop.length; ind++) {
 			String individual = "";
 			
 			for (int vb = 0; vb < currPop[ind].length; vb++) {
 				individual += currPop[ind][vb][0] + ",";
+			}
+			
+			for (int vb = 0; vb < currPop[ind].length; vb++) {
 				individual += currentFunction.convertGenesToNumber(currPop[ind][vb][0]) + ",";
 			}
+			
 			individual += currentFunction.getFitness(currPop[ind][0][0]).toString();
-		
+			averageFitness = averageFitness + currentFunction.getFitness(currPop[ind][0][0]);
+			
 			System.out.println(individual);
 		}
+		System.out.println("Average fitness = " + (averageFitness / currPop.length));
 	}
 
 	/**
