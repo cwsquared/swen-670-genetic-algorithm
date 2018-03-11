@@ -304,15 +304,15 @@ public class ResearchGA {
 				
 				//First Individual
 				newIndividual1[0] = selectedIndividual1[0].substring(0, crossoverPoint).concat(
-						selectedIndividual2[0].substring(crossoverPoint, nextGen[0][0].length));	//genes
+						selectedIndividual2[0].substring(crossoverPoint, getNumberGenesPerIndividual()));	//genes
 				newIndividual1[1] = selectedIndividual1[1].substring(0, crossoverPoint).concat(
-						selectedIndividual2[1].substring(crossoverPoint, nextGen[0][0].length));	//methylation
+						selectedIndividual2[1].substring(crossoverPoint, getNumberGenesPerIndividual()));	//methylation
 		        
 				//Second Individual
 		        newIndividual2[0] = selectedIndividual2[0].substring(0, crossoverPoint).concat(
-		                selectedIndividual1[0].substring(crossoverPoint, nextGen[0][0].length));	//genes
+		                selectedIndividual1[0].substring(crossoverPoint, getNumberGenesPerIndividual()));	//genes
 		        newIndividual2[1] = selectedIndividual2[1].substring(0, crossoverPoint).concat(
-		                selectedIndividual1[1].substring(crossoverPoint, nextGen[0][0].length));	//methylation
+		                selectedIndividual1[1].substring(crossoverPoint, getNumberGenesPerIndividual()));	//methylation
 		        
 //		        System.out.println("First Individual: " + newIndividual1 + " |  Second Individual: " + newIndividual2 + "\n");
 		        
