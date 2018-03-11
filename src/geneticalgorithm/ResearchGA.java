@@ -394,7 +394,7 @@ public class ResearchGA {
 	 * @return
 	 */
 	public String[][][] determineMethylation(String[][][] nextGen) {
-		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
+		String[][][] ng = nextGen;
 
 		//TODO
 
@@ -407,9 +407,18 @@ public class ResearchGA {
 	 * @return
 	 */
 	public String[][][] clearMethylation(String[][][] nextGen) {
-		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
+		String[][][] ng = nextGen;
 
-		//TODO
+		for (int ind = 0; ind < ng.length; ind++) {
+			for (int vb = 0; vb < ng[ind].length; vb++) {
+				String newMeth = new String();
+				for (int i = 0; i < ng[ind][vb].length; i++) {
+					newMeth = newMeth.concat("0");
+				}
+				
+				ng[ind][vb][1] = newMeth;
+			}
+		}
 
 		return ng;
 	}
