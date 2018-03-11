@@ -340,18 +340,16 @@ public class ResearchGA {
 		String[][][] ng = nextGen;	//--a copy of the current generation of genes that needs to be mutated
 		
 		String normalIndividual = new String();		///---used to store current individual string that we will examine and mutate
-		//String methylIndividual = new String(); 	///---methylation...remmed out for now...part of phase 3
 		Double myrnd; ///---random number, did this so we can see the actual random number being used to detect mutation!
 
 		try {
 
-	        for (int population_size = 0; population_size < nextGen.length; population_size++)
+	        for (int individual = 0; individual < nextGen.length; individual++)
 	        {
-	        	for (int number_of_generations = 0; number_of_generations < nextGen[population_size].length; number_of_generations++) 
+	        	for (int number_of_variables = 0; number_of_variables < nextGen[individual].length; number_of_variables++) 
 	        	{
 	        		mutated = false;
-	        		normalIndividual = nextGen[population_size][number_of_generations][0];
-	        		//methylIndividual = nextGen[population_size][number_of_generations][1];  ///--remmed out for now since we are not doing Methylation!
+	        		normalIndividual = nextGen[individual][number_of_variables][0];
 	        		
 	        		if (ShowMessage)  ///---show debugging output 
 	        			System.out.println("\tAnalyzing gene <<<[ "+normalIndividual + " ]>>>");
@@ -367,19 +365,17 @@ public class ResearchGA {
 	                		mutated = true;
 	                		
 	                		if (ShowMessage) ///---show debugging output 
-	                			System.out.println("\tGenaration(["+(population_size+1)+"]["+(number_of_generations+1)+"]["+(c+1)+"]) Will mutate! --> Random #("+MUTATION_RATE+") is: "+ String.format("%1.2f", myrnd));                   
+	                			System.out.println("\tGeneration(["+(individual+1)+"]["+(number_of_variables+1)+"]["+(c+1)+"]) Will mutate! --> Random #("+MUTATION_RATE+") is: "+ String.format("%1.2f", myrnd));                   
 	
 	                    	if (normalIndividual.substring(c, c + 1).equals("1")) {
 	                			normalIndividual = normalIndividual.substring(0,c)+'0'+normalIndividual.substring(c+1);
 	                		}else{
 	                			normalIndividual = normalIndividual.substring(0,c)+'1'+normalIndividual.substring(c+1);
 	                		}
-	                	}else{                	  
-		                	  ///---We do not mutate...do not touch the genetic string!
 	                	}                  
 	                }
 	                
-	                ng[population_size][number_of_generations][0] = normalIndividual;
+	                ng[individual][number_of_variables][0] = normalIndividual;
 	                		
 	                if (ShowMessage) ///---show debugging output 
 	        			System.out.println("\t-->> "+normalIndividual + " <<--  " + (mutated ? "MUTATED!!!" : "")); System.out.println();   		
