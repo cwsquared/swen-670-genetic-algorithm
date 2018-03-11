@@ -235,9 +235,9 @@ public class ResearchGA {
 			double selectionValue = 0.0;
 			
 			//Loop to determine the sum of the overall fitness
-			for(int a = 0; a < currGen.length; a++){ 
-				for(int b = 0; b < currGen[a].length; b++){
-					sumFitness = sumFitness + getCurrentFunction().getFitness(currGen[a][b][0]);
+			for(int ind = 0; ind < currGen.length; ind++){ 
+				for(int vb = 0; vb < currGen[ind].length; vb++){
+					sumFitness = sumFitness + currentFunction.getFitness(expressGenetics(currGen[ind][vb][0],currGen[ind][vb][1]));
 				}
 			}
 //			System.out.print("Sum of fitness for this generation is " + sumFitness + "\n");
@@ -251,7 +251,7 @@ public class ResearchGA {
 				int selectionIndex = -1;
 				while(selectionValue >= 0.0){
 					selectionIndex = selectionIndex + 1;
-					selectionValue = selectionValue - getCurrentFunction().getFitness(currGen[selectionIndex][b][0]);
+					selectionValue = selectionValue - currentFunction.getFitness(expressGenetics(currGen[selectionIndex][b][0],currGen[selectionIndex][b][1]));
 				}		
 				selectPairs[x][0] = selectionIndex; 
 //				System.out.print("Selection value (After) is " + selectionValue + "\n");
@@ -264,7 +264,7 @@ public class ResearchGA {
 		        while (selectionValue >= 0.0)
 		        {
 		            selectionIndex = selectionIndex + 1;
-		            selectionValue = selectionValue - getCurrentFunction().getFitness(currGen[selectionIndex][b][0]);
+		            selectionValue = selectionValue - currentFunction.getFitness(expressGenetics(currGen[selectionIndex][b][0],currGen[selectionIndex][b][1]));
 		        }  
 //		        System.out.print("Selection value (After) is " + selectionValue + "\n");
 		        selectPairs[x][1] = selectionIndex; 	
