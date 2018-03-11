@@ -145,7 +145,7 @@ public class ResearchGA {
 				break;
 			}
 
-			// Intialize random number generator based on date
+			// Initialize random number generator based on date
 			ga.rnd = new Random();
 			Calendar cal = Calendar.getInstance();
 			SimpleDateFormat sdf = new SimpleDateFormat("ssMMmmyydd");
@@ -154,15 +154,16 @@ public class ResearchGA {
 
 			// Initialize the population
 			ga.population = ga.initialization(ga.currentFunction.getVariableCount());
+			System.out.println("Initial generation");   //Header for the output
 			ga.printGeneration(ga.population);
 			int[][] pairs;
 			for (int gen = 1; gen <= ga.NUM_OF_GENERATIONS; gen++) {
-				//CW: Just added the method calls in the order the overview doc calls for them
 				ga.nextGen = ga.determineMethylation(ga.population);
 				pairs = ga.performSelection(ga.nextGen);
 				ga.nextGen = ga.performCrossover(ga.nextGen, pairs);
 				ga.nextGen = ga.performMutation(ga.nextGen);
-				//ga.printGeneration(ga.nextGen);
+				System.out.println("\n Generation" + gen);
+				ga.printGeneration(ga.nextGen);
 				ga.nextGen = ga.clearMethylation(ga.nextGen);
 				ga.population = ga.nextGen;
 			}
