@@ -199,8 +199,6 @@ public class ResearchGA {
 	    Random rand = new Random();
 	    String genes;
 	    String meth;
-
-	    System.out.println(newPopulation.length);
 	    
 	    //Iterates through the individuals (runs POP_SIZE times)
 	    for (int ind = 0; ind < POP_SIZE; ind++) {
@@ -456,12 +454,13 @@ public class ResearchGA {
 	 * @param currPop	array representing the current population
 	 */
 	private void printGeneration(String[][][] currPop) {
-
-		for (int ind = 0; ind < currPop.length; ) {
+		for (int ind = 0; ind < currPop.length; ind++) {
 			String individual = "";
+			
 			for (int vb = 0; vb < currPop[ind].length; vb++) {
 				individual = individual.concat(expressGenetics(currPop[ind][vb][0],currPop[ind][vb][1]) + ",");
 			}
+			
 			for (int vb = 0; vb < currPop[ind].length; vb++) {
 				individual = individual.concat(currentFunction.convertGenesToNumber(expressGenetics(currPop[ind][vb][0],currPop[ind][vb][1])) + ",");
 			} 
@@ -469,15 +468,6 @@ public class ResearchGA {
 		
 			System.out.println(individual);
 		}
-
-		/*System.out.println(this.currentFunction.getClass().getName() + ": " + 
-				this.POP_SIZE + ", " + 
-				this.NUM_OF_GENERATIONS + ", " + 
-				this.NUM_GENES_PER_INDIVIDUAL + ", " + 
-				this.MUTATION_RATE + ", " + 
-				this.METHYLATION_COUNT);
-		*/
-
 	}
 
 	/**

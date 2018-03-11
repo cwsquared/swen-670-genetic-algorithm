@@ -2,4 +2,4 @@
 /build/*
 /testreports/*
 /bin/
-/genetic_algorithm_output.txt
+/genetic_algorithm_output.csv
