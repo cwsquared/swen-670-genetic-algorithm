@@ -286,15 +286,17 @@ public class ResearchGA {
 	public String[][][] performCrossover(String[][][] nextGen,int[][] pairs) {
 		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
 
-		String selectedIndividual1 = new String();
-		String selectedIndividual2 = new String();
-		String newIndividual1 = new String();
-		String newIndividual2 = new String();
+		String[] selectedIndividual1 = new String[2];
+		String[] selectedIndividual2 = new String[2];
+		String[] newIndividual1 = new String[2];
+		String[] newIndividual2 = new String[2];
 		
 		for(int a = 0; a < nextGen.length / 2; a++){ 
 			for(int b = 0; b < nextGen[a].length; b++){
-				selectedIndividual1 = nextGen[pairs[a][0]][b][0];
-				selectedIndividual2 = nextGen[pairs[a][1]][b][0];
+				selectedIndividual1[0] = nextGen[pairs[a][0]][b][0];	//genes
+				selectedIndividual1[1] = nextGen[pairs[a][0]][b][1];	//methylation
+				selectedIndividual2[0] = nextGen[pairs[a][1]][b][0];	//genes
+				selectedIndividual2[1] = nextGen[pairs[a][1]][b][1];	//methylation
 //				System.out.println("Pairs: " + selectedIndividual1 + "|" + selectedIndividual2);
 				
 				//** Crossover Implementation
@@ -303,18 +305,24 @@ public class ResearchGA {
 				
 				
 				//First Individual
-				newIndividual1 = selectedIndividual1.substring(0, crossoverPoint).concat(
-						selectedIndividual2.substring(crossoverPoint, getNumberGenesPerIndividual()));
+				newIndividual1[0] = selectedIndividual1[0].substring(0, crossoverPoint).concat(
+						selectedIndividual2[0].substring(crossoverPoint, nextGen[0][0].length));	//genes
+				newIndividual1[1] = selectedIndividual1[1].substring(0, crossoverPoint).concat(
+						selectedIndividual2[1].substring(crossoverPoint, nextGen[0][0].length));	//methylation
 		        
 				//Second Individual
-		        newIndividual2 = selectedIndividual2.substring(0, crossoverPoint).concat(
-		                selectedIndividual1.substring(crossoverPoint, getNumberGenesPerIndividual()));	
+		        newIndividual2[0] = selectedIndividual2[0].substring(0, crossoverPoint).concat(
+		                selectedIndividual1[0].substring(crossoverPoint, nextGen[0][0].length));	//genes
+		        newIndividual2[1] = selectedIndividual2[1].substring(0, crossoverPoint).concat(
+		                selectedIndividual1[1].substring(crossoverPoint, nextGen[0][0].length));	//methylation
 		        
 //		        System.out.println("First Individual: " + newIndividual1 + " |  Second Individual: " + newIndividual2 + "\n");
 		        
 		        //Add new individuals to generation
-		        ng[a*2][b][0] = newIndividual1;
-		        ng[a*2+1][b][0] = newIndividual2;
+		        ng[a*2][b][0] = newIndividual1[0];		//genes
+		        ng[a*2][b][1] = newIndividual1[1];		//methylation
+		        ng[a*2+1][b][0] = newIndividual2[0];	//genes
+		        ng[a*2+1][b][1] = newIndividual2[1];	//methylation
 			}
 		}	
 		return ng;
