@@ -332,7 +332,8 @@ public class ResearchGA {
 	 */
 	public String[][][] performMutation(String[][][] nextGen) {
 		
-		String[][][] ng = nextGen;	//--a copy of the current generation of genes that needs to be mutated
+		//String[][][] ng = nextGen;	//--a copy of the current generation of genes that needs to be mutated
+		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
 		
 		String normalIndividual = new String();		///---used to store current individual string that we will examine and mutate
 		Double myrnd; ///---random number, did this so we can see the actual random number being used to detect mutation!
