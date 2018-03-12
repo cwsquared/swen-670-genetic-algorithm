@@ -5,7 +5,7 @@ This repository acts as the starting Eclipse Project for the development of our 
 
 To run the application, you will need to download and install the Eclipse Java IDE.
 
-Once inside Eclipse IDE, build the project by Opening the Ant Build Manager Window and Clicking Run As on the Genetic Algorithm task.
+Once inside Eclipse Oxygen IDE, build the project by Opening the Ant Build Manager Window and Clicking Run As on the Genetic Algorithm task.
 
 The Ant Build Manager will generate the necessary JAR file within a /build directory. This file is targeted by the run_algorithm.bat Batch file.
 
