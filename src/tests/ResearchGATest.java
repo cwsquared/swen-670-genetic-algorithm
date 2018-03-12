@@ -157,4 +157,24 @@ public class ResearchGATest {
 		assertEquals(eg3,"01010101");
 	}
 	
+	
+	@Test
+	public void testMutation() {
+		String[][][] p = new String[1][1][2];
+		String[][][] ret;
+		
+		p[0][0][0] = "00000";
+		p[0][0][1] = "00000";
+		
+		ga.setPopulation(p);
+		ga.setNumGenesPerIndividual(5);
+		ga.setMutationRate(100.0);
+		
+		ret = ga.performMutation(ga.getPopulation());
+System.out.println("===? "+ret[0][0][0]);
+
+		assertEquals("Error occured trying to test gene '11111", "11111", ret[0][0][0]);		
+	
+	}
+	
 }
