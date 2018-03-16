@@ -152,6 +152,16 @@ public class ResearchGA {
 			long d = Long.parseLong(sdf.format(cal.getTime()));
 			ga.rnd.setSeed(d);
 
+			// Print GA parameters
+			System.out.println("\nGenetic Algorithm parameters: ");
+			System.out.print(ga.currentFunction.getClass().getSimpleName() + 
+					" (" + ga.currentFunction.getLowerBound() + " <= x <= " + ga.currentFunction.getUpperBound() + "),");
+			System.out.print("Population size: " + ga.POP_SIZE + "," + 
+					"Number of generations: " + ga.NUM_OF_GENERATIONS + "," + 
+					"Number of genes per individual: " + ga.NUM_GENES_PER_INDIVIDUAL + "," + 
+					"Mutation rate: " + ga.MUTATION_RATE + "," + 
+					"Methylation count: " + ga.METHYLATION_COUNT);
+			
 			// Initialize the population
 			ga.population = ga.initialization(ga.currentFunction.getVariableCount());
 			System.out.println("\nInitial generation");   //Header for the output
