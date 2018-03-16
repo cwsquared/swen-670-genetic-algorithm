@@ -39,6 +39,38 @@ public class ResearchGATest {
 	}
 	
 	@Test
+	// Test the initialization function second dimension size
+	public void testInitalizationArraySecondDimensionSizeOne() {
+		String[][][] pop = ga.initialization(1);
+		int individuals = pop[0].length;
+		assertEquals("Initialization created array second dimension of correct size", 1, individuals);
+	}
+	
+	@Test
+	// Test the initialization function second dimension size
+	public void testInitalizationArraySecondDimensionSizeTwo() {
+		String[][][] pop = ga.initialization(2);
+		int individuals = pop[0].length;
+		assertEquals("Initialization created array second dimension of correct size", 2, individuals);
+	}
+	
+	@Test
+	// Test the initialization function methylation string
+	public void testInitializationMethylationString() {
+		String[][][] pop = ga.initialization(1);
+		String individuals = pop[0][0][1];
+		assertEquals("Initialization created methylation string with expected contents", "000", individuals);	
+	}
+	
+	@Test
+	// Test the initialization function individual gene string length
+	public void testInitializationIndividualGeneStringSize() {
+		String[][][] pop = ga.initialization(1);
+		int individuals = pop[0][0][0].length();
+		assertEquals("Initialization created methylation string with expected contents", 3, individuals);	
+	}
+	
+	@Test
 	// Test getter and setter for current function
 	public void testResearchGAGetSetCurrentFunction() {
 		FitnessFunction f = new FitnessFunction();
@@ -155,6 +187,26 @@ public class ResearchGATest {
 	public void testexpressGeneticsFullMethylation() {
 		String eg3 = ga.expressGenetics("10101010","11111111");
 		assertEquals(eg3,"01010101");
+	}
+	
+	
+	@Test
+	public void testMutation() {
+		String[][][] p = new String[1][1][2];
+		String[][][] ret;
+		
+		p[0][0][0] = "00000";
+		p[0][0][1] = "00000";
+		
+		ga.setPopulation(p);
+		ga.setNumGenesPerIndividual(5);
+		ga.setMutationRate(100.0);
+		
+		ret = ga.performMutation(ga.getPopulation());
+System.out.println("===? "+ret[0][0][0]);
+
+		assertEquals("Error occured trying to test gene '11111", "11111", ret[0][0][0]);		
+	
 	}
 	
 }

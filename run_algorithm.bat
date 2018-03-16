@@ -23,6 +23,7 @@ ECHO.
 :: Fitness Function #1
 java -classpath ./build/GeneticAlgorithm.jar geneticalgorithm/ResearchGA 1 2 2 8 0.2 2 >> %filename%
 java -classpath ./build/GeneticAlgorithm.jar geneticalgorithm/ResearchGA 1 8 2 16 0.5 2 >> %filename%
+java -classpath ./build/GeneticAlgorithm.jar geneticalgorithm/ResearchGA 1 100 100 32 0.5 5 >> %filename%
 
 ::ECHO.>>%filename%
 
