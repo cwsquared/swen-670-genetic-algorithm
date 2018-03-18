@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
 
+
 /** 
  *  Class Name: ResearchGA
  *  Class Description: The ResearchGA class contains the main attributes and methods of the genetic algorithm.
@@ -253,6 +254,11 @@ public class ResearchGA {
 			//Loop to Select the individuals from the array
 			for(int b = 0; b < currGen[x].length; b++){
 				
+				///---added by Charles. 3/18/2018....initialize rnd if null so driver or test cases don't fail!!
+            	if (rnd==null) {  ///---We need to initialize this if not trying to test the GA function the main thread will throw an exception on
+            		rnd = new Random();
+            	}		
+				
 				//**First individual
 				selectionValue = rnd.nextDouble() * sumFitness;
 //				System.out.print("Selection value (Before) is " + selectionValue + "\n");				
@@ -341,7 +347,9 @@ public class ResearchGA {
 	 * @return
 	 */
 	public String[][][] performMutation(String[][][] nextGen) {
-		long start = System.currentTimeMillis();
+		
+		//long start = System.currentTimeMillis();
+		
 		//String[][][] ng = nextGen;	//--a copy of the current generation of genes that needs to be mutated
 		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
 		
@@ -375,7 +383,7 @@ public class ResearchGA {
 	        	
 	        }
 	        
-	        System.out.println("Runtime: " + (System.currentTimeMillis() - start));
+	        //System.out.println("Total execution time: " + (System.currentTimeMillis() - start)+"ms");
 	        
 		return ng;
 		
