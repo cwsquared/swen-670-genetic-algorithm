@@ -341,7 +341,7 @@ public class ResearchGA {
 	 * @return
 	 */
 	public String[][][] performMutation(String[][][] nextGen) {
-		
+		long start = System.currentTimeMillis();
 		//String[][][] ng = nextGen;	//--a copy of the current generation of genes that needs to be mutated
 		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
 		
@@ -374,7 +374,9 @@ public class ResearchGA {
 	        	}
 	        	
 	        }
-        
+	        
+	        System.out.println("Runtime: " + (System.currentTimeMillis() - start));
+	        
 		return ng;
 		
 	}
