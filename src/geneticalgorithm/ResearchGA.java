@@ -417,6 +417,36 @@ public class ResearchGA {
 			
 		return ng;
 	}
+	
+	
+	public String[][][] determineMethylation02(List<Double> lowestFitness, String[][][] nextGen) {
+		for (int i = 0; i < lowestFitness.length() -1; i++) {
+			Double currentFitness = 0.0;
+			Double testFitness = 0.0;
+			String temp = nextGen[lowestFitness[i][0] ] [0][0];
+			currentFitness = lowestFitness[i][1];
+				
+			Random rnd = Random.NextInt(NUM_GENES_PER_INDIVIDUAL);   //Check how to do this
+				
+			if (temp.substring(rnd,rnd+1) == 1) {
+				temp.substring(rnd,rnd+1) = 0;
+			}
+			else {
+				temp.substring(rnd,rnd+1) = 1;
+			}
+			
+			testFitness = currentFunction.getFitness(temp);
+	
+			if (testFitness > currentFitness)
+			{
+				String newMeth = nextGen[ lowestFitness[i][0] ] [0][1].substring(0,rnd) + 1 +  nextGen[ lowestFitness[i][0] ] [0][1].substring(rnd.toString() + 1,NUM_GENES_PER_INDIVIDUAL - 1);
+				nextGen[ lowestFitness[i][0] ] [0][1] = newMeth;
+			}
+		}
+		
+	//Returns updated population of individuals (String[][][] ng)
+	return ng;
+	}
 
 	/**
 	 * Sets all methylation bits back to 0
