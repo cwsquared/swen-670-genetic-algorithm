@@ -418,30 +418,60 @@ public class ResearchGA {
 		return ng;
 	}
 	
-	
-	public String[][][] determineMethylation02(List<Double> lowestFitness, String[][][] nextGen) {
+	// takes fielded individual fitness (lowestFitness) and picks random chars in gene string, flipping their bits
+	// if more fit, flips corresponding methylation bit for that individual
+	public String[][][] determineMethylation02(List<Double> lowestFitness) {
+		
+		// loop through each of the lowestFitness values
+		// performing the gene string flip, fitness check, and methylation flip on more fitness result
+		
+		String[][][] ng;
+		
 		for (int i = 0; i < lowestFitness.length() -1; i++) {
+			
+			// represents current fitness of individual
 			Double currentFitness = 0.0;
+			// represents test fitness of individual
 			Double testFitness = 0.0;
-			String temp = nextGen[lowestFitness[i][0] ] [0][0];
+			
+			// temp value represents the current individual fitness value
+			// Chris: I am a bit confused about role of ng here/syntax of below
+			//String temp = ng[ lowestFitness[i][0] ] [0][0];
+			String temp;
+
+			// set current fitness equal to current individual in for loop from lowestFitness
 			currentFitness = lowestFitness[i][1];
-				
-			Random rnd = Random.NextInt(NUM_GENES_PER_INDIVIDUAL);   //Check how to do this
-				
+			
+			// determine randmom value and set to rnd for later use in bit flip
+			// should this be an int?
+			//Random rnd = Random.NextInt(numGenes);
+			String rnd;
+			
+			// check random sub string of individuals gene string from lowestFitness
 			if (temp.substring(rnd,rnd+1) == 1) {
-				temp.substring(rnd,rnd+1) = 0;
+				// on true eval of above, set random substring value equal to zero (bit flip a random bit if different)
+				//temp.substring(rnd,rnd+1) = 0;
 			}
 			else {
-				temp.substring(rnd,rnd+1) = 1;
+				// or don't if the same as check
+				//temp.substring(rnd,rnd+1) = 1;
 			}
-			
+			// set value of testFitness equal to the value of the fitness (as determined by getFitness) of the passed temp individual
 			testFitness = currentFunction.getFitness(temp);
-	
+			
+			// determine if the test fitness is greater than current fitness
 			if (testFitness > currentFitness)
 			{
-				String newMeth = nextGen[ lowestFitness[i][0] ] [0][1].substring(0,rnd) + 1 +  nextGen[ lowestFitness[i][0] ] [0][1].substring(rnd.toString() + 1,NUM_GENES_PER_INDIVIDUAL - 1);
-				nextGen[ lowestFitness[i][0] ] [0][1] = newMeth;
+				// if testFitness greater than currentFitness
+				// 
+				String newMeth = ng[ lowestFitness[i][0] ] [0][1].substring(0,rnd) + 1 +  ng[ lowestFitness[i][0] ] [0][1].substring(rnd + 1,NUM_GENES_PER_INDIVIDUAL  - 1);
+				ng[ lowestFitness[i][0] ] [0][1] = newMeth;
 			}
+			
+		}
+		//Returns updated population of individuals (String[][][] ng)
+		return ng;
+				
 		}
 		
 	//Returns updated population of individuals (String[][][] ng)
