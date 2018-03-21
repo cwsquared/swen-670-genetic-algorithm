@@ -394,13 +394,27 @@ public class ResearchGA {
 	 * the gene being flipped makes for a more fit individual.  If the bit flip increases fitness, 
 	 * the corresponding methylation bit is set to 1.
 	 * @param nextGen
-	 * @return
+	 * @return 
 	 */
+	// find a number of indiviudals that we assign as the methylation count to field
+	
+	// take fielded individuals fitness and pick random chars in string, flip the bit
+	
+	// figure out if more fit or less
+	
+	// if more fit, flip cooresponding methylation bit for that individual
 	public String[][][] determineMethylation(String[][][] nextGen) {
+
+		//Create a METHYLATION_COUNT sized local Double array, named lowestFitness
+		
+		
+		//Assign the passed parameter to a local String[][][] variable, ng
 		String[][][] ng = nextGen;
-
-		//TODO
-
+		
+		//Loop over the “ng” population determining the fitness of each individual
+		
+			//If the fitness is less than or equal to an existing lowestFitness element
+			
 		return ng;
 	}
 
