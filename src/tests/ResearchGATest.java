@@ -203,10 +203,28 @@ public class ResearchGATest {
 		ga.setMutationRate(100.0);
 		
 		ret = ga.performMutation(ga.getPopulation());
-System.out.println("===? "+ret[0][0][0]);
+		System.out.println("===? "+ret[0][0][0]);
 
 		assertEquals("Error occured trying to test gene '11111", "11111", ret[0][0][0]);		
 	
 	}
+	
+	@Test
+	//Test that the metylation string is set back to all zeroes by the clearMethylation() method
+	public void testClearMethylation() {
+		String[][][] pop = new String[3][1][2];
+		pop[0][0][0] = "10101010";
+		pop[0][0][1] = "10101010";
+		pop[1][0][0] = "01010101";
+		pop[1][0][1] = "10001000";
+		pop[2][0][0] = "11110000";
+		pop[2][0][1] = "00001000";
+		ga.clearMethylation(pop);
+		assertEquals(pop[0][0][1], "00000000");
+		assertEquals(pop[1][0][1], "00000000");
+		assertEquals(pop[2][0][1], "00000000");
+		
+	}
+	
 	
 }

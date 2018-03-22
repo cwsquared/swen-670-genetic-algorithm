@@ -415,7 +415,7 @@ public class ResearchGA {
 		for (int ind = 0; ind < ng.length; ind++) {
 			for (int vb = 0; vb < ng[ind].length; vb++) {
 				String newMeth = new String();
-				for (int i = 0; i < ng[ind][vb].length; i++) {
+				for (int i = 0; i < ng[ind][vb][1].length(); i++) {
 					newMeth = newMeth.concat("0");
 				}
 				
