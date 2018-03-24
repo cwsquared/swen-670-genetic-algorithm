@@ -203,7 +203,7 @@ public class ResearchGATest {
 		ga.setMutationRate(100.0);
 		
 		ret = ga.performMutation(ga.getPopulation());
-System.out.println("===? "+ret[0][0][0]);
+//System.out.println("===? "+ret[0][0][0]);
 
 		assertEquals("Error occured trying to test gene '11111", "11111", ret[0][0][0]);		
 	
