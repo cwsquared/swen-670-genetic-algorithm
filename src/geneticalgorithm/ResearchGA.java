@@ -506,7 +506,7 @@ public class ResearchGA {
 		for (int ind = 0; ind < ng.length; ind++) {
 			for (int vb = 0; vb < ng[ind].length; vb++) {
 				String newMeth = new String();
-				for (int i = 0; i < ng[ind][vb].length; i++) {
+				for (int i = 0; i < ng[ind][vb][1].length(); i++) {
 					newMeth = newMeth.concat("0");
 				}
 				
@@ -546,22 +546,31 @@ public class ResearchGA {
 	 */
 	private void printGeneration(String[][][] currPop) {
 		Double averageFitness = 0.0;
+		
+		// loop through the entire population
 		for (int ind = 0; ind < currPop.length; ind++) {
 			String individual = "";
 			
+			// for the currently iterated individual, display gene string
 			for (int vb = 0; vb < currPop[ind].length; vb++) {
 				individual += currPop[ind][vb][0] + ",";
 			}
 			
+			// for the currently iterated individual, display gene string converted to number
 			for (int vb = 0; vb < currPop[ind].length; vb++) {
 				individual += currentFunction.convertGenesToNumber(currPop[ind][vb][0]) + ",";
 			}
 			
+			// for the current individual in the population, display fitness value
 			individual += currentFunction.getFitness(currPop[ind][0][0]).toString();
+			
+			// setup value to calculate the average fitness by appending current individual fitness value
 			averageFitness = averageFitness + currentFunction.getFitness(currPop[ind][0][0]);
 			
+			// Output the currently iterated individual string built above
 			System.out.println(individual);
 		}
+		// Calculated the Average Fitness of the Current Population currPop
 		System.out.println("Average fitness = " + (averageFitness / currPop.length));
 	}
 

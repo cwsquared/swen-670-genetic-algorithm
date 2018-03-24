@@ -43,7 +43,7 @@ public class FitnessFunc3 extends FitnessFunction {
 	/**
 	 * 
 	 * @param genes
-	 * @return a Double value of the equation: f(x)=sin^6(10*pi*x^2), where x = genes
+	 * @return a Double value of the equation: f(x)=sin^6(10*pi*x^3), where x = genes
 	 */
 	public Double getFitness(String genes) {
 		Double x = convertGenesToNumber(genes);
