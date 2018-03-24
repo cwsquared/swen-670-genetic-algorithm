@@ -89,6 +89,8 @@ public class ResearchGA {
 			boolean arg0Valid = false;
 			boolean numberArgsValid = false;
 			boolean popSizeIsEven = false;
+			boolean methylationSize = false;
+			boolean methylationIsEven = false;
 
 			// Check that the first argument is 1,2,3,4,5 (i.e. valid fitness function)
 			if(args[0].equals("1") || args[0].equals("2") || args[0].equals("3") || args[0].equals("4") || args[0].equals("5")) {
@@ -104,6 +106,16 @@ public class ResearchGA {
 					popSizeIsEven = true;
 				}
 				
+				// Check that methylation pop size is even
+				if((Integer.parseInt(args[5]) & 1) == 0) {
+					methylationIsEven = true;
+				}
+				
+				// Check that methylation is smaller than pop size
+				if(Integer.parseInt(args[5]) < Integer.parseInt(args[1])) {
+					methylationSize = true;
+				}
+				
 				Integer.parseInt(args[2]);
 				Integer.parseInt(args[3]);
 				Double.parseDouble(args[4]);
@@ -111,7 +123,7 @@ public class ResearchGA {
 				numberArgsValid = true;
 			}  catch (Exception e) { numberArgsValid = false;}
 
-			if(arg0Valid == true && numberArgsValid == true && popSizeIsEven == true) {
+			if(arg0Valid == true && numberArgsValid == true && popSizeIsEven == true && methylationIsEven == true && methylationSize == true) {
 				validated = true;
 			}
 
@@ -396,86 +408,15 @@ public class ResearchGA {
 	 * @param nextGen
 	 * @return 
 	 */
-	// find a number of indiviudals that we assign as the methylation count to field
-	
-	// take fielded individuals fitness and pick random chars in string, flip the bit
-	
-	// figure out if more fit or less
-	
-	// if more fit, flip cooresponding methylation bit for that individual
 	public String[][][] determineMethylation(String[][][] nextGen) {
-
-		//Create a METHYLATION_COUNT sized local Double array, named lowestFitness
 		
-		
-		//Assign the passed parameter to a local String[][][] variable, ng
 		String[][][] ng = nextGen;
-		
-		//Loop over the “ng” population determining the fitness of each individual
-		
-			//If the fitness is less than or equal to an existing lowestFitness element
-			
-		return ng;
-	}
 	
-	// takes fielded individual fitness (lowestFitness) and picks random chars in gene string, flipping their bits
-	// if more fit, flips corresponding methylation bit for that individual
-	public String[][][] determineMethylation02(List<Double> lowestFitness) {
-		
-		// loop through each of the lowestFitness values
-		// performing the gene string flip, fitness check, and methylation flip on more fitness result
-		
-		String[][][] ng;
-		
-		for (int i = 0; i < lowestFitness.length() -1; i++) {
-			
-			// represents current fitness of individual
-			Double currentFitness = 0.0;
-			// represents test fitness of individual
-			Double testFitness = 0.0;
-			
-			// temp value represents the current individual fitness value
-			// Chris: I am a bit confused about role of ng here/syntax of below
-			//String temp = ng[ lowestFitness[i][0] ] [0][0];
-			String temp;
-
-			// set current fitness equal to current individual in for loop from lowestFitness
-			currentFitness = lowestFitness[i][1];
-			
-			// determine randmom value and set to rnd for later use in bit flip
-			// should this be an int?
-			//Random rnd = Random.NextInt(numGenes);
-			String rnd;
-			
-			// check random sub string of individuals gene string from lowestFitness
-			if (temp.substring(rnd,rnd+1) == 1) {
-				// on true eval of above, set random substring value equal to zero (bit flip a random bit if different)
-				//temp.substring(rnd,rnd+1) = 0;
-			}
-			else {
-				// or don't if the same as check
-				//temp.substring(rnd,rnd+1) = 1;
-			}
-			// set value of testFitness equal to the value of the fitness (as determined by getFitness) of the passed temp individual
-			testFitness = currentFunction.getFitness(temp);
-			
-			// determine if the test fitness is greater than current fitness
-			if (testFitness > currentFitness)
-			{
-				// if testFitness greater than currentFitness
-				// 
-				String newMeth = ng[ lowestFitness[i][0] ] [0][1].substring(0,rnd) + 1 +  ng[ lowestFitness[i][0] ] [0][1].substring(rnd + 1,NUM_GENES_PER_INDIVIDUAL  - 1);
-				ng[ lowestFitness[i][0] ] [0][1] = newMeth;
-			}
+		for (int i = 0; i < ng.length; i++) {
 			
 		}
-		//Returns updated population of individuals (String[][][] ng)
-		return ng;
-				
-		}
 		
-	//Returns updated population of individuals (String[][][] ng)
-	return ng;
+		return ng;		
 	}
 
 	/**
