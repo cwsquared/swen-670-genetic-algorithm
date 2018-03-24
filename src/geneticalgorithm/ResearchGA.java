@@ -409,13 +409,88 @@ public class ResearchGA {
 	 * @return 
 	 */
 	public String[][][] determineMethylation(String[][][] nextGen) {
-		
+
 		String[][][] ng = nextGen;
-	
-		for (int i = 0; i < ng.length; i++) {
-			
+		String[][] lowestFitness = null;
+
+		// Create Lowest Population Array
+		for (int individual = 0; individual < POP_SIZE; individual++) {
+			// determine fitness of individual
+
+			// find least fit individuals in pop size
+
+			// append current least fit individual to lowestFitness
+			//ng[individual] = lowestFitness[individual];
 		}
-		
+
+		// takes fielded individual fitness (lowestFitness) and picks random chars in gene string, flipping their bits
+		// if more fit, flips corresponding methylation bit for that individual
+
+		// set up ng with nextGen size for each of the three dimensions
+		//String[][][] ng = new String[population.length][population[0].length][population[0][0].length];
+
+		// set up lowestFitness for population of methylation affected individuals
+		//String[][] lowestFitness = new String[METHYLATION_COUNT][0];
+
+		// perform loop to identify and assign the lowestFitness individuals
+		// sized by methylation count parameter
+		// iterate through each individual and identify the least fit of the group
+
+		for (int i = 0; i < population.length; i++)
+		{
+			//System.out.println("Test output: " + nextGen[individual]);
+		}
+
+		// loop through each of the lowestFitness values
+		// performing the gene string flip, fitness check, and methylation flip on more fitness result
+		for (int i = 0; i < METHYLATION_COUNT; i++) {
+
+			// represents current fitness of individual
+			Double currentFitness = 0.0;
+			// represents test fitness of individual
+			Double testFitness = 0.0;
+
+			// temp value represents the current individual fitness value
+			// Chris: I am a bit confused about role of ng here/syntax of below
+			//String temp = ng[ lowestFitness[i][0] ];
+			//String temp;
+
+			// set current fitness equal to current individual in for loop from lowestFitness
+			//currentFitness = lowestFitness[i][1];
+
+			// determine randmom value and set to rnd for later use in bit flip
+			// should this be an int?
+			//Random rnd = Random.NextInt(numGenes);
+			String rnd = null;
+			
+			// set equal to random substring selection within bounds of GENES_PER_INDIVIDUAL
+			int ind = 0;
+			
+			/// NOTES: rnd.substring(ind, ind - 1).equals("0") choose random bit and flip it substring(rnd,rnd+1) == 1 
+			// check random sub string of individuals gene string from lowestFitness
+			if ( ind == 0 ) {
+				// on true eval of above, set random substring value equal to zero (bit flip a random bit if different)
+				//temp.substring(rnd,rnd+1) = 0;
+			}
+			else {
+				// or don't if the same as check
+				//temp.substring(rnd,rnd+1) = 1;
+			}
+			// set value of testFitness equal to the value of the fitness (as determined by getFitness) of the passed temp individual
+			//testFitness = currentFunction.getFitness(temp);
+
+			// determine if the test fitness is greater than current fitness
+			if (testFitness > currentFitness)
+			{
+				// if testFitness greater than currentFitness
+				// 
+				//String newMeth = ng[ lowestFitness[i][0] ] [0][1].substring(0,rnd) + 1 +  ng[ lowestFitness[i][0] ] [0][1].substring(rnd + 1,NUM_GENES_PER_INDIVIDUAL  - 1);
+				//ng[ lowestFitness[i][0] ] [0][1] = newMeth;
+			}
+
+		}
+
+		//Returns updated population of individuals (String[][][] ng)
 		return ng;		
 	}
 
