@@ -48,6 +48,6 @@ public class FitnessFunc3 extends FitnessFunction {
 	public Double getFitness(String genes) {
 		Double x = convertGenesToNumber(genes);
 		Double pi = Math.PI;
-		return Math.pow(Math.sin(5 * pi * Math.pow(x,3)), 6.0);
+		return Math.pow(Math.sin(10 * pi * Math.pow(x,3)), 6.0);
 	}
 }
