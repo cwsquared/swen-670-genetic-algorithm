@@ -413,14 +413,16 @@ public class ResearchGA {
  			for (int vb = 0; vb < ng[individual].length; vb++) {
  				
  					System.out.println( "Gene String: " + ng[individual][vb][0] + "  Methylation String: " + ng[individual][vb][1] );			
- 			
- 			}
 			// determine fitness of individual
-
+ 					Double fitness = currentFunction.getFitness( ng[individual][vb][0] );
+ 					
+ 					Double fitnessComparator = currentFunction.getFitness( ng[individual][vb][0] );
+ 			// compare with
 			// find least fit individuals in pop size
 
 			// append current least fit individual to lowestFitness
 			//ng[individual] = lowestFitness[individual];
+ 			}
 		}
 
 		//for (int i = 0; i < population.length; i++)
