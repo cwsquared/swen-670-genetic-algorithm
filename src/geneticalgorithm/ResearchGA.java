@@ -90,7 +90,6 @@ public class ResearchGA {
 			boolean numberArgsValid = false;
 			boolean popSizeIsEven = false;
 			boolean methylationSize = false;
-			boolean methylationIsEven = false;
 
 			// Check that the first argument is 1,2,3,4,5 (i.e. valid fitness function)
 			if(args[0].equals("1") || args[0].equals("2") || args[0].equals("3") || args[0].equals("4") || args[0].equals("5")) {
@@ -106,11 +105,6 @@ public class ResearchGA {
 					popSizeIsEven = true;
 				}
 				
-				// Check that methylation pop size is even
-				if((Integer.parseInt(args[5]) & 1) == 0) {
-					methylationIsEven = true;
-				}
-				
 				// Check that methylation is smaller than pop size
 				if(Integer.parseInt(args[5]) < Integer.parseInt(args[1])) {
 					methylationSize = true;
@@ -123,7 +117,7 @@ public class ResearchGA {
 				numberArgsValid = true;
 			}  catch (Exception e) { numberArgsValid = false;}
 
-			if(arg0Valid == true && numberArgsValid == true && popSizeIsEven == true && methylationIsEven == true && methylationSize == true) {
+			if(arg0Valid == true && numberArgsValid == true && popSizeIsEven == true && methylationSize == true) {
 				validated = true;
 			}
 
