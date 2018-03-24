@@ -423,6 +423,10 @@ public class ResearchGA {
 			//ng[individual] = lowestFitness[individual];
 		}
 
+		//for (int i = 0; i < population.length; i++)
+		
+		//System.out.println("Test output: " + nextGen[individual]);
+		
 		// takes fielded individual fitness (lowestFitness) and picks random chars in gene string, flipping their bits
 		// if more fit, flips corresponding methylation bit for that individual
 
@@ -436,10 +440,6 @@ public class ResearchGA {
 		// sized by methylation count parameter
 		// iterate through each individual and identify the least fit of the group
 
-		for (int i = 0; i < population.length; i++)
-		{
-			//System.out.println("Test output: " + nextGen[individual]);
-		}
 
 		// loop through each of the lowestFitness values
 		// performing the gene string flip, fitness check, and methylation flip on more fitness result
