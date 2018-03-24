@@ -406,9 +406,15 @@ public class ResearchGA {
 
 		String[][][] ng = nextGen;
 		String[][] lowestFitness = null;
-
+		
 		// Create Lowest Population Array
 		for (int individual = 0; individual < POP_SIZE; individual++) {
+			
+ 			for (int vb = 0; vb < ng[individual].length; vb++) {
+ 				
+ 					System.out.println( "Gene String: " + ng[individual][vb][0] + "  Methylation String: " + ng[individual][vb][1] );			
+ 			
+ 			}
 			// determine fitness of individual
 
 			// find least fit individuals in pop size
@@ -419,7 +425,6 @@ public class ResearchGA {
 
 		//for (int i = 0; i < population.length; i++)
 		
-		//System.out.println("Test output: " + nextGen[individual]);
 		
 		// takes fielded individual fitness (lowestFitness) and picks random chars in gene string, flipping their bits
 		// if more fit, flips corresponding methylation bit for that individual
