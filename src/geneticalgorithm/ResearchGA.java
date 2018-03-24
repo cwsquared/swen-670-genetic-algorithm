@@ -1,6 +1,7 @@
 package geneticalgorithm;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Random;
 
@@ -181,7 +182,7 @@ public class ResearchGA {
 				ga.nextGen = ga.performMutation(ga.nextGen);
 				System.out.println("Generation " + gen);
 				ga.printGeneration(ga.nextGen);
-				ga.nextGen = ga.clearMethylation(ga.nextGen);
+				//ga.nextGen = ga.clearMethylation(ga.nextGen);
 				ga.population = ga.nextGen;
 			}
 		} else {
@@ -408,40 +409,39 @@ public class ResearchGA {
 		String[][] lowestFitness = null;
 		
 		// Create Lowest Population Array
+		// find least fit individuals in pop size
 		for (int individual = 0; individual < POP_SIZE; individual++) {
 			
  			for (int vb = 0; vb < ng[individual].length; vb++) {
- 				
+ 					
  					System.out.println( "Gene String: " + ng[individual][vb][0] + "  Methylation String: " + ng[individual][vb][1] );			
 			// determine fitness of individual
  					Double fitness = currentFunction.getFitness( ng[individual][vb][0] );
  					
- 					Double fitnessComparator = currentFunction.getFitness( ng[individual][vb][0] );
- 			// compare with
-			// find least fit individuals in pop size
-
-			// append current least fit individual to lowestFitness
-			//ng[individual] = lowestFitness[individual];
+ 					// append current least fit individual to lowestFitness
+ 					// build lowestFitness array with the fitness values and later sort by fitness value
+ 					// grab the meth_count number of least fit individuals from the built array
+ 					// and append to another array for later methylation bit flip check manipulation
+ 					
+ 					// Arrays.Sort (sort values) and Arrays.copyOf (deep copy)
  			}
 		}
-
-		//for (int i = 0; i < population.length; i++)
 		
+			// NOTES
+				// takes fielded individual fitness (lowestFitness) and picks random chars in gene string, flipping their bits
+				// if more fit, flips corresponding methylation bit for that individual
 		
-		// takes fielded individual fitness (lowestFitness) and picks random chars in gene string, flipping their bits
-		// if more fit, flips corresponding methylation bit for that individual
-
-		// set up ng with nextGen size for each of the three dimensions
-		//String[][][] ng = new String[population.length][population[0].length][population[0][0].length];
-
-		// set up lowestFitness for population of methylation affected individuals
-		//String[][] lowestFitness = new String[METHYLATION_COUNT][0];
-
-		// perform loop to identify and assign the lowestFitness individuals
-		// sized by methylation count parameter
-		// iterate through each individual and identify the least fit of the group
-
-
+				// set up ng with nextGen size for each of the three dimensions
+				//String[][][] ng = new String[population.length][population[0].length][population[0][0].length];
+		
+				// set up lowestFitness for population of methylation affected individuals
+				//String[][] lowestFitness = new String[METHYLATION_COUNT][0];
+		
+				// perform loop to identify and assign the lowestFitness individuals
+				// sized by methylation count parameter
+				// iterate through each individual and identify the least fit of the group
+			// END NOTES 
+		
 		// loop through each of the lowestFitness values
 		// performing the gene string flip, fitness check, and methylation flip on more fitness result
 		for (int i = 0; i < METHYLATION_COUNT; i++) {
@@ -490,7 +490,6 @@ public class ResearchGA {
 			}
 
 		}
-
 		//Returns updated population of individuals (String[][][] ng)
 		return ng;		
 	}
