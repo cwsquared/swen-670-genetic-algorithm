@@ -1,6 +1,8 @@
 package geneticalgorithm;
 
-public class MethylationHelper implements Comparable {
+import java.util.Comparator;
+
+public class MethylationHelper {
 
 	private int individualIndex;
 	private double individualFitness;
@@ -23,11 +25,18 @@ public class MethylationHelper implements Comparable {
 		this.individualIndex = individualIndex;
 	}
 
-	@Override
-	public double compareTo(MethylationHelper comparestu) {
-       double compareFitness=((MethylationHelper)comparestu).getIndividualFitness();
-       // Ascending Order
-       return this.individualFitness-compareFitness;
-	}
-	
+	   /*Comparator for sorting the list by roll no*/
+    public static Comparator<MethylationHelper> StuRollno = new Comparator<MethylationHelper>() {
+
+	public double compare(MethylationHelper mh1, MethylationHelper mh2) {
+
+	   double rollno1 = mh1.getIndividualFitness();
+	   double rollno2 = mh2.getIndividualFitness();
+
+	   /*For ascending order*/
+	   return rollno1-rollno2;
+
+	   /*For descending order*/
+	   //rollno2-rollno1;
+   }};
 }
