@@ -406,7 +406,7 @@ public class ResearchGA {
 	public String[][][] determineMethylation(String[][][] nextGen) {
 
 		String[][][] ng = nextGen;
-		String[][] lowestFitness = null;
+		String[][] lowestFitness = new String[ng.length][ng[0].length];
 		
 		// Create Lowest Population Array
 		// find least fit individuals in pop size
@@ -417,7 +417,7 @@ public class ResearchGA {
  					System.out.println( "Gene String: " + ng[individual][vb][0] + "  Methylation String: " + ng[individual][vb][1] );			
 			// determine fitness of individual
  					Double fitness = currentFunction.getFitness( ng[individual][vb][0] );
- 					
+ 					 
  					// append current least fit individual to lowestFitness
  					// build lowestFitness array with the fitness values and later sort by fitness value
  					// grab the meth_count number of least fit individuals from the built array
