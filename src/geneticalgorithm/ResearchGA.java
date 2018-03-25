@@ -1,6 +1,7 @@
 package geneticalgorithm;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Random;
@@ -406,18 +407,30 @@ public class ResearchGA {
 	public String[][][] determineMethylation(String[][][] nextGen) {
 
 		String[][][] ng = nextGen;
-		String[][] lowestFitness = new String[ng.length][ng[0].length];
+		ArrayList lowestFitness = new ArrayList();
 		
-		// Create Lowest Population Array
 		// find least fit individuals in pop size
 		for (int individual = 0; individual < POP_SIZE; individual++) {
-			
+	
  			for (int vb = 0; vb < ng[individual].length; vb++) {
+
+ 				// Calculate the fitness value for the current individual Gene String
+ 				Double fitness = currentFunction.getFitness( ng[individual][vb][0] );
+ 				// Create separate class that has an integer attribute (index of ind) and a double (fitness) attribute
+ 				MethylationHelper mh = new MethylationHelper(individual, fitness);
+ 				// Call the class as an arraylist here
+ 				lowestFitness.add(mh);
+ 				// iterate over what is in arraylist and if less than or equal to fitness of current lowest fitness element
+ 				
+ 				// first arg current iterator of for loop
+ 				
+ 				// second arg value of fitness value
  					
- 					System.out.println( "Gene String: " + ng[individual][vb][0] + "  Methylation String: " + ng[individual][vb][1] );			
-			// determine fitness of individual
- 					Double fitness = currentFunction.getFitness( ng[individual][vb][0] );
- 					 
+
+ 				System.out.println( "Gene String: " + ng[individual][vb][0] + "  Methylation String: " + ng[individual][vb][1] );			
+ 					// determine fitness of individual
+ 					
+ 					
  					// append current least fit individual to lowestFitness
  					// build lowestFitness array with the fitness values and later sort by fitness value
  					// grab the meth_count number of least fit individuals from the built array
@@ -427,6 +440,7 @@ public class ResearchGA {
  			}
 		}
 		
+		lowestFitness.sort(mh);
 			// NOTES
 				// takes fielded individual fitness (lowestFitness) and picks random chars in gene string, flipping their bits
 				// if more fit, flips corresponding methylation bit for that individual
