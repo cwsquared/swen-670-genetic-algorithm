@@ -25,18 +25,20 @@ public class MethylationHelper {
 		this.individualIndex = individualIndex;
 	}
 
-	   /*Comparator for sorting the list by roll no*/
-    public static Comparator<MethylationHelper> StuRollno = new Comparator<MethylationHelper>() {
+	public static Comparator<MethylationHelper> indFit = new Comparator<MethylationHelper>() {
 
-	public double compare(MethylationHelper mh1, MethylationHelper mh2) {
+		public double compare(MethylationHelper mh1, MethylationHelper mh2) {
 
-	   double rollno1 = mh1.getIndividualFitness();
-	   double rollno2 = mh2.getIndividualFitness();
+			double indFit1 = mh1.getIndividualFitness();
+			double indFit2 = mh2.getIndividualFitness();
 
-	   /*For ascending order*/
-	   return rollno1-rollno2;
+			// ascending
+			return indFit1-indFit2;
 
-	   /*For descending order*/
-	   //rollno2-rollno1;
-   }};
+			// descending
+			//return indFit2-indFito1;
+		}
+		
+	};
+
 }
