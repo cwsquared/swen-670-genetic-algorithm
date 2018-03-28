@@ -45,8 +45,9 @@ public class FitnessFunc4 extends FitnessFunction {
 	 * @param genes
 	 * @return a Double value of the equation: f(x)=2^(-2x^2)*sin^6(10*pi*x), where x = genes
 	 */
-	public Double getFitness(String genes) {
-		Double x = convertGenesToNumber(genes);
+	public Double getFitness(String[][] individual) {
+		String genetics = expressGenetics(individual[0][0],individual[0][1]);
+		Double x = convertGenesToNumber(genetics);
 		Double pi = Math.PI;
 		return Math.pow(2,( Math.pow((-2*x),2)))  *  (Math.pow(Math.sin(5 * pi * x), 6.0));
 	}
