@@ -166,29 +166,7 @@ public class ResearchGATest {
 		
 		//Check that the function returns a new generation with correct size after crossing the genes
 		assertEquals("The new generation size is twice the Selected pair size", populationLength, nextGenLength);		
-	}
-	
-	@Test
-	//Test that the Gene Expression method returns correct string of expressed genes with zeroed methylation
-	public void testexpressGeneticsZeroMethylation() {
-		String eg1 = ga.expressGenetics("10101010","00000000");
-		assertEquals(eg1, "10101010");
-	}
-	
-	@Test
-	//Test that the Gene Expression method returns correct string of expressed genes with some methylation
-	public void testexpressGeneticsSomeMethylation() {
-		String eg2 = ga.expressGenetics("10101010","10101010");
-		assertEquals(eg2,"00000000");
-	}
-	
-	@Test
-	//Test that the Gene Expression method returns correct string of expressed genes with methylation of all 1's
-	public void testexpressGeneticsFullMethylation() {
-		String eg3 = ga.expressGenetics("10101010","11111111");
-		assertEquals(eg3,"01010101");
-	}
-	
+	}	
 	
 	@Test
 	public void testMutation() {
