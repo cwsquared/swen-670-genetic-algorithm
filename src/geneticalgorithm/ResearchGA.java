@@ -427,29 +427,6 @@ public class ResearchGA {
 	}
 
 	/**
-	 * Converts the string of 1's and 0's to a Double number value
-	 * @param genes	a string representing genes
-	 * @return a number representing the genes
-	 */
-	public String expressGenetics(String genes, String meth) {
-		String eg = new String();
-		
-		for (int i = 0; i < genes.length(); i++) {
-			if (meth.substring(i, i + 1).equals("1")) {		//Flip the current gene char
-				if (genes.substring(i, i + 1).equals("1"))
-					eg = eg.concat("0");
-				else
-					eg = eg.concat("1");
-			} 
-			else
-			{
-				eg = eg.concat(genes.substring(i, i + 1));
-			}
-		}	
-		return eg;
-	}
-
-	/**
 	 * Prints the current individual's genes, domain values, and fitness
 	 * @param currPop	array representing the current population
 	 */
