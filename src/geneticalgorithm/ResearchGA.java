@@ -246,7 +246,8 @@ public class ResearchGA {
 			//Loop to determine the sum of the overall fitness
 			for(int ind = 0; ind < currGen.length; ind++){ 
 				for(int vb = 0; vb < currGen[ind].length; vb++){
-					sumFitness = sumFitness + currentFunction.getFitness(currGen[ind][vb][0]);
+					//sumFitness = sumFitness + currentFunction.getFitness(currGen[ind][vb][0]);
+					sumFitness = sumFitness + currentFunction.getFitness(currGen[ind]);
 				}
 			}
 //			System.out.print("Sum of fitness for this generation is " + sumFitness + "\n");
@@ -265,7 +266,8 @@ public class ResearchGA {
 				int selectionIndex = -1;
 				while(selectionValue >= 0.0){
 					selectionIndex = selectionIndex + 1;
-					selectionValue = selectionValue - currentFunction.getFitness(currGen[selectionIndex][b][0]);
+					//selectionValue = selectionValue - currentFunction.getFitness(currGen[selectionIndex][b][0]);
+					selectionValue = selectionValue - currentFunction.getFitness(currGen[selectionIndex]);
 				}		
 				selectPairs[x][0] = selectionIndex; 
 //				System.out.print("Selection value (After) is " + selectionValue + "\n");
@@ -278,7 +280,8 @@ public class ResearchGA {
 		        while (selectionValue >= 0.0)
 		        {
 		            selectionIndex = selectionIndex + 1;
-		            selectionValue = selectionValue - currentFunction.getFitness(currGen[selectionIndex][b][0]);
+		            //selectionValue = selectionValue - currentFunction.getFitness(currGen[selectionIndex][b][0]);
+		            selectionValue = selectionValue - currentFunction.getFitness(currGen[selectionIndex]);
 		        }  
 //		        System.out.print("Selection value (After) is " + selectionValue + "\n");
 		        selectPairs[x][1] = selectionIndex; 	
@@ -448,10 +451,10 @@ public class ResearchGA {
 			}
 			
 			// for the current individual in the population, display fitness value
-			individual += currentFunction.getFitness(currPop[ind][0][0]).toString();
+			individual += currentFunction.getFitness(currPop[ind]).toString();
 			
 			// setup value to calculate the average fitness by appending current individual fitness value
-			averageFitness = averageFitness + currentFunction.getFitness(currPop[ind][0][0]);
+			averageFitness = averageFitness + currentFunction.getFitness(currPop[ind]);
 			
 			// Output the currently iterated individual string built above
 			System.out.println(individual);
