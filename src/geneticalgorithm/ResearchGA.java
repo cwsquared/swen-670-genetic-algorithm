@@ -551,8 +551,8 @@ public class ResearchGA {
 	 * Set population
 	 * @param population	an array representing the population
 	 */
-	public void setPopulation(String[][][] population) {
-		this.population = population;
+	public void setPopulation(String[][][] pop) {
+		this.population = pop;
 	}
 
 	/**
