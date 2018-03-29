@@ -13,7 +13,7 @@ package geneticalgorithm;
  *  Class Methods:
  *       public FitnessFunction() - default constructor
  *       public FitnessFunction(int vc, int lb, int ub) - constructor that accepts parameters to be assigned to attributes.
- *       public Double getFitness(String genes) - fitness function to be overloaded by inheriting classes.  Returns 0.0
+ *       public Double getFitness(String genes) - fitness function to be overloaded by inheriting classes.  Returns null.
  *       public int getVariableCount()
  *       public void setVariableCount(int vc)
  *       public int getLowerBound()
