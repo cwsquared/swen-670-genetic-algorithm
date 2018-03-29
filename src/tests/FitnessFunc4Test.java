@@ -54,7 +54,7 @@ public class FitnessFunc4Test {
 		String[][] ind = new String[1][2];
 		ind[0][0] = "1100110011001100";
 		ind[0][1] = "0000000000000000";
-		assertEquals(f4.getFitness(ind) , 0.44319042360045985, 1E-10);
+		assertEquals(f4.getFitness(ind) , 2.4121809515799384E-94, 1E-10);
 	}
 	
 	
