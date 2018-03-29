@@ -460,22 +460,16 @@ public class ResearchGA {
 		// performing the gene string flip, fitness check, and methylation flip on more fitness result
 		for (int i = 0; i < METHYLATION_COUNT; i++) {
 
-			// represents current fitness of individual
-			Double currentFitness = 0.0;
 			// represents test fitness of individual
 			Double testFitness = 0.0;
 
-			// temp value represents the current individual fitness value
-			// Chris: I am a bit confused about role of ng here/syntax of below
+			// temp value represents the current individual gene string
 			//String temp = ng[ lowestFitness[i][0] ];
-			//String temp;
 
 			// set current fitness equal to current individual in for loop from lowestFitness
 			//currentFitness = lowestFitness[i][1];
 
-			// determine randmom value and set to rnd for later use in bit flip
-			// should this be an int?
-			
+			// determine randmom value and set to rnd for later use in bit flip			
 			int rndBitFlip = rnd.nextInt(NUM_GENES_PER_INDIVIDUAL);
 		
 			// set equal to random substring selection within bounds of GENES_PER_INDIVIDUAL
