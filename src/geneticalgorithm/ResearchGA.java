@@ -311,9 +311,9 @@ public class ResearchGA {
 		for(int a = 0; a < nextGen.length / 2; a++){ 
 			for(int b = 0; b < nextGen[a].length; b++){
 				selectedIndividual1[0] = nextGen[pairs[a][0]][b][0];	//genes
-				//selectedIndividual1[1] = nextGen[pairs[a][0]][b][1];	//methylation
+				selectedIndividual1[1] = nextGen[pairs[a][0]][b][1];	//methylation
 				selectedIndividual2[0] = nextGen[pairs[a][1]][b][0];	//genes
-				//selectedIndividual2[1] = nextGen[pairs[a][1]][b][1];	//methylation
+				selectedIndividual2[1] = nextGen[pairs[a][1]][b][1];	//methylation
 //				System.out.println("Pairs: " + selectedIndividual1 + "|" + selectedIndividual2);
 				
 				//** Crossover Implementation
@@ -323,22 +323,22 @@ public class ResearchGA {
 				//First Individual
 				newIndividual1[0] = selectedIndividual1[0].substring(0, crossoverPoint).concat(
 						selectedIndividual2[0].substring(crossoverPoint, getNumberGenesPerIndividual()));	//genes
-				//newIndividual1[1] = selectedIndividual1[1].substring(0, crossoverPoint).concat(
-				//		selectedIndividual2[1].substring(crossoverPoint, getNumberGenesPerIndividual()));	//methylation
+				newIndividual1[1] = selectedIndividual1[1].substring(0, crossoverPoint).concat(
+						selectedIndividual2[1].substring(crossoverPoint, getNumberGenesPerIndividual()));	//methylation
 		        
 				//Second Individual
 		        newIndividual2[0] = selectedIndividual2[0].substring(0, crossoverPoint).concat(
 		                selectedIndividual1[0].substring(crossoverPoint, getNumberGenesPerIndividual()));	//genes
-		        //newIndividual2[1] = selectedIndividual2[1].substring(0, crossoverPoint).concat(
-		        //        selectedIndividual1[1].substring(crossoverPoint, getNumberGenesPerIndividual()));	//methylation
+		        newIndividual2[1] = selectedIndividual2[1].substring(0, crossoverPoint).concat(
+		                selectedIndividual1[1].substring(crossoverPoint, getNumberGenesPerIndividual()));	//methylation
 		        
 //		        System.out.println("First Individual: " + newIndividual1 + " |  Second Individual: " + newIndividual2 + "\n");
 		        
 		        //Add new individuals to generation
 		        ng[a*2][b][0] = newIndividual1[0];		//genes
-		        //ng[a*2][b][1] = newIndividual1[1];		//methylation
+		        ng[a*2][b][1] = newIndividual1[1];		//methylation
 		        ng[a*2+1][b][0] = newIndividual2[0];	//genes
-		        //ng[a*2+1][b][1] = newIndividual2[1];	//methylation
+		        ng[a*2+1][b][1] = newIndividual2[1];	//methylation
 			}
 		}	
 		return ng;
@@ -353,8 +353,8 @@ public class ResearchGA {
 		
 		//long start = System.currentTimeMillis();
 		
-		//String[][][] ng = nextGen;	//--a copy of the current generation of genes that needs to be mutated
-		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
+		String[][][] ng = nextGen;	//--a copy of the current generation of genes that needs to be mutated
+		//String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
 		
 		String normalIndividual = new String();		///---used to store current individual string that we will examine and mutate
 		Double myrnd; ///---random number, did this so we can see the actual random number being used to detect mutation!
