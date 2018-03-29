@@ -456,47 +456,31 @@ public class ResearchGA {
 			System.out.println("Test DetermineMeth: " + lowestFitness.size() + " - " + xx );
 		}
 		
+		String[][] tempIndividual = new String[currentFunction.VARIABLE_COUNT][2];
 		// loop through each of the lowestFitness values
 		// performing the gene string flip, fitness check, and methylation flip on more fitness result
 		for (int i = 0; i < METHYLATION_COUNT; i++) {
+			for(int vb =0; vb < currentFunction.VARIABLE_COUNT; vb++) {
 
-			// represents test fitness of individual
-			Double testFitness = 0.0;
-
-			// temp value represents the current individual gene string
-			//String temp = ng[ lowestFitness[i][0] ];
-
-			// set current fitness equal to current individual in for loop from lowestFitness
-			//currentFitness = lowestFitness[i][1];
-
-			// determine randmom value and set to rnd for later use in bit flip			
-			int rndBitFlip = rnd.nextInt(NUM_GENES_PER_INDIVIDUAL);
-		
-			// set equal to random substring selection within bounds of GENES_PER_INDIVIDUAL
-			int ind = 0;
-			
-			/// NOTES: rnd.substring(ind, ind - 1).equals("0") choose random bit and flip it substring(rnd,rnd+1) == 1 
-			// check random sub string of individuals gene string from lowestFitness
-			if ( ind == 0 ) {
-				// on true eval of above, set random substring value equal to zero (bit flip a random bit if different)
-				//temp.substring(rnd,rnd+1) = 0;
+				// represents test fitness of individual
+				Double testFitness = 0.0;
+				String testMeth = ng[lowestFitness.get(i).getIndividualIndex()][vb][1];
+	
+				// determine random value and set to rnd for later use in bit flip			
+				int rndBitFlip = rnd.nextInt(NUM_GENES_PER_INDIVIDUAL);
+				
+				testMeth = ng[lowestFitness.get(i).getIndividualIndex()][vb][1].substring(0, rndBitFlip) + 1
+						+ ng[lowestFitness.get(i).getIndividualIndex()][vb][1].substring(rndBitFlip + 1, NUM_GENES_PER_INDIVIDUAL - 1);
+				
+				tempIndividual[vb][0] = ng[lowestFitness.get(i).getIndividualIndex()][vb][0];
+				tempIndividual[vb][1] = testMeth;
+				testFitness = currentFunction.getFitness(tempIndividual);
+				
+				// determine if the test fitness is greater than current fitness
+				if (testFitness > lowestFitness.get(i).getIndividualFitness()) {
+						ng[lowestFitness.get(i).getIndividualIndex()][vb][1] = testMeth;
+				}
 			}
-			else {
-				// or don't if the same as check
-				//temp.substring(rnd,rnd+1) = 1;
-			}
-			// set value of testFitness equal to the value of the fitness (as determined by getFitness) of the passed temp individual
-			//testFitness = currentFunction.getFitness(temp);
-
-			// determine if the test fitness is greater than current fitness
-			if (testFitness > currentFitness)
-			{
-				// if testFitness greater than currentFitness
-				// 
-				//String newMeth = ng[ lowestFitness[i][0] ] [0][1].substring(0,rnd) + 1 +  ng[ lowestFitness[i][0] ] [0][1].substring(rnd + 1,NUM_GENES_PER_INDIVIDUAL  - 1);
-				//ng[ lowestFitness[i][0] ] [0][1] = newMeth;
-			}
-
 		}
 		//Returns updated population of individuals (String[][][] ng)
 		return ng;		
