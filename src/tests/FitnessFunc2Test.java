@@ -32,23 +32,30 @@ public class FitnessFunc2Test {
 	// Test that the getFitness method returns correct value for x = 0.
 	public void testGetFitnessFunc2Zero() {
 		FitnessFunc2 f2 = new FitnessFunc2(1, 0, 1);
-		assertEquals(f2.getFitness("0000000000000000"), 0.0, 1E-10);
+		String[][] ind = new String[1][2];
+		ind[0][0] = "0000000000000000";
+		ind[0][1] = "0000000000000000";
+		assertEquals(f2.getFitness(ind), 0.0, 1E-10);
 	}
 	
 	@Test
 	// Test that the getFitness method returns correct value for x = 1.
 	public void testGetFitnessFunc2One() {
 		FitnessFunc2 f2 = new FitnessFunc2(1, 0, 1);
-		assertEquals(f2.getFitness("1111111111111111"), 0.0, 1E-10);
+		String[][] ind = new String[1][2];
+		ind[0][0] = "1111111111111111";
+		ind[0][1] = "0000000000000000";
+		assertEquals(f2.getFitness(ind), 0.0, 1E-10);
 	}
 	
 	@Test
-	// Test that the getFitness method returns correct value for x = 0.
+	// Test that the getFitness method returns correct value for x = (1/15).
 	public void testGetFitnessFunc2OneFifteenth() {
 		FitnessFunc2 f3 = new FitnessFunc2(1, 0, 1);
-		Double ret = f3.getFitness("1100110011001100");
-//		System.out.println("===> "+ret);  ///--0.04123937851565791
-		assertEquals(ret , 0.04123937851565791, 1E-10);
+		String[][] ind = new String[1][2];
+		ind[0][0] = "1110110001001100";
+		ind[0][1] = "0010000010000000";
+		assertEquals(f3.getFitness(ind), 0.04123937851565791, 1E-10);
 	}
 	
 	
