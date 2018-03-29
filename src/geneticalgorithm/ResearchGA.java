@@ -407,26 +407,27 @@ public class ResearchGA {
 	public String[][][] determineMethylation(String[][][] nextGen) {
 
 		String[][][] ng = nextGen;
-		ArrayList lowestFitness = new ArrayList();
+		// Call the class as an arraylist here
+		ArrayList<MethylationHelper> lowestFitness = new ArrayList<MethylationHelper>();
 		
 		// find least fit individuals in pop size
 		for (int individual = 0; individual < POP_SIZE; individual++) {
-	
- 			for (int vb = 0; vb < ng[individual].length; vb++) {
-
- 				// Calculate the fitness value for the current individual Gene String
- 				Double fitness = currentFunction.getFitness( ng[individual][vb][0] );
- 				// Create separate class that has an integer attribute (index of ind) and a double (fitness) attribute
- 				MethylationHelper mh = new MethylationHelper(individual, fitness);
- 				// Call the class as an arraylist here
- 				lowestFitness.add(mh);
+			
+			// create new mh object
+			Double fitness = currentFunction.getFitness( ng[individual].toString() );
+			MethylationHelper mh = new MethylationHelper(individual, fitness);
+			
+			for (int vb = 0; vb < ng[individual].length; vb++) {
+ 				
  				// iterate over what is in arraylist and if less than or equal to fitness of current lowest fitness element
+ 				
+ 				// add the mh (index,fitness) to the lowestFitness ArrayList
+ 				lowestFitness.add(mh);
  				
  				// first arg current iterator of for loop
  				
  				// second arg value of fitness value
  					
-
  				System.out.println( "Gene String: " + ng[individual][vb][0] + "  Methylation String: " + ng[individual][vb][1] );			
  					// determine fitness of individual
  					
