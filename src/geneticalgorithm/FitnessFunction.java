@@ -13,7 +13,7 @@ package geneticalgorithm;
  *  Class Methods:
  *       public FitnessFunction() - default constructor
  *       public FitnessFunction(int vc, int lb, int ub) - constructor that accepts parameters to be assigned to attributes.
- *       public Double getFitness(String genes) - fitness function to be overloaded by inheriting classes.  Returns 0.0
+ *       public Double getFitness(String genes) - fitness function to be overloaded by inheriting classes.  Returns null.
  *       public int getVariableCount()
  *       public void setVariableCount(int vc)
  *       public int getLowerBound()
@@ -46,11 +46,34 @@ public class FitnessFunction {
 	}
 	
 	/**
+	 * Converts the string of 1's and 0's to a Double number value
+	 * @param genes	a string representing genes
+	 * @return a string representing the genes as influenced by methylation
+	 */
+	public String expressGenetics(String genes, String meth) {
+		String eg = new String();
+		
+		for (int i = 0; i < genes.length(); i++) {
+			if (meth.substring(i, i + 1).equals("1")) {		//Flip the current gene char
+				if (genes.substring(i, i + 1).equals("1"))
+					eg = eg.concat("0");
+				else
+					eg = eg.concat("1");
+			} 
+			else
+			{
+				eg = eg.concat(genes.substring(i, i + 1));
+			}
+		}	
+		return eg;
+	}
+
+	/**
 	 * Fitness function to be overloaded by inheriting classes.  Returns 0.0
 	 * @param genes 
 	 * @return 
 	 */
-	public Double getFitness(String genes) {
+	public Double getFitness(String[][] individual) {
 		return null;
 	}
 	
