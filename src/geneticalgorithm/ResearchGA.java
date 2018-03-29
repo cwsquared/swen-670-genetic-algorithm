@@ -183,7 +183,7 @@ public class ResearchGA {
 				ga.nextGen = ga.performMutation(ga.nextGen);
 				System.out.println("Generation " + gen);
 				ga.printGeneration(ga.nextGen);
-				//ga.nextGen = ga.clearMethylation(ga.nextGen);
+				ga.nextGen = ga.clearMethylation(ga.nextGen);
 				ga.population = ga.nextGen;
 			}
 		} else {
