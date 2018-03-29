@@ -440,7 +440,6 @@ public class ResearchGA {
  			}
 		}
 		
-		lowestFitness.sort(mh);
 			// NOTES
 				// takes fielded individual fitness (lowestFitness) and picks random chars in gene string, flipping their bits
 				// if more fit, flips corresponding methylation bit for that individual
