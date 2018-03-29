@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import geneticalgorithm.FitnessFunc1;
 import geneticalgorithm.FitnessFunc2;
 
 public class FitnessFunc2Test {
