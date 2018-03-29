@@ -417,7 +417,7 @@ public class ResearchGA {
 		for (int individual = 0; individual < POP_SIZE; individual++) {
 			
 			// create new mh object
-			Double fitness = currentFunction.getFitness( ng[individual].toString() );
+			Double fitness = currentFunction.getFitness( ng[individual] );
 			MethylationHelper mh = new MethylationHelper(individual, fitness);
 			
 			for (int vb = 0; vb < ng[individual].length; vb++) {
