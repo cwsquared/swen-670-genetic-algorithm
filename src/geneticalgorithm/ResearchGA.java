@@ -460,10 +460,12 @@ public class ResearchGA {
 		// loop through each of the lowestFitness values
 		// performing the gene string flip, fitness check, and methylation flip on more fitness result
 		for (int i = 0; i < METHYLATION_COUNT; i++) {
-			for(int vb =0; vb < currentFunction.VARIABLE_COUNT; vb++) {
+			
+			// represents test fitness of individual
+			Double testFitness = 0.0;
+			
+			for(int vb = 0; vb < currentFunction.VARIABLE_COUNT; vb++) {
 
-				// represents test fitness of individual
-				Double testFitness = 0.0;
 				String testMeth = ng[lowestFitness.get(i).getIndividualIndex()][vb][1];
 	
 				// determine random value and set to rnd for later use in bit flip			
@@ -474,12 +476,13 @@ public class ResearchGA {
 				
 				tempIndividual[vb][0] = ng[lowestFitness.get(i).getIndividualIndex()][vb][0];
 				tempIndividual[vb][1] = testMeth;
+				
+			}
 				testFitness = currentFunction.getFitness(tempIndividual);
 				
 				// determine if the test fitness is greater than current fitness
 				if (testFitness > lowestFitness.get(i).getIndividualFitness()) {
 						ng[lowestFitness.get(i).getIndividualIndex()][vb][1] = testMeth;
-				}
 			}
 		}
 		//Returns updated population of individuals (String[][][] ng)
