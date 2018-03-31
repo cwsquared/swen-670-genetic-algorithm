@@ -463,26 +463,29 @@ public class ResearchGA {
 			
 			// represents test fitness of individual
 			Double testFitness = 0.0;
+			String[] testMeth = new String[currentFunction.VARIABLE_COUNT];
 			
 			for(int vb = 0; vb < currentFunction.VARIABLE_COUNT; vb++) {
 
-				String testMeth = ng[lowestFitness.get(i).getIndividualIndex()][vb][1];
+				testMeth[vb] = ng[lowestFitness.get(i).getIndividualIndex()][vb][1];
 	
 				// determine random value and set to rnd for later use in bit flip			
 				int rndBitFlip = rnd.nextInt(NUM_GENES_PER_INDIVIDUAL);
 				
-				testMeth = ng[lowestFitness.get(i).getIndividualIndex()][vb][1].substring(0, rndBitFlip) + 1
+				testMeth[vb] = ng[lowestFitness.get(i).getIndividualIndex()][vb][1].substring(0, rndBitFlip) + 1
 						+ ng[lowestFitness.get(i).getIndividualIndex()][vb][1].substring(rndBitFlip + 1, NUM_GENES_PER_INDIVIDUAL - 1);
 				
 				tempIndividual[vb][0] = ng[lowestFitness.get(i).getIndividualIndex()][vb][0];
-				tempIndividual[vb][1] = testMeth;
+				tempIndividual[vb][1] = testMeth[vb];
 				
 			}
-				testFitness = currentFunction.getFitness(tempIndividual);
-				
-				// determine if the test fitness is greater than current fitness
-				if (testFitness > lowestFitness.get(i).getIndividualFitness()) {
-						ng[lowestFitness.get(i).getIndividualIndex()][vb][1] = testMeth;
+			testFitness = currentFunction.getFitness(tempIndividual);
+			
+			// determine if the test fitness is greater than current fitness
+			if (testFitness > lowestFitness.get(i).getIndividualFitness()) {
+				for(int vb2 = 0; vb2 < testMeth.length; vb2++) {
+					ng[lowestFitness.get(i).getIndividualIndex()][vb2][1] = testMeth[vb2];
+				}
 			}
 		}
 		//Returns updated population of individuals (String[][][] ng)
