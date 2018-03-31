@@ -1,6 +1,8 @@
 package geneticalgorithm;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Random;
 
@@ -89,6 +91,7 @@ public class ResearchGA {
 			boolean arg0Valid = false;
 			boolean numberArgsValid = false;
 			boolean popSizeIsEven = false;
+			boolean methylationSize = false;
 
 			// Check that the first argument is 1,2,3,4,5 (i.e. valid fitness function)
 			if(args[0].equals("1") || args[0].equals("2") || args[0].equals("3") || args[0].equals("4") || args[0].equals("5")) {
@@ -104,6 +107,11 @@ public class ResearchGA {
 					popSizeIsEven = true;
 				}
 				
+				// Check that methylation is smaller than pop size
+				if(Integer.parseInt(args[5]) < Integer.parseInt(args[1])) {
+					methylationSize = true;
+				}
+				
 				Integer.parseInt(args[2]);
 				Integer.parseInt(args[3]);
 				Double.parseDouble(args[4]);
@@ -111,7 +119,7 @@ public class ResearchGA {
 				numberArgsValid = true;
 			}  catch (Exception e) { numberArgsValid = false;}
 
-			if(arg0Valid == true && numberArgsValid == true && popSizeIsEven == true) {
+			if(arg0Valid == true && numberArgsValid == true && popSizeIsEven == true && methylationSize == true) {
 				validated = true;
 			}
 
@@ -175,7 +183,7 @@ public class ResearchGA {
 				ga.nextGen = ga.performMutation(ga.nextGen);
 				System.out.println("Generation " + gen);
 				ga.printGeneration(ga.nextGen);
-				ga.nextGen = ga.clearMethylation(ga.nextGen);
+				//ga.nextGen = ga.clearMethylation(ga.nextGen);
 				ga.population = ga.nextGen;
 			}
 		} else {
@@ -397,14 +405,110 @@ public class ResearchGA {
 	 * the gene being flipped makes for a more fit individual.  If the bit flip increases fitness, 
 	 * the corresponding methylation bit is set to 1.
 	 * @param nextGen
-	 * @return
+	 * @return 
 	 */
 	public String[][][] determineMethylation(String[][][] nextGen) {
+
 		String[][][] ng = nextGen;
+		// Call the class as an arraylist here
+		ArrayList<MethylationHelper> lowestFitness = new ArrayList<MethylationHelper>();
+		
+		// find least fit individuals in pop size
+		for (int individual = 0; individual < POP_SIZE; individual++) {
+			
+			// create new mh object
+			Double fitness = currentFunction.getFitness( ng[individual] );
+			MethylationHelper mh = new MethylationHelper(individual, fitness);
+			
+			for (int vb = 0; vb < ng[individual].length; vb++) {
+ 				
+ 				// iterate over what is in arraylist and if less than or equal to fitness of current lowest fitness element
+ 				
+ 				// add the mh (index,fitness) to the lowestFitness ArrayList
+ 				lowestFitness.add(mh);
+ 				
+ 				// first arg current iterator of for loop
+ 				
+ 				// second arg value of fitness value
+ 					
+ 				System.out.println( "Gene String: " + ng[individual][vb][0] + "  Methylation String: " + ng[individual][vb][1] );			
+ 					// determine fitness of individual
+ 					
+ 					
+ 					// append current least fit individual to lowestFitness
+ 					// build lowestFitness array with the fitness values and later sort by fitness value
+ 					// grab the meth_count number of least fit individuals from the built array
+ 					// and append to another array for later methylation bit flip check manipulation
+ 					
+ 					// Arrays.Sort (sort values) and Arrays.copyOf (deep copy)
+ 			}
+		}
+		
+			// NOTES
+				// takes fielded individual fitness (lowestFitness) and picks random chars in gene string, flipping their bits
+				// if more fit, flips corresponding methylation bit for that individual
+		
+				// set up ng with nextGen size for each of the three dimensions
+				//String[][][] ng = new String[population.length][population[0].length][population[0][0].length];
+		
+				// set up lowestFitness for population of methylation affected individuals
+				//String[][] lowestFitness = new String[METHYLATION_COUNT][0];
+		
+				// perform loop to identify and assign the lowestFitness individuals
+				// sized by methylation count parameter
+				// iterate through each individual and identify the least fit of the group
+			// END NOTES 
+		
+		// loop through each of the lowestFitness values
+		// performing the gene string flip, fitness check, and methylation flip on more fitness result
+		for (int i = 0; i < METHYLATION_COUNT; i++) {
 
-		//TODO
+			// represents current fitness of individual
+			Double currentFitness = 0.0;
+			// represents test fitness of individual
+			Double testFitness = 0.0;
 
-		return ng;
+			// temp value represents the current individual fitness value
+			// Chris: I am a bit confused about role of ng here/syntax of below
+			//String temp = ng[ lowestFitness[i][0] ];
+			//String temp;
+
+			// set current fitness equal to current individual in for loop from lowestFitness
+			//currentFitness = lowestFitness[i][1];
+
+			// determine randmom value and set to rnd for later use in bit flip
+			// should this be an int?
+			//Random rnd = Random.NextInt(numGenes);
+			String rnd = null;
+			
+			// set equal to random substring selection within bounds of GENES_PER_INDIVIDUAL
+			int ind = 0;
+			
+			/// NOTES: rnd.substring(ind, ind - 1).equals("0") choose random bit and flip it substring(rnd,rnd+1) == 1 
+			// check random sub string of individuals gene string from lowestFitness
+			if ( ind == 0 ) {
+				// on true eval of above, set random substring value equal to zero (bit flip a random bit if different)
+				//temp.substring(rnd,rnd+1) = 0;
+			}
+			else {
+				// or don't if the same as check
+				//temp.substring(rnd,rnd+1) = 1;
+			}
+			// set value of testFitness equal to the value of the fitness (as determined by getFitness) of the passed temp individual
+			//testFitness = currentFunction.getFitness(temp);
+
+			// determine if the test fitness is greater than current fitness
+			if (testFitness > currentFitness)
+			{
+				// if testFitness greater than currentFitness
+				// 
+				//String newMeth = ng[ lowestFitness[i][0] ] [0][1].substring(0,rnd) + 1 +  ng[ lowestFitness[i][0] ] [0][1].substring(rnd + 1,NUM_GENES_PER_INDIVIDUAL  - 1);
+				//ng[ lowestFitness[i][0] ] [0][1] = newMeth;
+			}
+
+		}
+		//Returns updated population of individuals (String[][][] ng)
+		return ng;		
 	}
 
 	/**
