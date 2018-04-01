@@ -473,7 +473,7 @@ public class ResearchGA {
 				int rndBitFlip = rnd.nextInt(NUM_GENES_PER_INDIVIDUAL);
 				
 				testMeth[vb] = ng[lowestFitness.get(i).getIndividualIndex()][vb][1].substring(0, rndBitFlip) + 1
-						+ ng[lowestFitness.get(i).getIndividualIndex()][vb][1].substring(rndBitFlip + 1, NUM_GENES_PER_INDIVIDUAL - 1);
+						+ ng[lowestFitness.get(i).getIndividualIndex()][vb][1].substring(rndBitFlip + 1, NUM_GENES_PER_INDIVIDUAL);
 				
 				tempIndividual[vb][0] = ng[lowestFitness.get(i).getIndividualIndex()][vb][0];
 				tempIndividual[vb][1] = testMeth[vb];
