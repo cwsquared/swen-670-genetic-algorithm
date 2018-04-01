@@ -13,14 +13,14 @@ public class MethylationHelper {
 	public double getIndividualFitness() {
 		return individualFitness;
 	}
-	public void setIndividualFitness(double individualFitness) {
-		this.individualFitness = individualFitness;
+	public void setIndividualFitness(double fitness) {
+		this.individualFitness = fitness;
 	}
 	public int getIndividualIndex() {
 		return individualIndex;
 	}
-	public void setIndividualIndex(int individualIndex) {
-		this.individualIndex = individualIndex;
+	public void setIndividualIndex(int index) {
+		this.individualIndex = index;
 	}
 
 
