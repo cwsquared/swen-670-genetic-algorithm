@@ -53,7 +53,7 @@ public class FitnessFunc3Test {
 		String[][] ind = new String[1][2];
 		ind[0][0] = "1100110011001100";
 		ind[0][1] = "0000000000000000";
-		assertEquals(f3.getFitness(ind) , 1.902692726297746E-4, 1E-10);
+		assertEquals(f3.getFitness(ind) , 2.3656405270976673E-4, 1E-10);
 	}
 	
 	
