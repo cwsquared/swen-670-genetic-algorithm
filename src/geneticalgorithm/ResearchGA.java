@@ -2,7 +2,6 @@ package geneticalgorithm;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Random;
 
@@ -356,8 +355,6 @@ public class ResearchGA {
 	 */
 	public String[][][] performMutation(String[][][] nextGen) {
 		
-		//long start = System.currentTimeMillis();
-		
 		String[][][] ng = nextGen;	//--a copy of the current generation of genes that needs to be mutated
 		//String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
 		
@@ -390,8 +387,6 @@ public class ResearchGA {
 	        	}
 	        	
 	        }
-	        
-	        //System.out.println("Total execution time: " + (System.currentTimeMillis() - start)+"ms");
 	        
 		return ng;
 		
