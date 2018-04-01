@@ -253,10 +253,7 @@ public class ResearchGA {
 			
 			//Loop to determine the sum of the overall fitness
 			for(int ind = 0; ind < currGen.length; ind++){ 
-				for(int vb = 0; vb < currGen[ind].length; vb++){
-					//sumFitness = sumFitness + currentFunction.getFitness(currGen[ind][vb][0]);
-					sumFitness = sumFitness + currentFunction.getFitness(currGen[ind]);
-				}
+				sumFitness = sumFitness + currentFunction.getFitness(currGen[ind]);
 			}
 //			System.out.print("Sum of fitness for this generation is " + sumFitness + "\n");
 			
