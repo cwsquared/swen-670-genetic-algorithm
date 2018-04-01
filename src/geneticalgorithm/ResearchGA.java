@@ -448,12 +448,14 @@ public class ResearchGA {
 			if(lowestFitness.size() > METHYLATION_COUNT) {
 				lowestFitness.remove(METHYLATION_COUNT);
 			}
+			/*
 			// output stuff
 			String xx = "";
 			for(int d=0; d < lowestFitness.size(); d++) {				
 				xx += lowestFitness.get(d).getIndividualIndex() + " - " + lowestFitness.get(d).getIndividualFitness() + ", ";
 			}
 			System.out.println("Test DetermineMeth: " + lowestFitness.size() + " - " + xx );
+			*/
 		}
 		
 		String[][] tempIndividual = new String[currentFunction.VARIABLE_COUNT][2];
