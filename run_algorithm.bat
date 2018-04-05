@@ -21,27 +21,28 @@ break > %filename%
 
 ECHO.
 :: Fitness Function #1
-java -classpath ./build/GeneticAlgorithm.jar geneticalgorithm/ResearchGA 1 2 2 8 0.2 2 >> %filename%
-java -classpath ./build/GeneticAlgorithm.jar geneticalgorithm/ResearchGA 1 8 2 16 0.5 2 >> %filename%
-java -classpath ./build/GeneticAlgorithm.jar geneticalgorithm/ResearchGA 1 100 100 32 0.5 5 >> %filename%
+java -classpath ./build/GeneticAlgorithm.jar geneticalgorithm/ResearchGA 1 20 20 16 1.6 5 >> %filename%
 
 ::ECHO.>>%filename%
 
 ::ECHO.
 ::ECHO Fitness Function #2
-::java -classpath ./build/GeneticAlgorithm.jar geneticalgorithm/ResearchGA 2 2 1 5 0.2 2 >> %filename%
+java -classpath ./build/GeneticAlgorithm.jar geneticalgorithm/ResearchGA 2 20 20 16 1.6 5 >> %filename%
 
 ::ECHO.>>%filename%
 
 ::ECHO.
 ::ECHO Fitness Function #3
+java -classpath ./build/GeneticAlgorithm.jar geneticalgorithm/ResearchGA 3 20 20 16 1.6 5 >> %filename%
 
 ::ECHO.>>%filename%
 
 ::ECHO.
 ::ECHO Fitness Function #4
+java -classpath ./build/GeneticAlgorithm.jar geneticalgorithm/ResearchGA 4 20 20 16 1.6 5 >> %filename%
 
 ::ECHO.>>%filename%
 
 ::ECHO.
 ::ECHO Fitness Function #5
+java -classpath ./build/GeneticAlgorithm.jar geneticalgorithm/ResearchGA 5 20 20 16 1.6 5 >> %filename%

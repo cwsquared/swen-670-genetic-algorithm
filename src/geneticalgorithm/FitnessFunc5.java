@@ -49,7 +49,36 @@ public class FitnessFunc5 extends FitnessFunction {
 	 * @param yGenes
 	 * @return a Double value of the equation: f(x)=2x^2-1.05x^4+x^6/6-xy+y^2, where x = genes
 	 */
-	public Double getFitness(Double xGenes, Double yGenes) {
-		return null;
+	public Double getFitness(String[][] individual) {
+		String xGenetics = expressGenetics(individual[0][0],individual[0][1]);
+		String yGenetics = expressGenetics(individual[1][0],individual[1][1]);
+		Double x = convertGenesToNumber(xGenetics);
+		Double y = convertGenesToNumber(yGenetics);
+		Double op = (2 * Math.pow(x, 2.0)) - (1.05 * (Math.pow(x, 4.0))) + (Math.pow(x, 6.0)/6) - (x*y) + (Math.pow(y, 2.0)); 
+		/*
+		System.out.println("X Genes: " + x);
+		System.out.println("Y Genes: " + y);
+		System.out.println("Op: " + op);
+		*/
+		return op;				
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

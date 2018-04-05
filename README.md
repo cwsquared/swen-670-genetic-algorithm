@@ -9,7 +9,7 @@ Once inside Eclipse Oxygen IDE, build the project by Opening the Ant Build Manag
 
 The Ant Build Manager will generate the necessary JAR file within a /build directory. This file is targeted by the run_algorithm.bat Batch file.
 
-The run_algorithm.bat Batch file contains the arguments supplied to the application for setting fitness function, population size, number of generations, number of genes per indiviudal, mutation rate, and methylation coumt.
+The run_algorithm.bat Batch file contains the arguments supplied to the application for setting fitness function, population size, number of generations, number of genes per individual, mutation rate, and Methylation count. Example argument string: 1 6 1 20 3.14 2
 
 Next, in the root directory of the project, run the run_algorithm.bat Batch file. This will generate a Comma Separated Values (CSV) output of the Genetic Algorithm.
 

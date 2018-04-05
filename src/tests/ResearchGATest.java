@@ -166,29 +166,7 @@ public class ResearchGATest {
 		
 		//Check that the function returns a new generation with correct size after crossing the genes
 		assertEquals("The new generation size is twice the Selected pair size", populationLength, nextGenLength);		
-	}
-	
-	@Test
-	//Test that the Gene Expression method returns correct string of expressed genes with zeroed methylation
-	public void testexpressGeneticsZeroMethylation() {
-		String eg1 = ga.expressGenetics("10101010","00000000");
-		assertEquals(eg1, "10101010");
-	}
-	
-	@Test
-	//Test that the Gene Expression method returns correct string of expressed genes with some methylation
-	public void testexpressGeneticsSomeMethylation() {
-		String eg2 = ga.expressGenetics("10101010","10101010");
-		assertEquals(eg2,"00000000");
-	}
-	
-	@Test
-	//Test that the Gene Expression method returns correct string of expressed genes with methylation of all 1's
-	public void testexpressGeneticsFullMethylation() {
-		String eg3 = ga.expressGenetics("10101010","11111111");
-		assertEquals(eg3,"01010101");
-	}
-	
+	}	
 	
 	@Test
 	public void testMutation() {
@@ -203,10 +181,25 @@ public class ResearchGATest {
 		ga.setMutationRate(100.0);
 		
 		ret = ga.performMutation(ga.getPopulation());
-System.out.println("===? "+ret[0][0][0]);
+		//System.out.println("===? "+ret[0][0][0]);
 
 		assertEquals("Error occured trying to test gene '11111", "11111", ret[0][0][0]);		
 	
 	}
 	
+	@Test
+	//Test that the methylation string is set back to all zeroes by the clearMethylation() method
+	public void testClearMethylation() {
+		String[][][] pop = new String[3][1][2];
+		pop[0][0][0] = "10101010";
+		pop[0][0][1] = "10101010";
+		pop[1][0][0] = "01010101";
+		pop[1][0][1] = "10001000";
+		pop[2][0][0] = "11110000";
+		pop[2][0][1] = "00001000";
+		ga.clearMethylation(pop);
+		assertEquals(pop[0][0][1], "00000000");
+		assertEquals(pop[1][0][1], "00000000");
+		assertEquals(pop[2][0][1], "00000000");
+	}
 }

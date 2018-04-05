@@ -26,4 +26,37 @@ public class FitnessFunc4Test {
 		assertEquals(f4.getUpperBound(), 6);
 	}
 	
+	
+	@Test
+	// Test that the getFitness method returns correct value for x = 0.
+	public void testGetFitnessFunc4Zero() {
+		FitnessFunc4 f4 = new FitnessFunc4(1, 0, 1);
+		String[][] ind = new String[1][2];
+		ind[0][0] = "0000000000000000";
+		ind[0][1] = "0000000000000000";
+		assertEquals(f4.getFitness(ind), 0.0, 1E-10);
+	}
+	
+	@Test
+	// Test that the getFitness method returns correct value for x = 1.
+	public void testGetFitnessFunc4One() {
+		FitnessFunc4 f4 = new FitnessFunc4(1, 0, 1);
+		String[][] ind = new String[1][2];
+		ind[0][0] = "1111111111111111";
+		ind[0][1] = "0000000000000000";
+		assertEquals(f4.getFitness(ind), 0.0, 1E-10);
+	}
+	
+	@Test
+	// Test that the getFitness method returns correct value for x = 1/15.
+	public void testGetFitnessFunc4OneFifteenth() {
+		FitnessFunc4 f4 = new FitnessFunc4(1, 0, 1);
+		String[][] ind = new String[1][2];
+		ind[0][0] = "1100110011001100";
+		ind[0][1] = "0000000000000000";
+		assertEquals(f4.getFitness(ind) , 2.4121809515799384E-94, 1E-10);
+	}
+	
+	
+	
 }
