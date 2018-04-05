@@ -54,7 +54,7 @@ public class FitnessFunc5 extends FitnessFunction {
 		String yGenetics = expressGenetics(individual[1][0],individual[1][1]);
 		Double x = convertGenesToNumber(xGenetics);
 		Double y = convertGenesToNumber(yGenetics);
-		Double op = (2 * Math.pow(x, 2.0)) - (1.05 * (Math.pow(x, 4.0))) + (Math.pow(x, 6.0)/6) - (x*y) + (Math.pow(y, 2.0)); 
+		Double op = 1/((2 * Math.pow(x, 2.0)) - (1.05 * (Math.pow(x, 4.0))) + (Math.pow(x, 6.0)/6) - (x*y) + (Math.pow(y, 2.0))); 
 		/*
 		System.out.println("X Genes: " + x);
 		System.out.println("Y Genes: " + y);
