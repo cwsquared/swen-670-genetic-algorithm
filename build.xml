@@ -1,19 +1,36 @@
-<project name="GeneticAlgorithm" basedir="." default="jar">
+<project name="GeneticAlgorithm" basedir="." default="build">
 	<description>Builds, tests, and runs the project genetic algorithm program.</description>
 	
+	<property name="src.java.dir" location="src"/>
+	<property name="src.test.dir" location="tests"/>
+	
+	<property name="build.dir" location="build"/>
+	<property name="build.classes.src.dir" location="${build.dir}/classes"/>
+	<property name="build.classes.test.dir" location="${build.dir}/test/classes"/>
+	<property name="testreport.dir" location="${build.dir}/testreports"/>
+	<property name="javadocs.dir" location="${build.dir}/docs"/>
+	
     <target name="clean" description="Cleans build directory">
-        <delete dir="build" />
-    	<delete dir="testreports" />
+        <delete dir="${build.dir}" />
     </target>
 
     <target name="compile" depends="clean" description="Compiles the code">
-        <mkdir dir="build"/>
-        <javac srcdir="src/geneticalgorithm" destdir="build" includeantruntime="false" />
+        <mkdir dir="${build.dir}"/>
+    	<mkdir dir="${build.classes.src.dir}" />
+    	<mkdir dir="${build.classes.test.dir}" />
+        <javac srcdir="${src.java.dir}" destdir="${build.classes.src.dir}" includeantruntime="false" />
+    	<javac srcdir="${src.test.dir}" destdir="${build.classes.test.dir}" includeantruntime="false">
+    		<classpath>
+    			<pathelement location="${build.classes.src.dir}"/>
+    			<fileset dir="libs">
+    				<include name="**/*.jar"/>
+    			</fileset>
+    		</classpath>
+    	</javac>
     </target>
 
     <target name="jar" depends="compile" description="Builds JAR">
-        <mkdir dir="build"/>
-        <jar destfile="build/GeneticAlgorithm.jar" basedir="build">
+        <jar destfile="${build.dir}/GeneticAlgorithm.jar" basedir="${build.classes.src.dir}">
             <manifest>
                 <attribute name="GA-Class" value="geneticalgorithm.ResearchGA"/>
             </manifest>
@@ -21,33 +38,45 @@
     </target>
 	
 	<target name="doc" depends="compile" description="Generate Java documentation">
-		<mkdir dir="build/docs"/>
-		<javadoc destdir="build/docs">
-			<fileset dir="src/geneticalgorithm" />
+		<mkdir dir="${javadocs.dir}"/>
+		<javadoc destdir="${javadocs.dir}">
+			<fileset dir="${src.java.dir}" />
 		</javadoc>
 	</target>
 	
-	<!-- Ant task to run unit tests and produce report.
+	<!-- Ant task to run unit tests and produce report.-->
 	<target name="test" depends="compile" description="Run unit tests and create unit test report" >
-		<mkdir dir="testreports"/>
-		<junit printsummary="yes" haltonfailure="yes">
-		    <classpath>
-		    	<pathelement location="libs/junit-4.12.jar"/>
-		    	<pathelement location="libs/hamcrest-core-1.3.jar"/>
-		    	<pathelement location="bin/geneticalgorithm"/>
-		    	<pathelement location="bin/tests"/>
-		    </classpath>
-			<formatter type="plain"/>
+		<mkdir dir="${testreport.dir}"/>
+		<junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+			<formatter type="plain" usefile="false"/>
 			<formatter type="xml"/>
-			<batchtest fork="yes" todir="testreports">
-				<fileset dir="src/tests">
+			<batchtest todir="${testreport.dir}">
+				<fileset dir="${src.test.dir}">
 					<include name="**/*Test*.java"/>
 				</fileset>
 			</batchtest>
+			<classpath>
+				<fileset dir="libs">
+					<include name="**/*.jar"/>
+				</fileset>
+				<pathelement location="${build.classes.src.dir}" />
+				<pathelement location="${build.classes.test.dir}" />
+			</classpath>
 		</junit>
-	</target> -->
+	</target>
+	
+	<target name="test-report" depends="test" description="Create unit test report">
+		<mkdir dir="${testreport.dir}/html"/>
+		<junitreport todir="${testreport.dir}">
+			<fileset dir="${testreport.dir}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+			<report todir="${testreport.dir}/html"/>
+		</junitreport>
+	</target>
 	
 	<!-- Run before a code commit -->
 	<target name="pre-commit" depends="compile,doc" description="Runs unit tests, generates java docs, and compiles code." />
 	
+	<target name="build" depends="jar,test-report,doc" description="Builds the JAR, runs unit tests, creates Java Docs" />
 </project>
