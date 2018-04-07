@@ -549,16 +549,16 @@ public class ResearchGA {
 	 * Takes a string and an index, flipping the character at index from a 1 to a 0, or vice versa
 	 * @param s	the string to be modified
 	 * @param index	the character index of the string which will be flipped
-	 * @return working string
+	 * @return alteredString
 	 */
 	public String flipStringBit(String s, int index) {
-		String workingString = s;
-		if (workingString.substring(index, index + 1).equals("1")) {
-			workingString = workingString.substring(0,index)+'0'+ workingString.substring(index+1,NUM_GENES_PER_INDIVIDUAL);
+		String alteredString;
+		if (s.substring(index, index + 1).equals("1")) {
+			alteredString = s.substring(0,index)+'0'+ s.substring(index+1,NUM_GENES_PER_INDIVIDUAL);
 		}else{
-			workingString = workingString.substring(0,index)+'1'+ workingString.substring(index+1,NUM_GENES_PER_INDIVIDUAL);
+			alteredString = s.substring(0,index)+'1'+ s.substring(index+1,NUM_GENES_PER_INDIVIDUAL);
 		}
-		return workingString;
+		return alteredString;
 	}
 	
 	/**

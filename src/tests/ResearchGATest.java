@@ -202,4 +202,11 @@ public class ResearchGATest {
 		assertEquals(pop[1][0][1], "00000000");
 		assertEquals(pop[2][0][1], "00000000");
 	}
+	
+	@Test
+	//Test the flipStringBit method
+	public void testFlipStringBit() {
+		ResearchGA ga1 = new ResearchGA(1, 2, 8, 4.4, 5);
+		assertEquals(ga1.flipStringBit("10101010", 4),"10100010");
+	}
 }
