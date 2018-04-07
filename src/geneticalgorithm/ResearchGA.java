@@ -355,8 +355,7 @@ public class ResearchGA {
 	 */
 	public String[][][] performMutation(String[][][] nextGen) {
 		
-		String[][][] ng = nextGen;	//--a copy of the current generation of genes that needs to be mutated
-		//String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
+		String[][][] ng = nextGen;
 		
 		String normalIndividual = new String();		///---used to store current individual string that we will examine and mutate
 		Double myrnd; ///---random number, did this so we can see the actual random number being used to detect mutation!
@@ -375,11 +374,14 @@ public class ResearchGA {
 	                	myrnd = rnd.nextDouble();
 	                  
 	                	if (myrnd < MUTATION_RATE) {
-	                    	if (normalIndividual.substring(c, c + 1).equals("1")) {
-	                			normalIndividual = normalIndividual.substring(0,c)+'0'+normalIndividual.substring(c+1);
+	                    	normalIndividual = flipStringBit(normalIndividual,c);
+	                		/*
+	                		if (normalIndividual.substring(c, c + 1).equals("1")) {
+	                			normalIndividual = normalIndividual.substring(0,c)+'0'+ normalIndividual.substring(c+1);
 	                		}else{
-	                			normalIndividual = normalIndividual.substring(0,c)+'1'+normalIndividual.substring(c+1);
+	                			normalIndividual = normalIndividual.substring(0,c)+'1'+ normalIndividual.substring(c+1);
 	                		}
+	                		*/
 	                	}                  
 	                }
 	                
@@ -465,10 +467,11 @@ public class ResearchGA {
 	
 				// determine random value and set to rnd for later use in bit flip			
 				int rndBitFlip = rnd.nextInt(NUM_GENES_PER_INDIVIDUAL);
-				
+				testMeth[vb] = flipStringBit(ng[lowestFitness.get(i).getIndividualIndex()][vb][1],rndBitFlip);
+				/*
 				testMeth[vb] = ng[lowestFitness.get(i).getIndividualIndex()][vb][1].substring(0, rndBitFlip) + 1
 						+ ng[lowestFitness.get(i).getIndividualIndex()][vb][1].substring(rndBitFlip + 1, NUM_GENES_PER_INDIVIDUAL);
-				
+				*/
 				tempIndividual[vb][0] = ng[lowestFitness.get(i).getIndividualIndex()][vb][0];
 				tempIndividual[vb][1] = testMeth[vb];
 				
@@ -489,7 +492,7 @@ public class ResearchGA {
 	/**
 	 * Sets all methylation bits back to 0
 	 * @param nextGen
-	 * @return
+	 * @return ng
 	 */
 	public String[][][] clearMethylation(String[][][] nextGen) {
 		String[][][] ng = nextGen;
@@ -542,6 +545,22 @@ public class ResearchGA {
 		System.out.println("Average fitness = " + (averageFitness / currPop.length));
 	}
 
+	/**
+	 * Takes a string and an index, flipping the character at index from a 1 to a 0, or vice versa
+	 * @param s	the string to be modified
+	 * @param index	the character index of the string which will be flipped
+	 * @return working string
+	 */
+	public String flipStringBit(String s, int index) {
+		String workingString = s;
+		if (workingString.substring(index, index + 1).equals("1")) {
+			workingString = workingString.substring(0,index)+'0'+ workingString.substring(index+1,NUM_GENES_PER_INDIVIDUAL);
+		}else{
+			workingString = workingString.substring(0,index)+'1'+ workingString.substring(index+1,NUM_GENES_PER_INDIVIDUAL);
+		}
+		return workingString;
+	}
+	
 	/**
 	 * Get the population
 	 * @return an array representing the population
