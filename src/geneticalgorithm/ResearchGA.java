@@ -513,6 +513,30 @@ public class ResearchGA {
 
 	/**
 	 * Prints the current individual's genes, domain values, and fitness
+	 * @param ind	array representing an indiviudal's genetics
+	 * @return individualString
+	 */
+	public String createIndividualStringForPrint(String[][] ind) {
+		String individualString = "";
+		
+		// for the currently iterated individual, display gene string
+		for (int vb = 0; vb < ind.length; vb++) {
+			individualString += ind[vb][0] + ",";
+		}
+		
+		// for the currently iterated individual, display gene string converted to number
+		for (int vb = 0; vb < ind.length; vb++) {
+			individualString += currentFunction.convertGenesToNumber(ind[vb][0]) + ",";
+		}
+		
+		// for the current individual in the population, display fitness value
+		individualString += currentFunction.getFitness(ind).toString();
+		
+		return individualString;
+	}
+	
+	/**
+	 * Prints the current individual's genes, domain values, and fitness
 	 * @param currPop	array representing the current population
 	 */
 	private void printGeneration(String[][][] currPop) {
@@ -520,8 +544,11 @@ public class ResearchGA {
 		
 		// loop through the entire population
 		for (int ind = 0; ind < currPop.length; ind++) {
+			//Builds the string for each individual in the population
+			String individual = createIndividualStringForPrint(currPop[ind]);
+			/*
 			String individual = "";
-			
+		
 			// for the currently iterated individual, display gene string
 			for (int vb = 0; vb < currPop[ind].length; vb++) {
 				individual += currPop[ind][vb][0] + ",";
@@ -534,6 +561,7 @@ public class ResearchGA {
 			
 			// for the current individual in the population, display fitness value
 			individual += currentFunction.getFitness(currPop[ind]).toString();
+			*/
 			
 			// setup value to calculate the average fitness by appending current individual fitness value
 			averageFitness = averageFitness + currentFunction.getFitness(currPop[ind]);

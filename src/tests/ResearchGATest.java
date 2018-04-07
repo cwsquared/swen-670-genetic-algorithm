@@ -206,7 +206,21 @@ public class ResearchGATest {
 	@Test
 	//Test the flipStringBit method
 	public void testFlipStringBit() {
-		ResearchGA ga1 = new ResearchGA(1, 2, 8, 4.4, 5);
-		assertEquals(ga1.flipStringBit("10101010", 4),"10100010");
+		ResearchGA ga = new ResearchGA(1, 2, 8, 4.4, 5);
+		assertEquals(ga.flipStringBit("10101010", 4),"10100010");
+	}
+	
+	@Test
+	//Test the output of createIndividualStringForPrint
+	public void testCreateIndividualStringForPrint() {
+		ResearchGA ga = new ResearchGA(1, 1, 8, 1.0, 1);
+		String[][][] pop = new String[1][1][2];
+		pop[0][0][0] = "10101010";
+		pop[0][0][1] = "10101010";
+		ga.setPopulation(pop);
+		String[][][] currGen = ga.getPopulation();
+		assertEquals(ga.createIndividualStringForPrint(currGen[0]),"00000000,0.0,0.0");
 	}
 }
+
+
