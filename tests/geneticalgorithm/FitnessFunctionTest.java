@@ -1,4 +1,4 @@
-package tests;
+package geneticalgorithm;
 
 import static org.junit.Assert.assertEquals;
 
