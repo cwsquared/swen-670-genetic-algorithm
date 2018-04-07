@@ -1,10 +1,8 @@
-package tests;
+package geneticalgorithm;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-
-import geneticalgorithm.MethylationHelper;
 
 public class MethylationHelperTest {
 	
