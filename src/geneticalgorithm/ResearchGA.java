@@ -175,8 +175,10 @@ public class ResearchGA {
 			System.out.println("\nInitial generation");   //Header for the output
 			ga.printGeneration(ga.population);
 			int[][] pairs;
+			ArrayList<MethylationHelper> lf = new ArrayList<MethylationHelper>();
 			for (int gen = 1; gen <= ga.NUM_OF_GENERATIONS; gen++) {
-				ga.nextGen = ga.determineMethylation(ga.population);
+				lf = ga.findLeastFitIndividuals(ga.population);
+				ga.nextGen = ga.determineMethylation(ga.population, lf);
 				pairs = ga.performSelection(ga.nextGen);
 				ga.nextGen = ga.performCrossover(ga.nextGen, pairs);
 				ga.nextGen = ga.performMutation(ga.nextGen);
