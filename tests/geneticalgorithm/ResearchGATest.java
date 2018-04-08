@@ -214,9 +214,10 @@ public class ResearchGATest {
 	//Test the output of createIndividualStringForPrint
 	public void testCreateIndividualStringForPrint() {
 		ResearchGA ga = new ResearchGA(1, 1, 8, 1.0, 1);
-		String[][][] pop = new String[1][1][2];
-		pop[0][0][0] = "10101010";
-		pop[0][0][1] = "10101010";
+		ga.setCurrentFunction(new FitnessFunc1());
+		String[][][] pop = new String[ga.getPopulationSize()][ga.getCurrentFunction().VARIABLE_COUNT][2];
+		pop[0][0][0] = "00000000";
+		pop[0][0][1] = "00000000";
 		ga.setPopulation(pop);
 		String[][][] currGen = ga.getPopulation();
 		assertEquals(ga.createIndividualStringForPrint(currGen[0]),"00000000,0.0,0.0");
