@@ -566,12 +566,12 @@ public class ResearchGA {
 		
 		// for the currently iterated individual, display gene string
 		for (int vb = 0; vb < ind.length; vb++) {
-			individualString += ind[vb][0] + ",";
+			individualString += currentFunction.expressGenetics(ind[vb][0], ind[vb][1]) + ",";
 		}
 		
 		// for the currently iterated individual, display gene string converted to number
 		for (int vb = 0; vb < ind.length; vb++) {
-			individualString += currentFunction.convertGenesToNumber(ind[vb][0]) + ",";
+			individualString += currentFunction.convertGenesToNumber(currentFunction.expressGenetics(ind[vb][0], ind[vb][1])) + ",";
 		}
 		
 		// for the current individual in the population, display fitness value
