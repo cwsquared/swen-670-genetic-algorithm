@@ -393,17 +393,68 @@ public class ResearchGA {
 		return ng;
 		
 	}
-
+	
 	/**
-	 * Locates the MC least fit individuals, randomly select 1 (one) gene, and test whether 
+	 * Locates the MethylationCount least fit individuals in the current population.
+	 * @param nextGen
+	 * @return lowestFitness	an ArrayList<MethylationHelper> objects containing MethylationCount number of least fit individuals in the population
+	 */
+	public ArrayList<MethylationHelper> findLeastFitIndividuals(String[][][] nextGen) {
+
+		String[][][] ng = nextGen;
+		
+		ArrayList<MethylationHelper> lowestFitness = new ArrayList<MethylationHelper>();
+		
+		for (int individual = 0; individual < POP_SIZE; individual++) {
+
+			Double fitness = currentFunction.getFitness( ng[individual] );
+			MethylationHelper mh = new MethylationHelper(individual, fitness);
+
+			int count = 0;
+			boolean added = false;
+			
+			do {
+				
+				if( lowestFitness.isEmpty() ) {
+					lowestFitness.add(mh);					
+					added = true;
+					break;
+				}
+				
+			
+				if( mh.getIndividualFitness() < lowestFitness.get(count).getIndividualFitness() ) {					
+					lowestFitness.add(count, mh);
+					added = true;
+					break;
+				}
+				count++;
+			} while ( count < lowestFitness.size() );
+			
+			if(!added) {				
+				lowestFitness.add(mh);
+			}
+			
+			if(lowestFitness.size() > METHYLATION_COUNT) {
+				lowestFitness.remove(METHYLATION_COUNT);
+			}
+		}
+		return lowestFitness;
+	}
+	
+	/**
+	 * Randomly select 1 (one) gene from each least fit individual and test whether 
 	 * the gene being flipped makes for a more fit individual.  If the bit flip increases fitness, 
 	 * the corresponding methylation bit is set to 1.
 	 * @param nextGen
 	 * @return 
 	 */
-	public String[][][] determineMethylation(String[][][] nextGen) {
+	public String[][][] determineMethylation(String[][][] nextGen, ArrayList<MethylationHelper> leastFit) {
 
 		String[][][] ng = nextGen;
+		/*
+		//Find the MethylationCount worst fit individuals
+		//ga.findLowestFitIndividuals(ng);
+		
 		// Call the class as an arraylist here
 		ArrayList<MethylationHelper> lowestFitness = new ArrayList<MethylationHelper>();
 		
@@ -442,16 +493,8 @@ public class ResearchGA {
 			if(lowestFitness.size() > METHYLATION_COUNT) {
 				lowestFitness.remove(METHYLATION_COUNT);
 			}
-			/*
-			// output stuff
-			String xx = "";
-			for(int d=0; d < lowestFitness.size(); d++) {				
-				xx += lowestFitness.get(d).getIndividualIndex() + " - " + lowestFitness.get(d).getIndividualFitness() + ", ";
-			}
-			System.out.println("Test DetermineMeth: " + lowestFitness.size() + " - " + xx );
-			*/
 		}
-		
+		*/
 		String[][] tempIndividual = new String[currentFunction.VARIABLE_COUNT][2];
 		// loop through each of the lowestFitness values
 		// performing the gene string flip, fitness check, and methylation flip on more fitness result
@@ -463,25 +506,25 @@ public class ResearchGA {
 			
 			for(int vb = 0; vb < currentFunction.VARIABLE_COUNT; vb++) {
 
-				testMeth[vb] = ng[lowestFitness.get(i).getIndividualIndex()][vb][1];
+				testMeth[vb] = ng[leastFit.get(i).getIndividualIndex()][vb][1];
 	
 				// determine random value and set to rnd for later use in bit flip			
 				int rndBitFlip = rnd.nextInt(NUM_GENES_PER_INDIVIDUAL);
-				testMeth[vb] = flipStringBit(ng[lowestFitness.get(i).getIndividualIndex()][vb][1],rndBitFlip);
+				testMeth[vb] = flipStringBit(ng[leastFit.get(i).getIndividualIndex()][vb][1],rndBitFlip);
 				/*
 				testMeth[vb] = ng[lowestFitness.get(i).getIndividualIndex()][vb][1].substring(0, rndBitFlip) + 1
 						+ ng[lowestFitness.get(i).getIndividualIndex()][vb][1].substring(rndBitFlip + 1, NUM_GENES_PER_INDIVIDUAL);
 				*/
-				tempIndividual[vb][0] = ng[lowestFitness.get(i).getIndividualIndex()][vb][0];
+				tempIndividual[vb][0] = ng[leastFit.get(i).getIndividualIndex()][vb][0];
 				tempIndividual[vb][1] = testMeth[vb];
 				
 			}
 			testFitness = currentFunction.getFitness(tempIndividual);
 			
 			// determine if the test fitness is greater than current fitness
-			if (testFitness > lowestFitness.get(i).getIndividualFitness()) {
+			if (testFitness > leastFit.get(i).getIndividualFitness()) {
 				for(int vb2 = 0; vb2 < testMeth.length; vb2++) {
-					ng[lowestFitness.get(i).getIndividualIndex()][vb2][1] = testMeth[vb2];
+					ng[leastFit.get(i).getIndividualIndex()][vb2][1] = testMeth[vb2];
 				}
 			}
 		}
