@@ -83,4 +83,28 @@ public class FitnessFunctionTest {
 		FitnessFunction ff = new FitnessFunction(1, 0, 1);
 		assertEquals(ff.convertGenesToNumber(genes), 0.06666666667, 1E-10);
 	}
+	
+	@Test
+	//Test that the setVariableCount method
+	public void testSetVariableCount() {
+		FitnessFunction ff = new FitnessFunction(1, 0, 1);
+		ff.setVariableCount(3);
+		assertEquals(ff.getVariableCount(),3);
+	}
+	
+	@Test
+	//Test that the setLowerBound method
+	public void testSetLowerBound() {
+		FitnessFunction ff = new FitnessFunction(1, 0, 1);
+		ff.setLowerBound(-3);
+		assertEquals(ff.getLowerBound(),-3);
+	}
+	
+	@Test
+	//Test that the setUpperBound method
+	public void testSetUpperBound() {
+		FitnessFunction ff = new FitnessFunction(1, 0, 1);
+		ff.setUpperBound(5);
+		assertEquals(ff.getUpperBound(),5);
+	}
 }
