@@ -37,7 +37,10 @@ public class FitnessFunction {
 	}
 	
 	/**
-	 * Constructor to set attributes
+	 * Constructor that accepts parameters to be assigned to attributes.
+	 * @param vc	an integer, variable count of the function.
+	 * @param lb	an integer, lower bound of the domain range.
+	 * @param ub	an integer, upper bound of the domain range.
 	 */
 	public FitnessFunction(int vc, int lb, int ub) {
 		this.VARIABLE_COUNT = vc;
@@ -48,7 +51,8 @@ public class FitnessFunction {
 	/**
 	 * Converts the string of 1's and 0's to a Double number value
 	 * @param genes	a string representing genes
-	 * @return a string representing the genes as influenced by methylation
+	 * @param meth	a string representing methylation
+	 * @return a string representing the genes as influenced by the methylation
 	 */
 	public String expressGenetics(String genes, String meth) {
 		String eg = new String();
@@ -69,9 +73,9 @@ public class FitnessFunction {
 	}
 
 	/**
-	 * Fitness function to be overloaded by inheriting classes.  Returns 0.0
-	 * @param genes 
-	 * @return 
+	 * Determines an individuals genetic fitness
+	 * @param individual	2-dimensional String array that represents all genetic/epigenetic information for the individual
+	 * @return returns null
 	 */
 	public Double getFitness(String[][] individual) {
 		return null;
@@ -79,8 +83,7 @@ public class FitnessFunction {
 	
 	/**
 	 * Converts the string of genes to a number of type Double.
-	 * @param genes
-	 * @param numGenes
+	 * @param genes	a string that represents the genetic information
 	 * @return the genes as a number
 	 */
 	public Double convertGenesToNumber(String genes) {

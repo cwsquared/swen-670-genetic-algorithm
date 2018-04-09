@@ -210,8 +210,8 @@ public class ResearchGA {
 
 	/**
 	 * Generates random set of bits for genes and all 0's for methylation
-	 * @param numVariables	the number of variables to intialize with
-	 * @return new population
+	 * @param numVariables	the number of variables to initialize with
+	 * @return an array of the new population of individuals
 	 */
 	public String[][][] initialization(int numVariables) {
 	    String[][][] newPopulation = new String[POP_SIZE][numVariables][2];
@@ -240,8 +240,8 @@ public class ResearchGA {
 
 	/**
 	 * Determine which individuals from the current generation will be mated for the next generation
-	 * @param currGen
-	 * @return
+	 * @param currGen	the current population generation
+	 * @return	an array of the mated pairs who will create the next generation.
 	 */
 	public int[][] performSelection(String[][][] currGen) {
 		int[][] selectPairs = new int[currGen.length/2][2]; 
@@ -302,9 +302,9 @@ public class ResearchGA {
 			
 	/**
 	 * Combine genes from the selected pairs to produce a pair of new individuals
-	 * @param nextGen
-	 * @param pairs
-	 * @return
+	 * @param nextGen	a String[][][] array that contains the population.
+	 * @param pairs an array of the mated pairs who will create the next generation.
+	 * @return returns the updated population
 	 */
 	public String[][][] performCrossover(String[][][] nextGen,int[][] pairs) {
 		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
@@ -352,8 +352,8 @@ public class ResearchGA {
 
 	/**
 	 * Randomly change a MUTATION_RATE percentage of genes in an individual
-	 * @param nextGen
-	 * @return
+	 * @param nextGen	a String[][][] array that contains the population.
+	 * @return returns the updated population
 	 */
 	public String[][][] performMutation(String[][][] nextGen) {
 		
@@ -398,8 +398,8 @@ public class ResearchGA {
 	
 	/**
 	 * Locates the MethylationCount least fit individuals in the current population.
-	 * @param nextGen
-	 * @return lowestFitness	an ArrayList<MethylationHelper> objects containing MethylationCount number of least fit individuals in the population
+	 * @param nextGen	a String[][][] array that contains the population.
+	 * @return lowestFitness	an ArrayList of MethylationHelper objects containing MethylationCount number of least fit individuals in the population
 	 */
 	public ArrayList<MethylationHelper> findLeastFitIndividuals(String[][][] nextGen) {
 
@@ -447,8 +447,9 @@ public class ResearchGA {
 	 * Randomly select 1 (one) gene from each least fit individual and test whether 
 	 * the gene being flipped makes for a more fit individual.  If the bit flip increases fitness, 
 	 * the corresponding methylation bit is set to 1.
-	 * @param nextGen
-	 * @return 
+	 * @param nextGen	a String[][][] array that contains the population.
+	 * @param leastFit	an arraylist of MethyltionHelper objects representing the least fit members of the population.
+	 * @return ng	the updated population generation
 	 */
 	public String[][][] determineMethylation(String[][][] nextGen, ArrayList<MethylationHelper> leastFit) {
 
@@ -536,8 +537,8 @@ public class ResearchGA {
 
 	/**
 	 * Sets all methylation bits back to 0
-	 * @param nextGen
-	 * @return ng
+	 * @param nextGen	a String[][][] array that contains the population
+	 * @return ng	the updated population generation
 	 */
 	public String[][][] clearMethylation(String[][][] nextGen) {
 		String[][][] ng = nextGen;
@@ -700,7 +701,7 @@ public class ResearchGA {
 
 	/**
 	 * Set population
-	 * @param population	an array representing the population
+	 * @param pop	an array representing the population
 	 */
 	public void setPopulation(String[][][] pop) {
 		this.population = pop;
