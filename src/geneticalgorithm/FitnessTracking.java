@@ -1,6 +1,6 @@
 package geneticalgorithm;
 
-public class MethylationHelper {
+public class FitnessTracking {
 
 	private int individualIndex;
 	private double individualFitness;
@@ -10,7 +10,7 @@ public class MethylationHelper {
 	 * @param index	an integer, index of the individual in the population
 	 * @param fitness	a double, the fitness of the indexed individual against the benchmark function
 	 */
-	public MethylationHelper(int index, double fitness) {
+	public FitnessTracking(int index, double fitness) {
 		this.individualIndex = index;
 		this.individualFitness = fitness;
 	}

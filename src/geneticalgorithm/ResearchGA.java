@@ -175,7 +175,7 @@ public class ResearchGA {
 			System.out.println("\nInitial generation");   //Header for the output
 			ga.printGeneration(ga.population);
 			int[][] pairs;
-			ArrayList<MethylationHelper> lf = new ArrayList<MethylationHelper>();
+			ArrayList<FitnessTracking> lf = new ArrayList<FitnessTracking>();
 			for (int gen = 1; gen <= ga.NUM_OF_GENERATIONS; gen++) {
 				lf = ga.findLeastFitIndividuals(ga.population);
 				ga.nextGen = ga.determineMethylation(ga.population, lf);
@@ -401,16 +401,16 @@ public class ResearchGA {
 	 * @param nextGen	a String[][][] array that contains the population.
 	 * @return lowestFitness	an ArrayList of MethylationHelper objects containing MethylationCount number of least fit individuals in the population
 	 */
-	public ArrayList<MethylationHelper> findLeastFitIndividuals(String[][][] nextGen) {
+	public ArrayList<FitnessTracking> findLeastFitIndividuals(String[][][] nextGen) {
 
 		String[][][] ng = nextGen;
 		
-		ArrayList<MethylationHelper> lowestFitness = new ArrayList<MethylationHelper>();
+		ArrayList<FitnessTracking> lowestFitness = new ArrayList<FitnessTracking>();
 		
 		for (int individual = 0; individual < POP_SIZE; individual++) {
 
 			Double fitness = currentFunction.getFitness( ng[individual] );
-			MethylationHelper mh = new MethylationHelper(individual, fitness);
+			FitnessTracking ft = new FitnessTracking(individual, fitness);
 
 			int count = 0;
 			boolean added = false;
@@ -418,14 +418,14 @@ public class ResearchGA {
 			do {
 				
 				if( lowestFitness.isEmpty() ) {
-					lowestFitness.add(mh);					
+					lowestFitness.add(ft);					
 					added = true;
 					break;
 				}
 				
 			
-				if( mh.getIndividualFitness() < lowestFitness.get(count).getIndividualFitness() ) {					
-					lowestFitness.add(count, mh);
+				if( ft.getIndividualFitness() < lowestFitness.get(count).getIndividualFitness() ) {					
+					lowestFitness.add(count, ft);
 					added = true;
 					break;
 				}
@@ -433,7 +433,7 @@ public class ResearchGA {
 			} while ( count < lowestFitness.size() );
 			
 			if(!added) {				
-				lowestFitness.add(mh);
+				lowestFitness.add(ft);
 			}
 			
 			if(lowestFitness.size() > METHYLATION_COUNT) {
@@ -451,7 +451,7 @@ public class ResearchGA {
 	 * @param leastFit	an arraylist of MethyltionHelper objects representing the least fit members of the population.
 	 * @return ng	the updated population generation
 	 */
-	public String[][][] determineMethylation(String[][][] nextGen, ArrayList<MethylationHelper> leastFit) {
+	public String[][][] determineMethylation(String[][][] nextGen, ArrayList<FitnessTracking> leastFit) {
 
 		String[][][] ng = nextGen;
 		/*
@@ -464,9 +464,9 @@ public class ResearchGA {
 		// find least fit individuals in pop size
 		for (int individual = 0; individual < POP_SIZE; individual++) {
 
-			// create new mh object
+			// create new ft object
 			Double fitness = currentFunction.getFitness( ng[individual] );
-			MethylationHelper mh = new MethylationHelper(individual, fitness);
+			MethylationHelper ft = new MethylationHelper(individual, fitness);
 
 			int count = 0;
 			boolean added = false;
@@ -475,14 +475,14 @@ public class ResearchGA {
 				// add first element
 				
 				if( lowestFitness.isEmpty() ) {
-					lowestFitness.add(mh);					
+					lowestFitness.add(ft);					
 					added = true;
 					break;
 				}
 				
 			
-				if( mh.getIndividualFitness() < lowestFitness.get(count).getIndividualFitness() ) {					
-					lowestFitness.add(count, mh);
+				if( ft.getIndividualFitness() < lowestFitness.get(count).getIndividualFitness() ) {					
+					lowestFitness.add(count, ft);
 					added = true;
 					break;
 				}
@@ -490,7 +490,7 @@ public class ResearchGA {
 			} while ( count < lowestFitness.size() );
 			
 			if(!added) {				
-				lowestFitness.add(mh);
+				lowestFitness.add(ft);
 			}
 			
 			if(lowestFitness.size() > METHYLATION_COUNT) {
