@@ -2,11 +2,14 @@ package geneticalgorithm;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import geneticalgorithm.FitnessFunction;
 import geneticalgorithm.ResearchGA;
+import geneticalgorithm.FitnessTracking;
 
 public class ResearchGATest {
 
@@ -221,6 +224,34 @@ public class ResearchGATest {
 		ga.setPopulation(pop);
 		String[][][] currGen = ga.getPopulation();
 		assertEquals(ga.createIndividualStringForPrint(currGen[0]),"00000000,0.0,0.0");
+	}
+	
+	@Test
+	//Test the findLeastFitIndividuals(ga.population)
+	public void testFindLeastFitIndividuals() {
+		ResearchGA g = new ResearchGA(5,1,8,0.0,4);
+		g.setCurrentFunction(new FitnessFunc1());
+		String[][][] pop = new String[g.getPopulationSize()][1][2];
+		ArrayList<FitnessTracking> lf = new ArrayList<FitnessTracking>();
+		pop[0][0][0] = "00000000";
+		pop[0][0][1] = "00000000";
+		pop[1][0][0] = "00000000";
+		pop[1][0][1] = "00000000";
+		pop[2][0][0] = "00000000";
+		pop[2][0][1] = "00000000";
+		pop[3][0][0] = "00000001";
+		pop[3][0][1] = "00000000";
+		pop[4][0][0] = "10000000";
+		pop[4][0][1] = "00000000";
+		lf = g.findLeastFitIndividuals(pop);
+		assertEquals(lf.get(0).getIndividualIndex(),0);
+		assertEquals(lf.get(0).getIndividualFitness(),0.0,1E-10);
+		assertEquals(lf.get(1).getIndividualIndex(),1);
+		assertEquals(lf.get(1).getIndividualFitness(),0.0,1E-10);
+		assertEquals(lf.get(2).getIndividualIndex(),2);
+		assertEquals(lf.get(2).getIndividualFitness(),0.0,1E-10);
+		assertEquals(lf.get(3).getIndividualIndex(),4);
+		assertEquals(lf.get(3).getIndividualFitness(),5.442895827038818E-8,1E-10);
 	}
 }
 

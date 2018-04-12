@@ -220,19 +220,17 @@ public class ResearchGA {
 	    String genes;
 	    String meth;
 	    
-	    //Iterates through the individuals (runs POP_SIZE times)
 	    for (int ind = 0; ind < POP_SIZE; ind++) {
-	        //Iterates though the variables (1 time for #1-4 and 2 times for #5)
 	        for (int vb = 0; vb < numVariables; vb++) {
 	            genes = new String();
 	            meth = new String();
-	            //Builds the new strings for genes (news) and methylation (meth) by iterating "number of genes per individual" times
+
 	            for (int i = 0; i < NUM_GENES_PER_INDIVIDUAL; i++) {
 	            	genes +=String.valueOf(rand.nextInt(2));
 	                meth += "0";
 	            }
-	            newPopulation[ind][vb][0] = genes;      //saves the gene string into the current array element for index [a][b]
-	            newPopulation[ind][vb][1] = meth;      //saves the methylation string into the current array element for index [a][b]
+	            newPopulation[ind][vb][0] = genes;
+	            newPopulation[ind][vb][1] = meth;
 	        }
 	    }
 	    return newPopulation;
@@ -256,44 +254,34 @@ public class ResearchGA {
 			for(int ind = 0; ind < currGen.length; ind++){ 
 				sumFitness = sumFitness + currentFunction.getFitness(currGen[ind]);
 			}
-//			System.out.print("Sum of fitness for this generation is " + sumFitness + "\n");
 			
 			//Loop to Select the individuals from the array
 			for(int b = 0; b < currGen[x].length; b++){
 				
-				///---added by Charles. 3/18/2018....initialize rnd if null so driver or test cases don't fail!!
-            	if (rnd==null) {  ///---We need to initialize this if not trying to test the GA function the main thread will throw an exception on
+            	if (rnd==null) {
             		rnd = new Random();
             	}		
 				
 				//**First individual
 				selectionValue = rnd.nextDouble() * sumFitness;
-//				System.out.print("Selection value (Before) is " + selectionValue + "\n");				
+				
 				int selectionIndex = -1;
 				while(selectionValue >= 0.0){
 					selectionIndex = selectionIndex + 1;
-					//selectionValue = selectionValue - currentFunction.getFitness(currGen[selectionIndex][b][0]);
 					selectionValue = selectionValue - currentFunction.getFitness(currGen[selectionIndex]);
 				}		
 				selectPairs[x][0] = selectionIndex; 
-//				System.out.print("Selection value (After) is " + selectionValue + "\n");
-//				System.out.println("First Index: " + selectionIndex);
 		    
 		        //**Second Individual
 		        selectionValue = rnd.nextDouble() * sumFitness;
-//		        System.out.print("Selection value (Before) is " + selectionValue + "\n");
 		        selectionIndex = -1;
 		        while (selectionValue >= 0.0)
 		        {
 		            selectionIndex = selectionIndex + 1;
-		            //selectionValue = selectionValue - currentFunction.getFitness(currGen[selectionIndex][b][0]);
 		            selectionValue = selectionValue - currentFunction.getFitness(currGen[selectionIndex]);
 		        }  
-//		        System.out.print("Selection value (After) is " + selectionValue + "\n");
 		        selectPairs[x][1] = selectionIndex; 	
-//		        System.out.println("Second Index: " + selectionIndex);
 			}        		
-//			System.out.println("");
 		}
 		 	    
 		return selectPairs;
@@ -320,11 +308,9 @@ public class ResearchGA {
 				selectedIndividual1[1] = nextGen[pairs[a][0]][b][1];	//methylation
 				selectedIndividual2[0] = nextGen[pairs[a][1]][b][0];	//genes
 				selectedIndividual2[1] = nextGen[pairs[a][1]][b][1];	//methylation
-//				System.out.println("Pairs: " + selectedIndividual1 + "|" + selectedIndividual2);
 				
 				//** Crossover Implementation
 				int crossoverPoint = rnd.nextInt(getNumberGenesPerIndividual() - 1);   
-//				System.out.print("Crossover point " + crossoverPoint + "\n");
 				
 				//First Individual
 				newIndividual1[0] = selectedIndividual1[0].substring(0, crossoverPoint).concat(
@@ -376,14 +362,7 @@ public class ResearchGA {
 	                	myrnd = rnd.nextDouble();
 	                  
 	                	if (myrnd < MUTATION_RATE) {
-	                    	normalIndividual = flipStringBit(normalIndividual,c);
-	                		/*
-	                		if (normalIndividual.substring(c, c + 1).equals("1")) {
-	                			normalIndividual = normalIndividual.substring(0,c)+'0'+ normalIndividual.substring(c+1);
-	                		}else{
-	                			normalIndividual = normalIndividual.substring(0,c)+'1'+ normalIndividual.substring(c+1);
-	                		}
-	                		*/
+	                    	normalIndividual = flipStringBit(normalIndividual,c);	
 	                	}                  
 	                }
 	                
@@ -454,50 +433,7 @@ public class ResearchGA {
 	public String[][][] determineMethylation(String[][][] nextGen, ArrayList<FitnessTracking> leastFit) {
 
 		String[][][] ng = nextGen;
-		/*
-		//Find the MethylationCount worst fit individuals
-		//ga.findLowestFitIndividuals(ng);
 		
-		// Call the class as an arraylist here
-		ArrayList<MethylationHelper> lowestFitness = new ArrayList<MethylationHelper>();
-		
-		// find least fit individuals in pop size
-		for (int individual = 0; individual < POP_SIZE; individual++) {
-
-			// create new ft object
-			Double fitness = currentFunction.getFitness( ng[individual] );
-			MethylationHelper ft = new MethylationHelper(individual, fitness);
-
-			int count = 0;
-			boolean added = false;
-			
-			do {
-				// add first element
-				
-				if( lowestFitness.isEmpty() ) {
-					lowestFitness.add(ft);					
-					added = true;
-					break;
-				}
-				
-			
-				if( ft.getIndividualFitness() < lowestFitness.get(count).getIndividualFitness() ) {					
-					lowestFitness.add(count, ft);
-					added = true;
-					break;
-				}
-				count++;
-			} while ( count < lowestFitness.size() );
-			
-			if(!added) {				
-				lowestFitness.add(ft);
-			}
-			
-			if(lowestFitness.size() > METHYLATION_COUNT) {
-				lowestFitness.remove(METHYLATION_COUNT);
-			}
-		}
-		*/
 		String[][] tempIndividual = new String[currentFunction.VARIABLE_COUNT][2];
 		// loop through each of the lowestFitness values
 		// performing the gene string flip, fitness check, and methylation flip on more fitness result
@@ -514,10 +450,7 @@ public class ResearchGA {
 				// determine random value and set to rnd for later use in bit flip			
 				int rndBitFlip = rnd.nextInt(NUM_GENES_PER_INDIVIDUAL);
 				testMeth[vb] = flipStringBit(ng[leastFit.get(i).getIndividualIndex()][vb][1],rndBitFlip);
-				/*
-				testMeth[vb] = ng[lowestFitness.get(i).getIndividualIndex()][vb][1].substring(0, rndBitFlip) + 1
-						+ ng[lowestFitness.get(i).getIndividualIndex()][vb][1].substring(rndBitFlip + 1, NUM_GENES_PER_INDIVIDUAL);
-				*/
+				
 				tempIndividual[vb][0] = ng[leastFit.get(i).getIndividualIndex()][vb][0];
 				tempIndividual[vb][1] = testMeth[vb];
 				
@@ -592,23 +525,7 @@ public class ResearchGA {
 		for (int ind = 0; ind < currPop.length; ind++) {
 			//Builds the string for each individual in the population
 			String individual = createIndividualStringForPrint(currPop[ind]);
-			/*
-			String individual = "";
-		
-			// for the currently iterated individual, display gene string
-			for (int vb = 0; vb < currPop[ind].length; vb++) {
-				individual += currPop[ind][vb][0] + ",";
-			}
-			
-			// for the currently iterated individual, display gene string converted to number
-			for (int vb = 0; vb < currPop[ind].length; vb++) {
-				individual += currentFunction.convertGenesToNumber(currPop[ind][vb][0]) + ",";
-			}
-			
-			// for the current individual in the population, display fitness value
-			individual += currentFunction.getFitness(currPop[ind]).toString();
-			*/
-			
+						
 			// setup value to calculate the average fitness by appending current individual fitness value
 			averageFitness = averageFitness + currentFunction.getFitness(currPop[ind]);
 			
