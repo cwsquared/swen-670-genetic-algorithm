@@ -72,8 +72,8 @@ public class ResearchGATest {
 	
 	@Test
 	// Test getter and setter for current function
-	public void testResearchGAGetSetCurrentFunction() {
-		FitnessFunction f = new FitnessFunction();
+	public void testResearchGASetCurrentFunction() {
+		FitnessFunction f = new FitnessFunc1();
 		ga.setCurrentFunction(f);
 		assertEquals("set/get CurrentFunction failed", f, ga.getCurrentFunction());
 	}
@@ -202,4 +202,26 @@ public class ResearchGATest {
 		assertEquals(pop[1][0][1], "00000000");
 		assertEquals(pop[2][0][1], "00000000");
 	}
+	
+	@Test
+	//Test the flipStringBit method
+	public void testFlipStringBit() {
+		ResearchGA ga = new ResearchGA(1, 2, 8, 4.4, 5);
+		assertEquals(ga.flipStringBit("10101010", 4),"10100010");
+	}
+	
+	@Test
+	//Test the output of createIndividualStringForPrint
+	public void testCreateIndividualStringForPrint() {
+		ResearchGA ga = new ResearchGA(1, 1, 8, 1.0, 1);
+		ga.setCurrentFunction(new FitnessFunc1());
+		String[][][] pop = new String[ga.getPopulationSize()][ga.getCurrentFunction().VARIABLE_COUNT][2];
+		pop[0][0][0] = "00000000";
+		pop[0][0][1] = "00000000";
+		ga.setPopulation(pop);
+		String[][][] currGen = ga.getPopulation();
+		assertEquals(ga.createIndividualStringForPrint(currGen[0]),"00000000,0.0,0.0");
+	}
 }
+
+

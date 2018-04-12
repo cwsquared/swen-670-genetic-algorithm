@@ -35,26 +35,25 @@ public class FitnessFunc5 extends FitnessFunction {
 
 	/**
 	 * Constructor that accepts parameters to be assigned to attributes.
-	 * @param vc
-	 * @param lb
-	 * @param ub
+	 * @param vc	an integer, variable count of the function.
+	 * @param lb	an integer, lower bound of the domain range.
+	 * @param ub	an integer, upper bound of the domain range.
 	 */
 	public FitnessFunc5(int vc, int lb, int ub) {
 		super(vc, lb, ub);
 	}
 
 	/**
-	 * 
-	 * @param xGenes
-	 * @param yGenes
-	 * @return a Double value of the equation: f(x)=2x^2-1.05x^4+x^6/6-xy+y^2, where x = genes
+	 * Determines an individuals genetic fitness
+	 * @param individual	2-dimensional String array that represents all genetic/epigenetic information for the individual
+	 * @return a Double value of the equation: f(x,y)=1/(2x^2-1.05x^4+x^6/6-xy+y^2), where x = the expressed genetics of individual
 	 */
 	public Double getFitness(String[][] individual) {
 		String xGenetics = expressGenetics(individual[0][0],individual[0][1]);
 		String yGenetics = expressGenetics(individual[1][0],individual[1][1]);
 		Double x = convertGenesToNumber(xGenetics);
 		Double y = convertGenesToNumber(yGenetics);
-		Double op = (2 * Math.pow(x, 2.0)) - (1.05 * (Math.pow(x, 4.0))) + (Math.pow(x, 6.0)/6) - (x*y) + (Math.pow(y, 2.0)); 
+		Double op = 1/((2 * Math.pow(x, 2.0)) - (1.05 * (Math.pow(x, 4.0))) + (Math.pow(x, 6.0)/6) - (x*y) + (Math.pow(y, 2.0))); 
 		/*
 		System.out.println("X Genes: " + x);
 		System.out.println("Y Genes: " + y);
@@ -63,22 +62,3 @@ public class FitnessFunc5 extends FitnessFunction {
 		return op;				
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -175,8 +175,10 @@ public class ResearchGA {
 			System.out.println("\nInitial generation");   //Header for the output
 			ga.printGeneration(ga.population);
 			int[][] pairs;
+			ArrayList<FitnessTracking> lf = new ArrayList<FitnessTracking>();
 			for (int gen = 1; gen <= ga.NUM_OF_GENERATIONS; gen++) {
-				ga.nextGen = ga.determineMethylation(ga.population);
+				lf = ga.findLeastFitIndividuals(ga.population);
+				ga.nextGen = ga.determineMethylation(ga.population, lf);
 				pairs = ga.performSelection(ga.nextGen);
 				ga.nextGen = ga.performCrossover(ga.nextGen, pairs);
 				ga.nextGen = ga.performMutation(ga.nextGen);
@@ -208,8 +210,8 @@ public class ResearchGA {
 
 	/**
 	 * Generates random set of bits for genes and all 0's for methylation
-	 * @param numVariables	the number of variables to intialize with
-	 * @return new population
+	 * @param numVariables	the number of variables to initialize with
+	 * @return an array of the new population of individuals
 	 */
 	public String[][][] initialization(int numVariables) {
 	    String[][][] newPopulation = new String[POP_SIZE][numVariables][2];
@@ -238,8 +240,8 @@ public class ResearchGA {
 
 	/**
 	 * Determine which individuals from the current generation will be mated for the next generation
-	 * @param currGen
-	 * @return
+	 * @param currGen	the current population generation
+	 * @return	an array of the mated pairs who will create the next generation.
 	 */
 	public int[][] performSelection(String[][][] currGen) {
 		int[][] selectPairs = new int[currGen.length/2][2]; 
@@ -300,9 +302,9 @@ public class ResearchGA {
 			
 	/**
 	 * Combine genes from the selected pairs to produce a pair of new individuals
-	 * @param nextGen
-	 * @param pairs
-	 * @return
+	 * @param nextGen	a String[][][] array that contains the population.
+	 * @param pairs an array of the mated pairs who will create the next generation.
+	 * @return returns the updated population
 	 */
 	public String[][][] performCrossover(String[][][] nextGen,int[][] pairs) {
 		String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
@@ -350,13 +352,12 @@ public class ResearchGA {
 
 	/**
 	 * Randomly change a MUTATION_RATE percentage of genes in an individual
-	 * @param nextGen
-	 * @return
+	 * @param nextGen	a String[][][] array that contains the population.
+	 * @return returns the updated population
 	 */
 	public String[][][] performMutation(String[][][] nextGen) {
 		
-		String[][][] ng = nextGen;	//--a copy of the current generation of genes that needs to be mutated
-		//String[][][] ng = new String[nextGen.length][nextGen[0].length][nextGen[0][0].length];
+		String[][][] ng = nextGen;
 		
 		String normalIndividual = new String();		///---used to store current individual string that we will examine and mutate
 		Double myrnd; ///---random number, did this so we can see the actual random number being used to detect mutation!
@@ -375,11 +376,14 @@ public class ResearchGA {
 	                	myrnd = rnd.nextDouble();
 	                  
 	                	if (myrnd < MUTATION_RATE) {
-	                    	if (normalIndividual.substring(c, c + 1).equals("1")) {
-	                			normalIndividual = normalIndividual.substring(0,c)+'0'+normalIndividual.substring(c+1);
+	                    	normalIndividual = flipStringBit(normalIndividual,c);
+	                		/*
+	                		if (normalIndividual.substring(c, c + 1).equals("1")) {
+	                			normalIndividual = normalIndividual.substring(0,c)+'0'+ normalIndividual.substring(c+1);
 	                		}else{
-	                			normalIndividual = normalIndividual.substring(0,c)+'1'+normalIndividual.substring(c+1);
+	                			normalIndividual = normalIndividual.substring(0,c)+'1'+ normalIndividual.substring(c+1);
 	                		}
+	                		*/
 	                	}                  
 	                }
 	                
@@ -391,26 +395,78 @@ public class ResearchGA {
 		return ng;
 		
 	}
-
+	
 	/**
-	 * Locates the MC least fit individuals, randomly select 1 (one) gene, and test whether 
-	 * the gene being flipped makes for a more fit individual.  If the bit flip increases fitness, 
-	 * the corresponding methylation bit is set to 1.
-	 * @param nextGen
-	 * @return 
+	 * Locates the MethylationCount least fit individuals in the current population.
+	 * @param nextGen	a String[][][] array that contains the population.
+	 * @return lowestFitness	an ArrayList of MethylationHelper objects containing MethylationCount number of least fit individuals in the population
 	 */
-	public String[][][] determineMethylation(String[][][] nextGen) {
+	public ArrayList<FitnessTracking> findLeastFitIndividuals(String[][][] nextGen) {
 
 		String[][][] ng = nextGen;
+		
+		ArrayList<FitnessTracking> lowestFitness = new ArrayList<FitnessTracking>();
+		
+		for (int individual = 0; individual < POP_SIZE; individual++) {
+
+			Double fitness = currentFunction.getFitness( ng[individual] );
+			FitnessTracking ft = new FitnessTracking(individual, fitness);
+
+			int count = 0;
+			boolean added = false;
+			
+			do {
+				
+				if( lowestFitness.isEmpty() ) {
+					lowestFitness.add(ft);					
+					added = true;
+					break;
+				}
+				
+			
+				if( ft.getIndividualFitness() < lowestFitness.get(count).getIndividualFitness() ) {					
+					lowestFitness.add(count, ft);
+					added = true;
+					break;
+				}
+				count++;
+			} while ( count < lowestFitness.size() );
+			
+			if(!added) {				
+				lowestFitness.add(ft);
+			}
+			
+			if(lowestFitness.size() > METHYLATION_COUNT) {
+				lowestFitness.remove(METHYLATION_COUNT);
+			}
+		}
+		return lowestFitness;
+	}
+	
+	/**
+	 * Randomly select 1 (one) gene from each least fit individual and test whether 
+	 * the gene being flipped makes for a more fit individual.  If the bit flip increases fitness, 
+	 * the corresponding methylation bit is set to 1.
+	 * @param nextGen	a String[][][] array that contains the population.
+	 * @param leastFit	an arraylist of MethyltionHelper objects representing the least fit members of the population.
+	 * @return ng	the updated population generation
+	 */
+	public String[][][] determineMethylation(String[][][] nextGen, ArrayList<FitnessTracking> leastFit) {
+
+		String[][][] ng = nextGen;
+		/*
+		//Find the MethylationCount worst fit individuals
+		//ga.findLowestFitIndividuals(ng);
+		
 		// Call the class as an arraylist here
 		ArrayList<MethylationHelper> lowestFitness = new ArrayList<MethylationHelper>();
 		
 		// find least fit individuals in pop size
 		for (int individual = 0; individual < POP_SIZE; individual++) {
 
-			// create new mh object
+			// create new ft object
 			Double fitness = currentFunction.getFitness( ng[individual] );
-			MethylationHelper mh = new MethylationHelper(individual, fitness);
+			MethylationHelper ft = new MethylationHelper(individual, fitness);
 
 			int count = 0;
 			boolean added = false;
@@ -419,14 +475,14 @@ public class ResearchGA {
 				// add first element
 				
 				if( lowestFitness.isEmpty() ) {
-					lowestFitness.add(mh);					
+					lowestFitness.add(ft);					
 					added = true;
 					break;
 				}
 				
 			
-				if( mh.getIndividualFitness() < lowestFitness.get(count).getIndividualFitness() ) {					
-					lowestFitness.add(count, mh);
+				if( ft.getIndividualFitness() < lowestFitness.get(count).getIndividualFitness() ) {					
+					lowestFitness.add(count, ft);
 					added = true;
 					break;
 				}
@@ -434,22 +490,14 @@ public class ResearchGA {
 			} while ( count < lowestFitness.size() );
 			
 			if(!added) {				
-				lowestFitness.add(mh);
+				lowestFitness.add(ft);
 			}
 			
 			if(lowestFitness.size() > METHYLATION_COUNT) {
 				lowestFitness.remove(METHYLATION_COUNT);
 			}
-			/*
-			// output stuff
-			String xx = "";
-			for(int d=0; d < lowestFitness.size(); d++) {				
-				xx += lowestFitness.get(d).getIndividualIndex() + " - " + lowestFitness.get(d).getIndividualFitness() + ", ";
-			}
-			System.out.println("Test DetermineMeth: " + lowestFitness.size() + " - " + xx );
-			*/
 		}
-		
+		*/
 		String[][] tempIndividual = new String[currentFunction.VARIABLE_COUNT][2];
 		// loop through each of the lowestFitness values
 		// performing the gene string flip, fitness check, and methylation flip on more fitness result
@@ -461,24 +509,25 @@ public class ResearchGA {
 			
 			for(int vb = 0; vb < currentFunction.VARIABLE_COUNT; vb++) {
 
-				testMeth[vb] = ng[lowestFitness.get(i).getIndividualIndex()][vb][1];
+				testMeth[vb] = ng[leastFit.get(i).getIndividualIndex()][vb][1];
 	
 				// determine random value and set to rnd for later use in bit flip			
 				int rndBitFlip = rnd.nextInt(NUM_GENES_PER_INDIVIDUAL);
-				
+				testMeth[vb] = flipStringBit(ng[leastFit.get(i).getIndividualIndex()][vb][1],rndBitFlip);
+				/*
 				testMeth[vb] = ng[lowestFitness.get(i).getIndividualIndex()][vb][1].substring(0, rndBitFlip) + 1
 						+ ng[lowestFitness.get(i).getIndividualIndex()][vb][1].substring(rndBitFlip + 1, NUM_GENES_PER_INDIVIDUAL);
-				
-				tempIndividual[vb][0] = ng[lowestFitness.get(i).getIndividualIndex()][vb][0];
+				*/
+				tempIndividual[vb][0] = ng[leastFit.get(i).getIndividualIndex()][vb][0];
 				tempIndividual[vb][1] = testMeth[vb];
 				
 			}
 			testFitness = currentFunction.getFitness(tempIndividual);
 			
 			// determine if the test fitness is greater than current fitness
-			if (testFitness > lowestFitness.get(i).getIndividualFitness()) {
+			if (testFitness > leastFit.get(i).getIndividualFitness()) {
 				for(int vb2 = 0; vb2 < testMeth.length; vb2++) {
-					ng[lowestFitness.get(i).getIndividualIndex()][vb2][1] = testMeth[vb2];
+					ng[leastFit.get(i).getIndividualIndex()][vb2][1] = testMeth[vb2];
 				}
 			}
 		}
@@ -488,8 +537,8 @@ public class ResearchGA {
 
 	/**
 	 * Sets all methylation bits back to 0
-	 * @param nextGen
-	 * @return
+	 * @param nextGen	a String[][][] array that contains the population
+	 * @return ng	the updated population generation
 	 */
 	public String[][][] clearMethylation(String[][][] nextGen) {
 		String[][][] ng = nextGen;
@@ -510,6 +559,30 @@ public class ResearchGA {
 
 	/**
 	 * Prints the current individual's genes, domain values, and fitness
+	 * @param ind	array representing an indiviudal's genetics
+	 * @return individualString
+	 */
+	public String createIndividualStringForPrint(String[][] ind) {
+		String individualString = "";
+		
+		// for the currently iterated individual, display gene string
+		for (int vb = 0; vb < ind.length; vb++) {
+			individualString += currentFunction.expressGenetics(ind[vb][0], ind[vb][1]) + ",";
+		}
+		
+		// for the currently iterated individual, display gene string converted to number
+		for (int vb = 0; vb < ind.length; vb++) {
+			individualString += currentFunction.convertGenesToNumber(currentFunction.expressGenetics(ind[vb][0], ind[vb][1])) + ",";
+		}
+		
+		// for the current individual in the population, display fitness value
+		individualString += currentFunction.getFitness(ind).toString();
+		
+		return individualString;
+	}
+	
+	/**
+	 * Prints the current individual's genes, domain values, and fitness
 	 * @param currPop	array representing the current population
 	 */
 	private void printGeneration(String[][][] currPop) {
@@ -517,8 +590,11 @@ public class ResearchGA {
 		
 		// loop through the entire population
 		for (int ind = 0; ind < currPop.length; ind++) {
+			//Builds the string for each individual in the population
+			String individual = createIndividualStringForPrint(currPop[ind]);
+			/*
 			String individual = "";
-			
+		
 			// for the currently iterated individual, display gene string
 			for (int vb = 0; vb < currPop[ind].length; vb++) {
 				individual += currPop[ind][vb][0] + ",";
@@ -531,6 +607,7 @@ public class ResearchGA {
 			
 			// for the current individual in the population, display fitness value
 			individual += currentFunction.getFitness(currPop[ind]).toString();
+			*/
 			
 			// setup value to calculate the average fitness by appending current individual fitness value
 			averageFitness = averageFitness + currentFunction.getFitness(currPop[ind]);
@@ -542,6 +619,22 @@ public class ResearchGA {
 		System.out.println("Average fitness = " + (averageFitness / currPop.length));
 	}
 
+	/**
+	 * Takes a string and an index, flipping the character at index from a 1 to a 0, or vice versa
+	 * @param s	the string to be modified
+	 * @param index	the character index of the string which will be flipped
+	 * @return alteredString
+	 */
+	public String flipStringBit(String s, int index) {
+		String alteredString;
+		if (s.substring(index, index + 1).equals("1")) {
+			alteredString = s.substring(0,index)+'0'+ s.substring(index+1,NUM_GENES_PER_INDIVIDUAL);
+		}else{
+			alteredString = s.substring(0,index)+'1'+ s.substring(index+1,NUM_GENES_PER_INDIVIDUAL);
+		}
+		return alteredString;
+	}
+	
 	/**
 	 * Get the population
 	 * @return an array representing the population
@@ -608,7 +701,7 @@ public class ResearchGA {
 
 	/**
 	 * Set population
-	 * @param population	an array representing the population
+	 * @param pop	an array representing the population
 	 */
 	public void setPopulation(String[][][] pop) {
 		this.population = pop;

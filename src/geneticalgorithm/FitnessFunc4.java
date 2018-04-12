@@ -32,23 +32,23 @@ public class FitnessFunc4 extends FitnessFunction {
 
 	/**
 	 * Constructor that accepts parameters to be assigned to attributes.
-	 * @param vc
-	 * @param lb
-	 * @param ub
+	 * @param vc	an integer, variable count of the function.
+	 * @param lb	an integer, lower bound of the domain range.
+	 * @param ub	an integer, upper bound of the domain range.
 	 */
 	public FitnessFunc4(int vc, int lb, int ub) {
 		super(vc, lb, ub);
 	}
 
 	/**
-	 * 
-	 * @param genes
-	 * @return a Double value of the equation: f(x)=2^(-2x^2)*sin^6(10*pi*x), where x = genes
+	 * Determines an individuals genetic fitness
+	 * @param individual	2-dimensional String array that represents all genetic/epigenetic information for the individual
+	 * @return a Double value of the equation: f(x)=2^(-2x^2)*sin^6(10*pi*x), where x = the expressed genetics of individual
 	 */
 	public Double getFitness(String[][] individual) {
 		String genetics = expressGenetics(individual[0][0],individual[0][1]);
 		Double x = convertGenesToNumber(genetics);
 		Double pi = Math.PI;
-		return Math.pow(2,( Math.pow((-2*x),2)))  *  (Math.pow(Math.sin(10 * pi * x), 6.0));
+		return Math.pow(2,( -2 * Math.pow(x,2)))  *  (Math.pow(Math.sin(10 * pi * x), 6.0));
 	}
 }

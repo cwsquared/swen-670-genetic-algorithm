@@ -28,14 +28,14 @@ public class FitnessFunc5Test {
 	
 	@Test
 	// Test that the getFitness method returns correct value for x = 0.
-	public void testGetFitnessFunc5ZeroZero() {
+	public void testGetFitnessFunc5NegativeThrees() {
 		FitnessFunc5 f5 = new FitnessFunc5();
 		String[][] ind = new String[2][2];
 		ind[0][0] = "0000000000000000";
 		ind[0][1] = "0000000000000000";
 		ind[1][0] = "0000000000000000";
 		ind[1][1] = "0000000000000000";
-		assertEquals(f5.getFitness(ind), 54.45, 1E-10);
+		assertEquals(f5.getFitness(ind), .0183654729, 1E-10);
 	}
 	
 	@Test
@@ -47,43 +47,43 @@ public class FitnessFunc5Test {
 		ind[0][1] = "0000000000000000";
 		ind[1][0] = "1111111111111111";
 		ind[1][1] = "0000000000000000";
-		assertEquals(f5.getFitness(ind), 54.45, 1E-10);
+		assertEquals(f5.getFitness(ind), .0183654729, 1E-10);
 	}
 	
 	@Test
 	// Test that the getFitness method returns correct value for x = 0 and y = 1
-	public void testGetFitnessFunc5ZeroThree() {
+	public void testGetFitnessFunc5NegThreeThree() {
 		FitnessFunc5 f5 = new FitnessFunc5();
 		String[][] ind = new String[2][2];
 		ind[0][0] = "0000000000000000";
 		ind[0][1] = "0000000000000000";
 		ind[1][0] = "1111111111111111";
 		ind[1][1] = "0000000000000000";
-		assertEquals(f5.getFitness(ind), 72.45, 1E-10);
+		assertEquals(f5.getFitness(ind), .013802622498274672, 1E-10);
 	}
 	
 	@Test
 	// Test that the getFitness method returns correct value for x = 1 and y = 0
-	public void testGetFitnessFunc5OneZero() {
+	public void testGetFitnessFunc5ThreeNegThree() {
 		FitnessFunc5 f5 = new FitnessFunc5();
 		String[][] ind = new String[2][2];
 		ind[0][0] = "1111111111111111";
 		ind[0][1] = "0000000000000000";
 		ind[1][0] = "0000000000000000";
 		ind[1][1] = "0000000000000000";
-		assertEquals(f5.getFitness(ind), 72.45, 1E-10);
+		assertEquals(f5.getFitness(ind), .013802622498274672, 1E-10);
 	}
 	
 	@Test
 	// Test that the getFitness method returns correct value for x and y
-	public void testGetFitnessFunc5OneFifteenth() {
+	public void testGetFitnessFunc5ZeroZero() {
 		FitnessFunc5 f5 = new FitnessFunc5();
 		String[][] ind = new String[2][2];
-		ind[0][0] = "0100010001000100";
-		ind[0][1] = "0000000000000000";
-		ind[1][0] = "0011000010001000";
-		ind[1][1] = "0000000000000000";
-		assertEquals(f5.getFitness(ind) , 5.021144188191346, 1E-10);
+		ind[0][0] = "0000000000000000000000000000000000000000000000000000000000000001";
+		ind[0][1] = "0000000000000000000000000000000000000000000000000000000000000000";
+		ind[1][0] = "0000000000000000000000000000000000000000000000000000000000000001";
+		ind[1][1] = "0000000000000000000000000000000000000000000000000000000000000000";
+		assertEquals(f5.getFitness(ind), Double.POSITIVE_INFINITY, 1E-10);
 	}
 	
 }
