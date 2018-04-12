@@ -8,7 +8,7 @@ public class FitnessTrackerTest {
 	
 	@Test
 	// Test the constructor that sets private attributes
-	public void testMethylationHelper() {
+	public void testFitnessTracker() {
 		FitnessTracking ft = new FitnessTracking(1,2.0);
 		assertEquals(ft.getIndividualIndex(),1);
 		assertEquals(ft.getIndividualFitness(),2.0,1E-10);
