@@ -72,8 +72,8 @@ public class ResearchGATest {
 	
 	@Test
 	// Test getter and setter for current function
-	public void testResearchGAGetSetCurrentFunction() {
-		FitnessFunction f = new FitnessFunction();
+	public void testResearchGASetCurrentFunction() {
+		FitnessFunction f = new FitnessFunc1();
 		ga.setCurrentFunction(f);
 		assertEquals("set/get CurrentFunction failed", f, ga.getCurrentFunction());
 	}
