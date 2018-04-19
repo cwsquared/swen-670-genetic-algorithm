@@ -48,7 +48,7 @@ public class FitnessFunc4 extends FitnessFunction {
 	public Double getFitness(String[][] individual) {
 		String genetics = expressGenetics(individual[0][0],individual[0][1]);
 		Double x = convertGenesToNumber(genetics);
-		Double pi = Math.PI;
-		return Math.pow(2,( -2 * Math.pow(x,2)))  *  (Math.pow(Math.sin(10 * pi * x), 6.0));
+		Double pi = StrictMath.PI;
+		return StrictMath.pow(2,( -2 * StrictMath.pow(x,2)))  *  (StrictMath.pow(StrictMath.sin(10 * pi * x), 6.0));
 	}
 }
