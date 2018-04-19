@@ -153,13 +153,6 @@ public class ResearchGA {
 				break;
 			}
 
-			// Initialize random number generator based on date
-			ga.rnd = new Random();
-			Calendar cal = Calendar.getInstance();
-			SimpleDateFormat sdf = new SimpleDateFormat("ssMMmmyydd");
-			long d = Long.parseLong(sdf.format(cal.getTime()));
-			ga.rnd.setSeed(d);
-
 			// Print GA parameters
 			System.out.println("\nGenetic Algorithm parameters: ");
 			System.out.print(ga.currentFunction.getClass().getSimpleName() + 
@@ -206,6 +199,11 @@ public class ResearchGA {
 		this.NUM_GENES_PER_INDIVIDUAL = numGenes;
 		this.MUTATION_RATE = mutation;
 		this.METHYLATION_COUNT = methCount;
+		
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("ssMMmmyydd");
+		long d = Long.parseLong(sdf.format(cal.getTime()));
+		this.rnd = new Random(d);
 	}
 
 	/**
