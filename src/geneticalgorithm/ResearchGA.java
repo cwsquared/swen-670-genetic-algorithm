@@ -214,7 +214,6 @@ public class ResearchGA {
 	public String[][][] initialization(int numVariables) {
 	    String[][][] newPopulation = new String[POP_SIZE][numVariables][2];
 
-	    Random rand = new Random();
 	    String genes;
 	    String meth;
 	    
@@ -224,7 +223,7 @@ public class ResearchGA {
 	            meth = new String();
 
 	            for (int i = 0; i < NUM_GENES_PER_INDIVIDUAL; i++) {
-	            	genes +=String.valueOf(rand.nextInt(2));
+	            	genes += String.valueOf(rnd.nextInt(2));
 	                meth += "0";
 	            }
 	            newPopulation[ind][vb][0] = genes;
@@ -255,10 +254,6 @@ public class ResearchGA {
 			
 			//Loop to Select the individuals from the array
 			for(int b = 0; b < currGen[x].length; b++){
-				
-            	if (rnd==null) {
-            		rnd = new Random();
-            	}		
 				
 				//**First individual
 				selectionValue = rnd.nextDouble() * sumFitness;
@@ -354,9 +349,6 @@ public class ResearchGA {
 	
 	                for (int c = 0; c < NUM_GENES_PER_INDIVIDUAL;c++) // normalIndividual.length(); c++)
 	                {
-	                	if (rnd==null) {  ///---We need to initialize this if not trying to test the GA function the main thread will throw an exception on
-	                		rnd = new Random();
-	                	}
 	                	myrnd = rnd.nextDouble();
 	                  
 	                	if (myrnd < MUTATION_RATE) {
